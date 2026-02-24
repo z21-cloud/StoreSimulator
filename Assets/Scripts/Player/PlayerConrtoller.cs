@@ -8,8 +8,11 @@ namespace StoreSimulator.PlayerController
 {
     public class PlayerConrtoller : MonoBehaviour
     {
-        [SerializeField] private CharacterMover mover;
+        [Header("Input set-up")]
         [SerializeField] private InputManager input;
+
+        [Header("Mover set-up")]
+        [SerializeField] private CharacterMover mover;
 
         private void Update()
         {

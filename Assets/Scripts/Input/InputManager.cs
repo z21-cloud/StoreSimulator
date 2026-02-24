@@ -7,12 +7,15 @@ namespace StoreSimulator.PlayerInput
 {
     public class InputManager : MonoBehaviour, IInputProvider
     {
+        // properties
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
         public bool MouseLMB { get; private set; }
         public float MouseX { get; private set; }
         public float MouseY { get; private set; }
+        public bool isJumping { get; private set; }
 
+        // constants
         private const int LMB = 0; // left mouse button
 
         void Update()
@@ -21,6 +24,7 @@ namespace StoreSimulator.PlayerInput
             GetVerticalInput();
             GetMouseInput();
             GetMouseRotation();
+            Jumping();
         }
 
         private void GetHorizontalInput()
@@ -41,6 +45,11 @@ namespace StoreSimulator.PlayerInput
         {
             MouseX = Input.GetAxis("MouseX");
             MouseY = Input.GetAxis("MouseY");
+        }
+
+        private void Jumping()
+        {
+            isJumping = Input.GetButtonDown("Jump");
         }
     }
 }
