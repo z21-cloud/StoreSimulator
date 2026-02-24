@@ -1,0 +1,12 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace StoreSimulator.Physics
+{
+    public interface IVelocityProvider
+    {
+        public float CurrentYVelocity { get; }
+        public void SetVelocity(float velocity);
+    }
+}
