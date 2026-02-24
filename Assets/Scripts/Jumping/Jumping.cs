@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using StoreSimulator.Physics;
+using StoreSimulator.GravityPhysics;
 
 namespace StoreSimulator.Jumper
 {

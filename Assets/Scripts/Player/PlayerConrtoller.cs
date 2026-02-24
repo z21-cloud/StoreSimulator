@@ -5,6 +5,7 @@ using StoreSimulator.Mover;
 using StoreSimulator.PlayerInput;
 using StoreSimulator.Jumper;
 using System;
+using StoreSimulator.PickableObjects;
 
 namespace StoreSimulator.PlayerController
 {
@@ -19,16 +20,30 @@ namespace StoreSimulator.PlayerController
         [Header("Jumper set-up")]
         [SerializeField] private Jumping jumper;
 
+        [Header("Pickable picker set-up")]
+        [SerializeField] private PlayerInteraction picker;
+
         private void Update()
         {
             SetMovementDirection();
 
-            if (input.isJumping) Jump();
+            Jump();
+
+            Interact();
         }
 
         private void Jump()
         {
+            if (!input.isJumping) return;
+            
             jumper.Jump();
+        }
+
+        private void Interact()
+        {
+            if (!input.isInteracting) return;
+
+            picker.DoInteract();
         }
 
         private void SetMovementDirection()

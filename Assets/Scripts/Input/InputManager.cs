@@ -14,7 +14,8 @@ namespace StoreSimulator.PlayerInput
         public float MouseX { get; private set; }
         public float MouseY { get; private set; }
         public bool isJumping { get; private set; }
-
+        public bool isInteracting { get; private set; }
+    
         // constants
         private const int LMB = 0; // left mouse button
 
@@ -25,6 +26,7 @@ namespace StoreSimulator.PlayerInput
             GetMouseInput();
             GetMouseRotation();
             Jumping();
+            Picking();
         }
 
         private void GetHorizontalInput()
@@ -50,6 +52,11 @@ namespace StoreSimulator.PlayerInput
         private void Jumping()
         {
             isJumping = Input.GetButtonDown("Jump");
+        }
+
+        private void Picking()
+        {
+            isInteracting = Input.GetButtonDown("Interact");
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace StoreSimulator.Physics
+namespace StoreSimulator.GravityPhysics
 {
     public interface IVelocityProvider
     {
