@@ -21,7 +21,12 @@ namespace StoreSimulator.Jumper
 
             if (_gravityProvider == null)
             {
-                Debug.LogError($"CharacterMove: Object {gameObject.name} has no gravity provider");
+                Debug.LogError($"Jumping: Object {gameObject.name} has no gravity provider");
+            }
+
+            if (_characterConrtoller == null)
+            {
+                Debug.LogError($"Jumping: Object {gameObject.name} has no Character Conrtoller");
             }
         }
 

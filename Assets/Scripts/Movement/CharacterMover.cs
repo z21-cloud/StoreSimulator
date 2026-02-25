@@ -24,6 +24,11 @@ namespace StoreSimulator.Mover
             {
                 Debug.LogError($"CharacterMove: Object {gameObject.name} has no gravity provider");
             }
+
+            if (_characterConrtoller == null)
+            {
+                Debug.LogError($"CharacterMove: Object {gameObject.name} has no Character Conrtoller");
+            }
         }
 
         public void Move(Vector3 direction)

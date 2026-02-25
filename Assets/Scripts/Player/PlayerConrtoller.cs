@@ -5,7 +5,7 @@ using StoreSimulator.Mover;
 using StoreSimulator.PlayerInput;
 using StoreSimulator.Jumper;
 using System;
-using StoreSimulator.PickableObjects;
+using StoreSimulator.InteractableObjects;
 
 namespace StoreSimulator.PlayerController
 {

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace StoreSimulator.PickableObjects
+namespace StoreSimulator.InteractableObjects
 {
     public interface IInteractable
     {

@@ -2,17 +2,31 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace StoreSimulator.PickableObjects
+namespace StoreSimulator.InteractableObjects
 {
     public class PlayerInteraction : MonoBehaviour
     {
+        [Header("Interaction distance")]
         [SerializeField] private float interactableDistance = 5f;
+        [Header("Throw force")]
+        [Tooltip("For throw throwable objects")]
+        [SerializeField] private float throwForce = 1000f;
+        [Header("Release force")]
+        [Tooltip("For release holdable objects")]
+        [SerializeField] private float releaseForce = 100f;
+        [Header("Point for holding object")]
         [SerializeField] private Transform holdPoint;
 
-        private const float CENTER_CAMERA = 0.5f;
+        // consts
+        private readonly Vector3 CENTER_OF_CAMERASCREEN = new Vector3(0.5f, 0.5f, 0); // center of camera screen
+        private const float DIRECTION_CAMERA_OFFSET = 0.2f;
+        // components
+        private IInteractable _currentInteractable;
+        private IHoldable _heldObject;
+        private GameObject _heldObjectGO;
         private Camera _mainCamera;
 
-        private IPickable _currentInteractable;
+        private Vector3 throwVector;
 
         private void Awake()
         {
@@ -24,34 +38,63 @@ namespace StoreSimulator.PickableObjects
             _currentInteractable = DetectInteractable();
         }
 
-        private IPickable DetectInteractable()
+        private IInteractable DetectInteractable()
         {
-            Ray ray = _mainCamera.ViewportPointToRay(new Vector3(CENTER_CAMERA, CENTER_CAMERA, 0));
+            // create ray from center of main camera
+            Ray ray = _mainCamera.ViewportPointToRay(CENTER_OF_CAMERASCREEN);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, interactableDistance))
-            {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
-                return hit.collider.GetComponent<IPickable>();
-            }
+            // if hits smth in interactableDistance
+            if (!Physics.Raycast(ray, out RaycastHit hit, interactableDistance)) return null;
+            
+            // Draw line for debugging
+            Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+            // return parent interface IInteractable, if gameobject has implementation
+            if (hit.collider.TryGetComponent<IInteractable>(out var interactable))
+                return interactable;
+
+            // to prevert cases, where component in parent's object and collider inside parent's object
+            if (hit.collider.GetComponentInParent<IInteractable>() is IInteractable parentInteractable)
+                return parentInteractable;
 
             return null;
         }
 
+        // IPickable & IHoldable inhirates from IInteractable, both got simular functional for UI
         public void DoInteract()
         {
-            if (_currentInteractable == null) return;
+            throwVector = (_mainCamera.transform.forward + Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
+            // Drop or throw gameobject
+            if (_heldObject != null)
+            {
+                if (_heldObjectGO.TryGetComponent<IThrowable>(out var throwable))
+                    throwable.Throw(throwVector, throwForce);
 
-            if(_currentInteractable is IPickable pickable)
-            {
-                pickable.Pick();
+                if (_heldObjectGO.TryGetComponent<IHoldable>(out var holdable))
+                    holdable.Release(throwVector * releaseForce);
+
+                // reset 
+                _heldObject = null;
+                _heldObjectGO = null;
+                return;
             }
-            else if(_currentInteractable is IHoldable holdable)
+
+            // 
+            switch (_currentInteractable)
             {
-                holdable.Hold(holdPoint);
+                case IPickable pickable:
+                    pickable.Pick();
+                    break;
+
+                case IHoldable holdable:
+                    _heldObject = holdable;
+                    _heldObjectGO = ((MonoBehaviour)holdable).gameObject;
+                    holdable.Hold(holdPoint);
+                    break;
             }
         }
 
-        public IPickable GetCurrentInteractable() => _currentInteractable;
+        public IInteractable GetCurrentInteractable() => _currentInteractable;
     }
 }
 

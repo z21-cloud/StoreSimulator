@@ -8,8 +8,10 @@ namespace StoreSimulator.GravityPhysics
     {
         [SerializeField] private float gravity = -9.81f;
 
-        //  private vars
+        //  private vars components
         private CharacterController _characterController;
+        
+        // private vars definitions
         private float _verticalVelocity;
 
         // constants
