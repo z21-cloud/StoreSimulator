@@ -19,11 +19,6 @@ namespace StoreSimulator.InteractableObjects
             GetRigidbody();
         }
 
-        private void GetRigidbody()
-        {
-            rb = GetComponent<Rigidbody>();
-        }
-
         public string GetDescription()
         {
             throw new System.NotImplementedException();
@@ -32,13 +27,29 @@ namespace StoreSimulator.InteractableObjects
         public void Hold(Transform holdPoint)
         {
             SetHoldPosition(holdPoint);
-            SetPhysics();
+
+            // enable gravity & resets physics when hold object
+            bool useGravity = false;
+            SetPhysics(useGravity);
         }
 
-        private void SetPhysics()
+        public void Release(Vector3 impulse)
         {
-            rb.linearVelocity = new Vector3(0, 0);
-            rb.useGravity = false;
+            if (rb == null) GetRigidbody();
+            transform.parent = null;
+
+            // enable gravity & resets physics when release object
+            bool useGravity = true;
+            SetPhysics(useGravity);
+
+            if (impulse != Vector3.zero) rb.AddForce(impulse, ForceMode.Impulse);
+        }
+
+        private void SetPhysics(bool value)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.useGravity = value;
         }
 
         private void SetHoldPosition(Transform holdPoint)
@@ -48,16 +59,9 @@ namespace StoreSimulator.InteractableObjects
             transform.parent = holdPoint;
         }
 
-        public void Release(Vector3 impulse)
+        private void GetRigidbody()
         {
-            if (rb == null) GetRigidbody();
-            transform.parent = null;
-
-            rb.useGravity = true;
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-
-            if (impulse != Vector3.zero) rb.AddForce(impulse, ForceMode.Impulse);
+            rb = GetComponent<Rigidbody>();
         }
     }
 }

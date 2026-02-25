@@ -22,8 +22,8 @@ namespace StoreSimulator.InteractableObjects
         private const float DIRECTION_CAMERA_OFFSET = 0.2f;
         // components
         private IInteractable _currentInteractable;
-        private IHoldable _heldObject;
-        private GameObject _heldObjectGO;
+        private Transform _heldObject;
+        //private GameObject _heldObjectGO;
         private Camera _mainCamera;
 
         private Vector3 throwVector;
@@ -67,15 +67,15 @@ namespace StoreSimulator.InteractableObjects
             // Drop or throw gameobject
             if (_heldObject != null)
             {
-                if (_heldObjectGO.TryGetComponent<IThrowable>(out var throwable))
+                if (_heldObject.TryGetComponent<IThrowable>(out var throwable))
                     throwable.Throw(throwVector, throwForce);
 
-                if (_heldObjectGO.TryGetComponent<IHoldable>(out var holdable))
+                if (_heldObject.TryGetComponent<IHoldable>(out var holdable))
                     holdable.Release(throwVector * releaseForce);
 
                 // reset 
                 _heldObject = null;
-                _heldObjectGO = null;
+                //_heldObjectGO = null;
                 return;
             }
 
@@ -87,8 +87,8 @@ namespace StoreSimulator.InteractableObjects
                     break;
 
                 case IHoldable holdable:
-                    _heldObject = holdable;
-                    _heldObjectGO = ((MonoBehaviour)holdable).gameObject;
+                    _heldObject = ((MonoBehaviour)holdable).transform;
+                    //_heldObjectGO = ((MonoBehaviour)holdable).gameObject;
                     holdable.Hold(holdPoint);
                     break;
             }
