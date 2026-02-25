@@ -45,7 +45,7 @@ namespace StoreSimulator.InteractableObjects
 
             // if hits smth in interactableDistance
             if (!Physics.Raycast(ray, out RaycastHit hit, interactableDistance)) return null;
-            
+
             // Draw line for debugging
             Debug.DrawLine(ray.origin, hit.point, Color.red);
 
@@ -65,13 +65,9 @@ namespace StoreSimulator.InteractableObjects
         {
             throwVector = (_mainCamera.transform.forward + Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
             // Drop or throw gameobject
-            if (_heldObject != null)
+            if (_heldObject != null && _heldObject.TryGetComponent<IHoldable>(out var holdComponent))
             {
-                if (_heldObject.TryGetComponent<IThrowable>(out var throwable))
-                    throwable.Throw(throwVector, throwForce);
-
-                if (_heldObject.TryGetComponent<IHoldable>(out var holdable))
-                    holdable.Release(throwVector * releaseForce);
+                holdComponent.Release(throwVector * releaseForce);
 
                 // reset 
                 _heldObject = null;
@@ -92,6 +88,14 @@ namespace StoreSimulator.InteractableObjects
                     holdable.Hold(holdPoint);
                     break;
             }
+        }
+
+        public void ThrowObject()
+        {
+            if (_heldObject == null) return;
+
+            if (_heldObject.TryGetComponent<IThrowable>(out var throwable))
+                throwable.Throw(throwVector, throwForce);
         }
 
         public IInteractable GetCurrentInteractable() => _currentInteractable;
