@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using StoreSimulator.PickableObjects;
 
-public class PickableObject : MonoBehaviour, IInteractable
+public class PickableObject : MonoBehaviour, IPickable
 {
     public string GetDescription()
     {
         throw new System.NotImplementedException();
     }
 
-    public void Interact()
+    public void Pick()
     {
         gameObject.SetActive(false);
     }

@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6cd2050e688ad14ba1b07825d0d886f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 187363437}
+  inputSource: {fileID: 187363437}
   mover: {fileID: 187363439}
   jumper: {fileID: 187363441}
   picker: {fileID: 187363443}
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableDistance: 5
+  holdPoint: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

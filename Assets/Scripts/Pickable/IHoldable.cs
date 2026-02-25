@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace StoreSimulator.PickableObjects
 {
-    public interface IHoldable : IInteractable
+    public interface IHoldable : IPickable
     {
         public void Hold(Transform holdPoint);
         public void Release();

@@ -12,7 +12,7 @@ namespace StoreSimulator.PlayerController
     public class PlayerConrtoller : MonoBehaviour
     {
         [Header("Input set-up")]
-        [SerializeField] private InputManager input;
+        [SerializeField] private MonoBehaviour inputSource;
 
         [Header("Mover set-up")]
         [SerializeField] private CharacterMover mover;
@@ -22,6 +22,19 @@ namespace StoreSimulator.PlayerController
 
         [Header("Pickable picker set-up")]
         [SerializeField] private PlayerInteraction picker;
+
+        private IInputProvider input;
+
+        private void Awake()
+        {
+            if(inputSource is not IInputProvider provider)
+            {
+                Debug.LogError("PlayerController: Invalid inputSource");
+                return;
+            }
+
+            input = provider;
+        }
 
         private void Update()
         {

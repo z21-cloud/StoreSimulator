@@ -12,7 +12,7 @@ namespace StoreSimulator.PickableObjects
         private const float CENTER_CAMERA = 0.5f;
         private Camera _mainCamera;
 
-        private IInteractable _currentInteractable;
+        private IPickable _currentInteractable;
 
         private void Awake()
         {
@@ -24,14 +24,14 @@ namespace StoreSimulator.PickableObjects
             _currentInteractable = DetectInteractable();
         }
 
-        private IInteractable DetectInteractable()
+        private IPickable DetectInteractable()
         {
             Ray ray = _mainCamera.ViewportPointToRay(new Vector3(CENTER_CAMERA, CENTER_CAMERA, 0));
 
             if (Physics.Raycast(ray, out RaycastHit hit, interactableDistance))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
-                return hit.collider.GetComponent<IInteractable>();
+                return hit.collider.GetComponent<IPickable>();
             }
 
             return null;
@@ -51,7 +51,7 @@ namespace StoreSimulator.PickableObjects
             }
         }
 
-        public IInteractable GetCurrentInteractable() => _currentInteractable;
+        public IPickable GetCurrentInteractable() => _currentInteractable;
     }
 }
 
