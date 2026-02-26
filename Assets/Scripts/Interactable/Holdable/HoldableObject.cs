@@ -2,35 +2,41 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using StoreSimulator.PhysicalObjects;
 
 namespace StoreSimulator.InteractableObjects
 {
-    [RequireComponent(typeof(Rigidbody))]
-    public class HoldableObject : MonoBehaviour, IHoldable
+    [RequireComponent(typeof(GetRigidBody), typeof(ResetObjectPhysics), typeof(SetObjectParentPosition))]
+    public class HoldableObject : MonoBehaviour, IHoldable, IInteractable
     {
+        [SerializeField] private ThrowableSettings throwableSettings;
         // for UI or Inventory
         public event Action OnHolding;
 
+        private GetRigidBody getRigidBody;
         private Rigidbody rb;
+        private SetObjectParentPosition setParentPositon;
+        private ResetObjectPhysics resetObjectPhysics;
 
+        public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
 
         private void Awake()
         {
+            // base set-up
             GetRigidbody();
+
+            setParentPositon = GetComponent<SetObjectParentPosition>();
+            resetObjectPhysics = GetComponent<ResetObjectPhysics>();
         }
 
-        public string GetDescription()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void Hold(Transform holdPoint)
         {
-            SetHoldPosition(holdPoint);
+            setParentPositon.SetParentPosition(holdPoint);
 
             // enable gravity & resets physics when hold object
             bool useGravity = false;
-            SetPhysics(useGravity);
+            resetObjectPhysics.SetPhysics(rb, useGravity);
         }
 
         public void Release(Vector3 impulse)
@@ -40,28 +46,20 @@ namespace StoreSimulator.InteractableObjects
 
             // enable gravity & resets physics when release object
             bool useGravity = true;
-            SetPhysics(useGravity);
+            resetObjectPhysics.SetPhysics(rb, useGravity);
 
             if (impulse != Vector3.zero) rb.AddForce(impulse, ForceMode.Impulse);
         }
-
-        private void SetPhysics(bool value)
+        
+        public string GetDescription()
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.useGravity = value;
-        }
-
-        private void SetHoldPosition(Transform holdPoint)
-        {
-            transform.position = holdPoint.position;
-            transform.rotation = holdPoint.rotation;
-            transform.parent = holdPoint;
+            throw new System.NotImplementedException();
         }
 
         private void GetRigidbody()
         {
-            rb = GetComponent<Rigidbody>();
+            getRigidBody = GetComponent<GetRigidBody>();
+            rb = getRigidBody.GetRB;
         }
     }
 }

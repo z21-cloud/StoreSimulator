@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using System;
 
-public class PickableObject : MonoBehaviour, IPickable
+public class PickableObject : MonoBehaviour, IPickable, IInteractable
 {
     // for UI or Inventory
     public event Action OnPicked;

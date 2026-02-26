@@ -5,8 +5,9 @@ using System;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public interface IHoldable : IInteractable
+    public interface IHoldable
     {
+        public float ThrowForce { get; }
         public void Hold(Transform holdPoint);
         public void Release(Vector3 impulse);
     }

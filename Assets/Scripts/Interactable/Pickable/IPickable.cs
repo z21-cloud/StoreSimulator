@@ -5,7 +5,7 @@ using System;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public interface IPickable : IInteractable
+    public interface IPickable
     {
         public event Action OnPicked;
         public void Pick();

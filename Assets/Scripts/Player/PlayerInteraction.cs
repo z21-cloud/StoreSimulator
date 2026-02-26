@@ -8,9 +8,6 @@ namespace StoreSimulator.InteractableObjects
     {
         [Header("Interaction distance")]
         [SerializeField] private float interactableDistance = 5f;
-        [Header("Throw force")]
-        [Tooltip("For throw throwable objects")]
-        [SerializeField] private float throwForce = 1000f;
         [Header("Release force")]
         [Tooltip("For release holdable objects")]
         [SerializeField] private float releaseForce = 100f;
@@ -20,13 +17,11 @@ namespace StoreSimulator.InteractableObjects
         // consts
         private readonly Vector3 CENTER_OF_CAMERASCREEN = new Vector3(0.5f, 0.5f, 0); // center of camera screen
         private const float DIRECTION_CAMERA_OFFSET = 0.2f;
-        // components
-        private IInteractable _currentInteractable;
-        private Transform _heldObject;
-        //private GameObject _heldObjectGO;
-        private Camera _mainCamera;
 
-        private Vector3 throwVector;
+        // components
+        private GameObject _currentInteractable;
+        private IHoldable _heldObject;
+        private Camera _mainCamera;
 
         private void Awake()
         {
@@ -38,7 +33,7 @@ namespace StoreSimulator.InteractableObjects
             _currentInteractable = DetectInteractable();
         }
 
-        private IInteractable DetectInteractable()
+        private GameObject DetectInteractable()
         {
             // create ray from center of main camera
             Ray ray = _mainCamera.ViewportPointToRay(CENTER_OF_CAMERASCREEN);
@@ -50,55 +45,62 @@ namespace StoreSimulator.InteractableObjects
             Debug.DrawLine(ray.origin, hit.point, Color.red);
 
             // return parent interface IInteractable, if gameobject has implementation
-            if (hit.collider.TryGetComponent<IInteractable>(out var interactable))
-                return interactable;
+            if (hit.collider.TryGetComponent<IInteractable>(out _))
+                return hit.collider.gameObject;
 
             // to prevert cases, where component in parent's object and collider inside parent's object
             if (hit.collider.GetComponentInParent<IInteractable>() is IInteractable parentInteractable)
-                return parentInteractable;
+                return hit.collider.gameObject.GetComponentInParent<GameObject>();
 
             return null;
         }
 
-        // IPickable & IHoldable inhirates from IInteractable, both got simular functional for UI
+        // Interaction with gameobjects
         public void DoInteract()
         {
-            throwVector = (_mainCamera.transform.forward + Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
             // Drop or throw gameobject
-            if (_heldObject != null && _heldObject.TryGetComponent<IHoldable>(out var holdComponent))
+            if (_heldObject != null)
             {
-                holdComponent.Release(throwVector * releaseForce);
-
-                // reset 
-                _heldObject = null;
-                //_heldObjectGO = null;
+                ReleaseHoldableObject();
                 return;
             }
 
-            // 
-            switch (_currentInteractable)
-            {
-                case IPickable pickable:
-                    pickable.Pick();
-                    break;
+            if (_currentInteractable == null) return;
 
-                case IHoldable holdable:
-                    _heldObject = ((MonoBehaviour)holdable).transform;
-                    //_heldObjectGO = ((MonoBehaviour)holdable).gameObject;
-                    holdable.Hold(holdPoint);
-                    break;
+            // interaction with object pickup or hold
+            if (_currentInteractable.TryGetComponent<IPickable>(out var pickable))
+            {
+                pickable.Pick();
+            }
+            else if (_currentInteractable.TryGetComponent<IHoldable>(out var holdable))
+            {
+                // cache holdable object for releasing
+                _heldObject = holdable;
+                holdable.Hold(holdPoint);
             }
         }
 
-        public void ThrowObject()
+        private void ReleaseHoldableObject()
         {
-            if (_heldObject == null) return;
+            // vector for releasing holdable
+            Vector3 throwVector = (_mainCamera.transform.forward +
+                Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
+            // get force from object
+            float forceMultiplier = _heldObject.ThrowForce;
+            // throw or release object (depends on force multiplier)
+            _heldObject.Release(throwVector * releaseForce * forceMultiplier);
 
-            if (_heldObject.TryGetComponent<IThrowable>(out var throwable))
-                throwable.Throw(throwVector, throwForce);
+            // reset 
+            _heldObject = null;
         }
 
-        public IInteractable GetCurrentInteractable() => _currentInteractable;
+        public IInteractable GetCurrentInteractable()
+        {
+            _currentInteractable.TryGetComponent<IInteractable>(out var interactable);
+            {
+                return interactable;
+            }
+        }
     }
 }
 
