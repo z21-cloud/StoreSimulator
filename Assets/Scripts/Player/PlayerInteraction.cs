@@ -19,7 +19,7 @@ namespace StoreSimulator.InteractableObjects
         private const float DIRECTION_CAMERA_OFFSET = 0.2f;
 
         // components
-        private IHoldable _heldObject;
+        private GameObject _heldObject;
         private GameObject _currentInteractable;
         private Camera _mainCamera;
 
@@ -49,8 +49,10 @@ namespace StoreSimulator.InteractableObjects
                 return hit.collider.gameObject;
 
             // to prevert cases, where component in parent's object and collider inside parent's object
-            if (hit.collider.GetComponentInParent<IInteractable>() is IInteractable parentInteractable)
-                return hit.collider.gameObject.GetComponentInParent<GameObject>();
+            if (hit.collider.GetComponentInParent<IInteractable>() is IInteractable)
+            {
+                return hit.collider.transform.parent.gameObject;
+            }
 
             return null;
         }
@@ -58,9 +60,14 @@ namespace StoreSimulator.InteractableObjects
         // Interaction with gameobjects
         public void DoInteract()
         {
-            // Drop or throw gameobject
+            // Interaction with holdable item
             if (_heldObject != null)
             {
+                // Place item in storage
+                PlaceItem();
+                if (_heldObject == null) return;
+
+                // Drop or throw gameobject
                 ReleaseHoldableObject();
                 return;
             }
@@ -75,23 +82,43 @@ namespace StoreSimulator.InteractableObjects
             else if (_currentInteractable.TryGetComponent<IHoldable>(out var holdable))
             {
                 // cache holdable object for releasing
-                _heldObject = holdable;
+                _heldObject = ((MonoBehaviour)holdable).gameObject;
                 holdable.Hold(holdPoint);
+            }
+        }
+
+        private void PlaceItem()
+        {
+            if (_currentInteractable != null && _currentInteractable.TryGetComponent<IStorage>(out var storage))
+            {
+                if (_heldObject.TryGetComponent<IStoreable>(out var storeable))
+                {
+                    Debug.Log("Place Item");
+                    if (storage.CanPlaceItem(storeable))
+                    {
+                        storage.PlaceItem(storeable);
+                        _heldObject = null;
+                        return;
+                    }
+                }
             }
         }
 
         private void ReleaseHoldableObject()
         {
-            // vector for releasing holdable
-            Vector3 throwVector = (_mainCamera.transform.forward +
-                Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
-            // get force from object
-            float forceMultiplier = _heldObject.ThrowForce;
-            // throw or release object (depends on force multiplier)
-            _heldObject.Release(throwVector * releaseForce * forceMultiplier);
+            if (_heldObject.TryGetComponent<IHoldable>(out var holdable))
+            {
+                // vector for releasing holdable
+                Vector3 throwVector = (_mainCamera.transform.forward +
+                    Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
+                // get force from object
+                float forceMultiplier = holdable.ThrowForce;
+                // throw or release object (depends on force multiplier)
+                holdable.Release(throwVector * releaseForce * forceMultiplier);
 
-            // reset 
-            _heldObject = null;
+                // reset 
+                _heldObject = null;
+            }
         }
 
         public IInteractable GetCurrentInteractable()
