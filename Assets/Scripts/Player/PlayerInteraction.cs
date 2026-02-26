@@ -19,8 +19,8 @@ namespace StoreSimulator.InteractableObjects
         private const float DIRECTION_CAMERA_OFFSET = 0.2f;
 
         // components
-        private GameObject _currentInteractable;
         private IHoldable _heldObject;
+        private GameObject _currentInteractable;
         private Camera _mainCamera;
 
         private void Awake()
