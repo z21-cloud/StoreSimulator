@@ -28,8 +28,8 @@ namespace StoreSimulator.InteractableObjects
             SetParentPosition(holdPoint);
 
             // enable gravity & resets physics when hold object
-            bool useGravity = false;
-            SetPhysics(useGravity);
+            bool isKinematic = true;
+            SetPhysics(isKinematic);
         }
 
         public void Release(Vector3 impulse)
@@ -38,17 +38,17 @@ namespace StoreSimulator.InteractableObjects
             transform.parent = null;
 
             // enable gravity & resets physics when release object
-            bool useGravity = true;
-            SetPhysics(useGravity);
+            bool isKinematic = false;
+            SetPhysics(isKinematic);
 
             if (impulse != Vector3.zero) rb.AddForce(impulse, ForceMode.Impulse);
         }
 
         private void SetPhysics(bool value)
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.useGravity = value;
+            // rb.linearVelocity = Vector3.zero;
+            // rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = value;
         }
 
         private void SetParentPosition(Transform holdPoint)
