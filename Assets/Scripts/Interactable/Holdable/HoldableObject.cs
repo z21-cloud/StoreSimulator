@@ -19,7 +19,7 @@ namespace StoreSimulator.InteractableObjects
         private void Awake()
         {
             // base set-up
-            GetRigidbody();
+            rb = GetComponent<Rigidbody>();
         }
 
 
@@ -34,7 +34,7 @@ namespace StoreSimulator.InteractableObjects
 
         public void Release(Vector3 impulse)
         {
-            if (rb == null) GetRigidbody();
+            if (rb == null) Debug.LogError($"HoldableObject: {gameObject.name} rigidbody is null");
             transform.parent = null;
 
             // enable gravity & resets physics when release object
@@ -61,11 +61,6 @@ namespace StoreSimulator.InteractableObjects
         public string GetDescription()
         {
             throw new System.NotImplementedException();
-        }
-
-        private void GetRigidbody()
-        {
-            rb = GetComponent<Rigidbody>();
         }
     }
 }

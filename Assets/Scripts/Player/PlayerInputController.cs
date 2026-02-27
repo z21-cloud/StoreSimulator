@@ -9,7 +9,7 @@ using StoreSimulator.InteractableObjects;
 
 namespace StoreSimulator.PlayerController
 {
-    public class PlayerConrtoller : MonoBehaviour
+    public class PlayerInputController : MonoBehaviour
     {
         [Header("Input set-up")]
         [SerializeField] private MonoBehaviour inputSource;

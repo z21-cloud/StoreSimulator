@@ -7,7 +7,6 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IPickable
     {
-        public event Action OnPicked;
         public void Pick();
     }
 }

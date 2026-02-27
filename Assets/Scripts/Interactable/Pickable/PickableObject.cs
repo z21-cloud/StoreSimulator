@@ -1,23 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using StoreSimulator.InteractableObjects;
 using System;
 
-public class PickableObject : MonoBehaviour, IPickable, IInteractable
+namespace StoreSimulator.InteractableObjects
 {
-    // for UI or Inventory
-    public event Action OnPicked;
-
-    public string GetDescription()
+    public class PickableObject : MonoBehaviour, IPickable, IInteractable
     {
-        throw new System.NotImplementedException();
-    }
+        public string GetDescription()
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public void Pick()
-    {
-        gameObject.SetActive(false);
-        
-        //OnPicked?.Invoke();
+        public void Pick()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

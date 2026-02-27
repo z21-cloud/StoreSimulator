@@ -2,18 +2,41 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ShellfSlot : MonoBehaviour
+namespace StoreSimulator.InteractableObjects
 {
-    public Transform SpawnPoint { get; private set; }
-    public bool IsOccupied { get; private set; }
-
-    private void Start()
+    public class ShellfSlot : MonoBehaviour
     {
-        SpawnPoint = transform;
-        IsOccupied = false;
+        public Transform SpawnPoint { get; private set; }
+        public bool IsOccupied { get; private set; }
+
+        private IStoreable storeable;
+
+        private void Start()
+        {
+            storeable = null;
+            SpawnPoint = transform;
+            IsOccupied = false;
+        }
+
+        public void Occupy(IStoreable item)
+        {
+            storeable = item;
+            IsOccupied = true;
+        }
+
+        public IStoreable Release()
+        {
+            IsOccupied = false;
+            if (storeable != null)
+            {
+                IStoreable result = storeable;
+                storeable = null;
+
+                return result;
+            }
+            
+            return null;
+        }
     }
-
-    public void Occupy() => IsOccupied = true;
-
-    public void Release() => IsOccupied = false;
 }
+

@@ -8,5 +8,7 @@ namespace StoreSimulator.InteractableObjects
     {
         public Transform itemTransform { get; }
         public void OnStored(Transform shelfPoint);
+
+        public void OnPickedFromStore();
     }
 }

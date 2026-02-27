@@ -11,39 +11,60 @@ namespace StoreSimulator.InteractableObjects
 
         private const float DISTANCE_THRESHOLD = 0.1f;
 
-        private ShellfSlot _nextFreeSlot;
+        private ShellfSlot _reservedSlot;
 
         public bool CanPlaceItem(IStoreable item)
         {
             foreach (var slot in slots)
             {
-                if (!slot.IsOccupied)
+                if(!slot.IsOccupied)
                 {
-                    _nextFreeSlot = slot;
+                    _reservedSlot = slot;
                     return true;
                 }
             }
 
+            Debug.Log($"Storage: all slots are not available");
             return false;
         }
 
         public void PlaceItem(IStoreable item)
         {
-            if (_nextFreeSlot.IsOccupied || _nextFreeSlot == null) return;
+            if (_reservedSlot.IsOccupied || _reservedSlot == null) return;
             
-            _nextFreeSlot.Occupy();
+            _reservedSlot.Occupy(item);
+            Debug.Log($"{_reservedSlot.gameObject.name} : isOccupied {_reservedSlot.IsOccupied}");
 
-            StartCoroutine(MoveItemToSlotPosition(_nextFreeSlot, item));
+            item.OnStored(_reservedSlot.transform);
+
+            StartCoroutine(MoveItemToSlotPosition(_reservedSlot, item));
             
-            item.OnStored(_nextFreeSlot.transform);
-            
-            _nextFreeSlot = null;
-            Debug.Log($"Storage: all slots are not available");
-            return;
+            _reservedSlot = null;
+        }
+
+        public IHoldable GetPlacedItem()
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.IsOccupied)
+                {
+                    IHoldable holdable = slot.GetComponentInChildren<IHoldable>();
+                    IStoreable storeable = slot.GetComponentInChildren<IStoreable>();
+                    storeable.OnPickedFromStore();
+                    slot.Release();
+                    
+                    Debug.Log($"{slot.name} : isOccupied {slot.IsOccupied}");
+                    return holdable;
+                }
+            }
+
+            return null;
         }
 
         private IEnumerator MoveItemToSlotPosition(ShellfSlot slot, IStoreable item)
         {
+            item.itemTransform.parent = slot.transform;
+
             while (Vector3.Distance(item.itemTransform.position, slot.transform.position) > DISTANCE_THRESHOLD)
             {
                 item.itemTransform.position = Vector3.MoveTowards(
@@ -61,7 +82,6 @@ namespace StoreSimulator.InteractableObjects
                 yield return null;
             }
 
-            item.itemTransform.parent = slot.transform;
             item.itemTransform.position = slot.transform.position;
             item.itemTransform.rotation = slot.transform.rotation;
         }

@@ -13,6 +13,15 @@ namespace StoreSimulator.InteractableObjects
         {
             Rigidbody rb = GetComponent<Rigidbody>();
             rb.isKinematic = true;
+
+            BoxCollider collider = GetComponent<BoxCollider>();
+            collider.enabled = false;
+        }
+
+        public void OnPickedFromStore()
+        {
+            BoxCollider collider = GetComponent<BoxCollider>();
+            collider.enabled = true;
         }
     }
 }
