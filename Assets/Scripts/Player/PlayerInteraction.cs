@@ -22,8 +22,6 @@ namespace StoreSimulator.InteractableObjects
         // Interaction with gameobjects
         public void DoInteract()
         {
-            if (_currentInteractable == null) return;
-
             holdingHandler.DoInteract(_currentInteractable);
         }
 

@@ -42,11 +42,13 @@ namespace StoreSimulator.InteractableObjects
 
             if (currentInteractable.TryGetComponent<IStorage>(out var storage))
             {
+                if (storage.IsEmpty) return;
+
+                Debug.Log("Taking from shelf");
+
                 IHoldable holdable = storage.GetPlacedItem();
-
-                if (holdable == null) return;
-
                 holdable.Hold(holdPoint);
+
                 _heldObject = ((MonoBehaviour)holdable).gameObject;
             }
 
@@ -58,8 +60,19 @@ namespace StoreSimulator.InteractableObjects
             else if (currentInteractable.TryGetComponent<IHoldable>(out var holdable))
             {
                 // cache holdable object for releasing
+                Debug.Log("Taking from ground");
+
                 _heldObject = ((MonoBehaviour)holdable).gameObject;
                 holdable.Hold(holdPoint);
+            }
+            else if(currentInteractable.TryGetComponent<IStoreable>(out var storable))
+            {
+                if(storable.IsStored)
+                {
+
+                }
+                _heldObject = ((MonoBehaviour)storable).gameObject;
+                storable.Hold(holdPoint);
             }
         }
 

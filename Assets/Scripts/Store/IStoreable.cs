@@ -6,9 +6,12 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IStoreable
     {
-        public Transform itemTransform { get; }
+        public bool IsStored { get; }
+        public float ThrowForce { get; }
+        public ShellfSlot CurrentSlot { get; }
         public void OnStored(Transform shelfPoint);
-
         public void OnPickedFromStore();
+        public void Hold(Transform holdPoint);
+        public void Release(Vector3 impulse);
     }
 }

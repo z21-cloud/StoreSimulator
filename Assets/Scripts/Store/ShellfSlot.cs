@@ -6,36 +6,31 @@ namespace StoreSimulator.InteractableObjects
 {
     public class ShellfSlot : MonoBehaviour
     {
-        public Transform SpawnPoint { get; private set; }
         public bool IsOccupied { get; private set; }
 
-        private IStoreable storeable;
+        private IStoreable _storeable;
 
         private void Start()
         {
-            storeable = null;
-            SpawnPoint = transform;
+            _storeable = null;
             IsOccupied = false;
         }
 
         public void Occupy(IStoreable item)
         {
-            storeable = item;
+            _storeable = item;
             IsOccupied = true;
         }
 
         public IStoreable Release()
         {
-            IsOccupied = false;
-            if (storeable != null)
-            {
-                IStoreable result = storeable;
-                storeable = null;
+            if (!IsOccupied) return null;
 
-                return result;
-            }
-            
-            return null;
+            IStoreable item = _storeable;
+            _storeable = null;
+            IsOccupied = false;
+
+            return item;
         }
     }
 }
