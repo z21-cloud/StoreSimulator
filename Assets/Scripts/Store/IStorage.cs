@@ -8,7 +8,7 @@ namespace StoreSimulator.InteractableObjects
     {
         public bool CanPlaceItem(IStoreable item);
         public void PlaceItem(IStoreable item);
-        public IHoldable GetPlacedItem();
+        public IStoreable GetPlacedItem(Vector3 position);
         public bool IsEmpty { get; }
     }
 }

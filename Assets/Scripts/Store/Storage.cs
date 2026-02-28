@@ -10,7 +10,7 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private List<ShellfSlot> slots;
 
         private ShellfSlot _reservedSlot;
-        
+
         public bool IsEmpty
         {
             get
@@ -27,7 +27,7 @@ namespace StoreSimulator.InteractableObjects
         {
             foreach (var slot in slots)
             {
-                if(!slot.IsOccupied)
+                if (!slot.IsOccupied)
                 {
                     _reservedSlot = slot;
                     return true;
@@ -41,37 +41,50 @@ namespace StoreSimulator.InteractableObjects
         public void PlaceItem(IStoreable item)
         {
             if (_reservedSlot.IsOccupied || _reservedSlot == null) return;
-            
+
             _reservedSlot.Occupy(item);
             Debug.Log($"{_reservedSlot.gameObject.name} : isOccupied {_reservedSlot.IsOccupied}");
 
             item.OnStored(_reservedSlot.transform);
 
-            
+
             _reservedSlot = null;
         }
 
-        public IHoldable GetPlacedItem()
+        public IStoreable GetPlacedItem(Vector3 playerPosition)
         {
-            foreach (var slot in slots)
+            ShellfSlot resultSlot = GetCloseToPlayerItem(playerPosition);
+
+            if (resultSlot != null)
             {
-                if (slot.IsOccupied)
-                {
-                    IStoreable storeable = slot.Release();
-                    storeable.OnPickedFromStore();
-                    
-                    Debug.Log($"{slot.name} : isOccupied {slot.IsOccupied}");
-                    // StoreableItem requires HoldableObject, so
-                    return storeable as IHoldable;
-                }
+                IStoreable storeable = resultSlot.Release();
+                storeable.OnPickedFromStore();
+                Debug.Log($"{resultSlot.name} : isOccupied {resultSlot.IsOccupied}");
+                return storeable;
             }
 
             return null;
         }
 
-        private void GetCloseToPlayerItem()
+        private ShellfSlot GetCloseToPlayerItem(Vector3 playerPosition)
         {
+            Vector3 minDistance = slots[0].transform.position;
+            ShellfSlot resultSlot = slots[0];
+            
+            if (!resultSlot.IsOccupied) return null;
 
+            for (int i = 1; i < slots.Count; i++)
+            {
+                if (slots[i].IsOccupied &&
+                    (Vector3.Distance(playerPosition, minDistance) >
+                (Vector3.Distance(playerPosition, slots[i].transform.position))))
+                {
+                    minDistance = slots[i].transform.position;
+                    resultSlot = slots[i];
+                }
+            }
+
+            return resultSlot;
         }
 
         public string GetDescription()

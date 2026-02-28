@@ -63,7 +63,6 @@ namespace StoreSimulator.InteractableObjects
 
         public void OnStored(Transform storeSlot)
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
             rb.isKinematic = true;
 
             CurrentSlot = storeSlot.GetComponent<ShellfSlot>();
@@ -75,6 +74,7 @@ namespace StoreSimulator.InteractableObjects
         public void OnPickedFromStore()
         {
             IsStored = false;
+            CurrentSlot = null;
         }
 
         private IEnumerator MoveItemToSlotPosition(Transform slot)

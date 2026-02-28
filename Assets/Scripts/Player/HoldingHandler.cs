@@ -46,10 +46,10 @@ namespace StoreSimulator.InteractableObjects
 
                 Debug.Log("Taking from shelf");
 
-                IHoldable holdable = storage.GetPlacedItem();
-                holdable.Hold(holdPoint);
+                IStoreable storeable = storage.GetPlacedItem(transform.position);
+                storeable.Hold(holdPoint);
 
-                _heldObject = ((MonoBehaviour)holdable).gameObject;
+                _heldObject = ((MonoBehaviour)storeable).gameObject;
             }
 
             // interaction with object pickup or hold
@@ -69,7 +69,7 @@ namespace StoreSimulator.InteractableObjects
             {
                 if(storable.IsStored)
                 {
-
+                    return;
                 }
                 _heldObject = ((MonoBehaviour)storable).gameObject;
                 storable.Hold(holdPoint);
@@ -104,6 +104,19 @@ namespace StoreSimulator.InteractableObjects
                 float forceMultiplier = holdable.ThrowForce;
                 // throw or release object (depends on force multiplier)
                 holdable.Release(throwVector * releaseForce * forceMultiplier);
+
+                // reset 
+                _heldObject = null;
+            }
+            else if(_heldObject.TryGetComponent<IStoreable>(out var storeable))
+            {
+                // vector for releasing holdable
+                Vector3 throwVector = (_mainCamera.transform.forward +
+                    Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
+                // get force from object
+                float forceMultiplier = storeable.ThrowForce;
+                // throw or release object (depends on force multiplier)
+                storeable.Release(throwVector * releaseForce * forceMultiplier);
 
                 // reset 
                 _heldObject = null;
