@@ -23,19 +23,17 @@ namespace StoreSimulator.InteractableObjects
             }
         }
 
-        public bool CanPlaceItem(IStoreable item)
+        public bool CanPlaceItem(Vector3 playerPosition)
         {
-            foreach (var slot in slots)
+            _reservedSlot = GetClosestToPlayerFree(playerPosition);
+            
+            if (_reservedSlot == null)
             {
-                if (!slot.IsOccupied)
-                {
-                    _reservedSlot = slot;
-                    return true;
-                }
+                Debug.Log($"Storage: all slots are not available");
+                return false;
             }
 
-            Debug.Log($"Storage: all slots are not available");
-            return false;
+            return true;
         }
 
         public void PlaceItem(IStoreable item)
@@ -47,13 +45,12 @@ namespace StoreSimulator.InteractableObjects
 
             item.OnStored(_reservedSlot.transform);
 
-
             _reservedSlot = null;
         }
 
         public IStoreable GetPlacedItem(Vector3 playerPosition)
         {
-            ShellfSlot resultSlot = GetCloseToPlayerItem(playerPosition);
+            ShellfSlot resultSlot = GetClosestToPlayerOccupied(playerPosition);
 
             if (resultSlot != null)
             {
@@ -66,17 +63,55 @@ namespace StoreSimulator.InteractableObjects
             return null;
         }
 
-        private ShellfSlot GetCloseToPlayerItem(Vector3 playerPosition)
+        private ShellfSlot GetClosestToPlayerOccupied(Vector3 playerPosition)
         {
             Vector3 minDistance = slots[0].transform.position;
             ShellfSlot resultSlot = slots[0];
-            
-            if (!resultSlot.IsOccupied) return null;
+
 
             for (int i = 1; i < slots.Count; i++)
             {
                 if (slots[i].IsOccupied &&
-                    (Vector3.Distance(playerPosition, minDistance) >
+                (Vector3.Distance(playerPosition, minDistance) >
+                (Vector3.Distance(playerPosition, slots[i].transform.position))))
+                {
+                    minDistance = slots[i].transform.position;
+                    resultSlot = slots[i];
+                }
+            }
+
+            if (!resultSlot.IsOccupied) return null;
+            return resultSlot;
+        }
+
+        private ShellfSlot GetClosestToPlayerFree(Vector3 playerPosition)
+        {
+            Vector3 minDistance = slots[0].transform.position;
+            ShellfSlot resultSlot = slots[0];
+
+            for (int i = 1; i < slots.Count; i++)
+            {
+                if (!slots[i].IsOccupied &&
+                (Vector3.Distance(playerPosition, minDistance) >
+                (Vector3.Distance(playerPosition, slots[i].transform.position))))
+                {
+                    minDistance = slots[i].transform.position;
+                    resultSlot = slots[i];
+                }
+            }
+
+            if (resultSlot.IsOccupied) return null;
+            return resultSlot;
+        }
+
+        /*private ShellfSlot GetClosestToPlayerPosition(Vector3 playerPosition, List<ShellfSlot> slots)
+        {
+            Vector3 minDistance = slots[0].transform.position;
+            ShellfSlot resultSlot = slots[0];
+
+            for (int i = 1; i < slots.Count; i++)
+            {
+                if ((Vector3.Distance(playerPosition, minDistance) >
                 (Vector3.Distance(playerPosition, slots[i].transform.position))))
                 {
                     minDistance = slots[i].transform.position;
@@ -85,7 +120,7 @@ namespace StoreSimulator.InteractableObjects
             }
 
             return resultSlot;
-        }
+        }*/
 
         public string GetDescription()
         {

@@ -83,7 +83,7 @@ namespace StoreSimulator.InteractableObjects
                 if (_heldObject.TryGetComponent<IStoreable>(out var storeable))
                 {
                     Debug.Log("Place Item");
-                    if (storage.CanPlaceItem(storeable))
+                    if (storage.CanPlaceItem(transform.position))
                     {
                         storage.PlaceItem(storeable);
                         _heldObject = null;
