@@ -4,32 +4,25 @@ using System.Collections.Generic;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public class ShellfSlot : MonoBehaviour
+    public class ShellfSlot : MonoBehaviour, IShelf
     {
         public bool IsOccupied { get; private set; }
+        private GameObject item;
 
-        private IStoreable _storeable;
-
-        private void Start()
+        public void Occupy(GameObject item)
         {
-            _storeable = null;
-            IsOccupied = false;
-        }
-
-        public void Occupy(IStoreable item)
-        {
-            _storeable = item;
+            this.item = item;
             IsOccupied = true;
+
+            if(item.TryGetComponent<IStoreable>(out var storeable))
+            {
+                storeable.OnStored(gameObject);
+            }
         }
 
-        public IStoreable Release()
+        public GameObject Release()
         {
-            if (!IsOccupied) return null;
-
-            IStoreable item = _storeable;
-            _storeable = null;
             IsOccupied = false;
-
             return item;
         }
     }

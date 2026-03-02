@@ -30,9 +30,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7171032853494072079}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.26, y: 0.5, z: -4.86}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf1db9e3b2b3e846bf99847a3bd3c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwableSettings: {fileID: 11400000, guid: 3d319f5c5fde8b941ba05e0c84d57466, type: 2}
   mover: {fileID: 3723977384233377743}
+  throwableSettings: {fileID: 11400000, guid: 3d319f5c5fde8b941ba05e0c84d57466, type: 2}
 --- !u!54 &6115756668082681508
 Rigidbody:
   m_ObjectHideFlags: 0

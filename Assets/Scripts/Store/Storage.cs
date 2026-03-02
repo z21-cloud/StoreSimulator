@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System;
 
 namespace StoreSimulator.InteractableObjects
 {
@@ -9,83 +10,99 @@ namespace StoreSimulator.InteractableObjects
     {
         [SerializeField] private List<ShellfSlot> slots;
 
-        private ShellfSlot _reservedSlot;
+        //public bool IsEmpty { get; private set; }
 
-        public bool IsEmpty
+        //public bool IsFull { get; private set; }
+
+        private int _occupiedCount = 0;
+
+        public bool CanPlaceItem()
         {
-            get
+            foreach (var slot in slots)
             {
-                foreach (var slot in slots)
+                if (!slot.IsOccupied) return true;
+            }
+            return false;
+        }
+
+        public bool CanTakeItem()
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.IsOccupied) return true;
+            }
+            return false;
+        }
+
+        public void PlaceItem(GameObject item) //Vector3 playerPosition, bool findOccupied, 
+        {
+            // FIND FREE SLOT
+            //ShellfSlot reservedSlot = GetClosestToPlayer(playerPosition, findOccupied);
+
+            ShellfSlot reservedSlot = null;
+            foreach (ShellfSlot slot in slots)
+            {
+                if (!slot.IsOccupied)
                 {
-                    if (slot.IsOccupied) return false;
+                    reservedSlot = slot;
                 }
-                return true;
             }
-        }
 
-        public bool CanPlaceItem(Vector3 playerPosition)
-        {
-            bool isOccupied = false;
-            _reservedSlot = GetClosestSlot(playerPosition, isOccupied);
-            Debug.Log($"Storage: slots are available = {_reservedSlot != null}");
-
-            return _reservedSlot != null;
-        }
-
-        public void PlaceItem(IStoreable item)
-        {
-            if (_reservedSlot.IsOccupied || _reservedSlot == null) return;
-
-            _reservedSlot.Occupy(item);
-            Debug.Log($"{_reservedSlot.gameObject.name} : isOccupied {_reservedSlot.IsOccupied}");
-
-            item.OnStored(_reservedSlot.transform);
-
-            _reservedSlot = null;
-        }
-
-        public IStoreable GetPlacedItem(Vector3 playerPosition)
-        {
-            bool isOccupied = true;
-            ShellfSlot resultSlot = GetClosestSlot(playerPosition, isOccupied);
-
-            if (resultSlot != null)
+            // PLACE ITEM
+            if (reservedSlot != null)
             {
-                IStoreable storeable = resultSlot.Release();
-                storeable.OnPickedFromStore();
-                Debug.Log($"{resultSlot.name} : isOccupied {resultSlot.IsOccupied}");
-                return storeable;
+                reservedSlot.Occupy(item);
+                //_occupiedCount++;
+                //_occupiedCount = Mathf.Clamp(_occupiedCount, 0, slots.Count);
+                //UpdateStates();
             }
-
-            return null;
         }
 
-        private ShellfSlot GetClosestSlot(Vector3 playerPosition, bool findOccupied)
+        public GameObject TakeItem(Vector3 interactionPoint)
         {
             ShellfSlot bestSlot = null;
             float minDistance = float.MaxValue;
 
             foreach (var slot in slots)
             {
-                if (slot.IsOccupied != findOccupied) continue;
-                
-
-                float distance = (playerPosition - slot.transform.position).sqrMagnitude;
-
-                if (distance < minDistance)
+                if (slot.IsOccupied)
                 {
-                    minDistance = distance;
-                    bestSlot = slot;
+                    float dist = (interactionPoint - slot.transform.position).sqrMagnitude;
+
+                    if(minDistance > dist)
+                    {
+                        minDistance = dist;
+                        bestSlot = slot;
+                    }
                 }
             }
 
-            return bestSlot;
+            return bestSlot != null ? bestSlot.Release() : null;
+        }
+
+        private void UpdateStates()
+        {
+            //IsEmpty = _occupiedCount == 0;
+            //IsFull = _occupiedCount >= slots.Count;
         }
 
         public string GetDescription()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
+
+        /*private ShellfSlot GetClosestToPlayer(Vector3 playerPosition, bool findOccupied)
+        {
+            foreach (var slot in slots)
+            {
+                if(slot.IsOccupied == findOccupied)
+                {
+                    return slot;
+                }
+            }
+
+            return null;
+        }*/
     }
 }
 

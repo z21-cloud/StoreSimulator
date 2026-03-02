@@ -29,8 +29,9 @@ namespace StoreSimulator.InteractableObjects
             // Interaction with holdable item
             if (_heldObject != null)
             {
-                // Place item in storage
+                //Place item
                 PlaceItem(currentInteractable);
+
                 if (_heldObject == null) return;
 
                 // Drop or throw gameobject
@@ -39,22 +40,13 @@ namespace StoreSimulator.InteractableObjects
             }
 
             if (currentInteractable == null) return;
-
-            if (currentInteractable.TryGetComponent<IStorage>(out var storage))
-            {
-                if (storage.IsEmpty) return;
-
-                Debug.Log("Taking from shelf");
-
-                IStoreable storeable = storage.GetPlacedItem(transform.position);
-                storeable.Hold(holdPoint);
-
-                _heldObject = ((MonoBehaviour)storeable).gameObject;
-            }
+            
+            TakeItem(currentInteractable);
 
             // interaction with object pickup or hold
             if (currentInteractable.TryGetComponent<IPickable>(out var pickable))
             {
+                Debug.Log($"Pick up");
                 pickable.Pick();
             }
             else if (currentInteractable.TryGetComponent<IHoldable>(out var holdable))
@@ -65,30 +57,56 @@ namespace StoreSimulator.InteractableObjects
                 _heldObject = ((MonoBehaviour)holdable).gameObject;
                 holdable.Hold(holdPoint);
             }
-            else if(currentInteractable.TryGetComponent<IStoreable>(out var storable))
+        }
+
+        private void TakeItem(GameObject currentInteractable)
+        {
+            IStoreable targetStoreable = null;
+
+            if (currentInteractable.TryGetComponent<IStoreable>(out var directStoreable))
             {
-                if(storable.IsStored)
+                if (directStoreable.CurrentShelf != null)
                 {
-                    return;
+                    Debug.Log("Taking from storage - object collider");
+
+                    targetStoreable = directStoreable;
                 }
-                _heldObject = ((MonoBehaviour)storable).gameObject;
-                storable.Hold(holdPoint);
+            }
+            else if (currentInteractable.TryGetComponent<IStorage>(out var storage))
+            {
+                if (!storage.CanTakeItem()) return;
+
+                GameObject itemObj = storage.TakeItem(holdPoint.position);
+
+                if (itemObj != null)
+                {
+                    itemObj.TryGetComponent(out targetStoreable);
+                }
+            }
+
+            if(targetStoreable != null)
+            {
+                GameObject objToHold = targetStoreable.OnPickedFromStore();
+
+                if(objToHold != null && objToHold.TryGetComponent<IHoldable>(out var holdable))
+                {
+                    _heldObject = objToHold;
+                    holdable.Hold(holdPoint);
+                }
             }
         }
 
         private void PlaceItem(GameObject currentInteractable)
         {
-            if (currentInteractable != null && currentInteractable.TryGetComponent<IStorage>(out var storage))
+            if (currentInteractable != null &&
+                currentInteractable.TryGetComponent<IStorage>(out var storage) &&
+                _heldObject.TryGetComponent<IStoreable>(out var storeable))
             {
-                if (_heldObject.TryGetComponent<IStoreable>(out var storeable))
+                if (storage.CanPlaceItem())
                 {
-                    Debug.Log("Place Item");
-                    if (storage.CanPlaceItem(transform.position))
-                    {
-                        storage.PlaceItem(storeable);
-                        _heldObject = null;
-                        return;
-                    }
+                    storage.PlaceItem(_heldObject);
+                    _heldObject = null;
+                    return;
                 }
             }
         }
@@ -104,19 +122,6 @@ namespace StoreSimulator.InteractableObjects
                 float forceMultiplier = holdable.ThrowForce;
                 // throw or release object (depends on force multiplier)
                 holdable.Release(throwVector * releaseForce * forceMultiplier);
-
-                // reset 
-                _heldObject = null;
-            }
-            else if(_heldObject.TryGetComponent<IStoreable>(out var storeable))
-            {
-                // vector for releasing holdable
-                Vector3 throwVector = (_mainCamera.transform.forward +
-                    Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
-                // get force from object
-                float forceMultiplier = storeable.ThrowForce;
-                // throw or release object (depends on force multiplier)
-                storeable.Release(throwVector * releaseForce * forceMultiplier);
 
                 // reset 
                 _heldObject = null;

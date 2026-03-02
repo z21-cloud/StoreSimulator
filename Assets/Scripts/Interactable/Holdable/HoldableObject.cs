@@ -22,7 +22,6 @@ namespace StoreSimulator.InteractableObjects
             rb = GetComponent<Rigidbody>();
         }
 
-
         public void Hold(Transform holdPoint)
         {
             SetParentPosition(holdPoint);

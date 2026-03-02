@@ -4,22 +4,54 @@ using System.Collections.Generic;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public class StoreableItem : MonoBehaviour, IStoreable, IInteractable
+    public class StoreableItem : MonoBehaviour, IInteractable, IStoreable, IHoldable
     {
-        [SerializeField] private ThrowableSettings throwableSettings;
         [SerializeField] private MoveToPosition mover;
+        [SerializeField] private ThrowableSettings throwableSettings;
 
-        public bool IsStored { get; private set; }
-        public ShellfSlot CurrentSlot { get; private set; }
+        public IShelf CurrentShelf { get; private set; }
+        
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
 
         private Rigidbody rb;
 
-        #region holdable
         private void Awake()
         {
-            // base set-up
             rb = GetComponent<Rigidbody>();
+        }
+
+        public void OnStored(GameObject slot)
+        {
+            if (slot.TryGetComponent<IShelf>(out var shelf))
+            {
+                rb.isKinematic = true;
+                CurrentShelf = shelf;
+                mover.MoveToSlotPosition(slot.transform);
+            }
+            else
+            {
+                Debug.LogWarning($"StoreableItem: {gameObject.name} - {slot.gameObject.name} doesn't have IShelf");
+            }
+        }
+
+        public GameObject OnPickedFromStore()
+        {
+            if(CurrentShelf == null)
+            {
+                Debug.LogWarning($"StoreableItem: {gameObject.name} - CurrentShelf is null");
+                return null;
+            }
+
+            mover.StopAllCoroutines();
+            CurrentShelf.Release();
+            CurrentShelf = null;
+
+            return gameObject;
+        }
+
+        public string GetDescription()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Hold(Transform holdPoint)
@@ -52,33 +84,9 @@ namespace StoreSimulator.InteractableObjects
 
         private void SetParentPosition(Transform holdPoint)
         {
+            transform.parent = holdPoint;
             transform.position = holdPoint.position;
             transform.rotation = holdPoint.rotation;
-            transform.parent = holdPoint;
-        }
-
-        #endregion
-
-        public void OnStored(Transform storeSlot)
-        {
-            rb.isKinematic = true;
-
-            CurrentSlot = storeSlot.GetComponent<ShellfSlot>();
-
-            mover.MoveToSlotPosition(storeSlot);
-            IsStored = true;
-        }
-
-        public void OnPickedFromStore()
-        {
-            mover.StopAllCoroutines();
-            IsStored = false;
-            CurrentSlot = null;
-        }
-
-        public string GetDescription()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -6,9 +6,10 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IStorage
     {
-        public bool IsEmpty { get; }
-        public bool CanPlaceItem(Vector3 position);
-        public void PlaceItem(IStoreable item);
-        public IStoreable GetPlacedItem(Vector3 position);
+        public bool CanPlaceItem();
+        public bool CanTakeItem();
+        public void PlaceItem(GameObject item);
+        public GameObject TakeItem(Vector3 interactionPoint);
     }
 }
+
