@@ -21,6 +21,8 @@ namespace StoreSimulator.InteractableObjects
         [Header("Price visual")]
         [SerializeField] private TMP_Text priceText;
 
+        private float _currentPrice = 0f;
+
         private void Start()
         {
             UpdatePrice();
@@ -83,9 +85,18 @@ namespace StoreSimulator.InteractableObjects
             if (reservedSlot != null)
             {
                 reservedSlot.Occupy(item);
-                if(item.TryGetComponent<IPricable>(out var pricable))
+                if (item.TryGetComponent<IPricable>(out var pricable))
                 {
-                    priceText.text = $"{pricable.CurrentPrice}$";
+                    if (_currentPrice == 0f)
+                    {
+                        _currentPrice = pricable.CurrentPrice;
+                    }
+                    else
+                    {
+                        pricable.CurrentPrice = _currentPrice;
+                    }
+                    
+                    priceText.text = $"{_currentPrice}$";
                 }
                 //UpdateStates();
             }
@@ -125,6 +136,7 @@ namespace StoreSimulator.InteractableObjects
             if (CanTakeItem()) return;
 
             priceText.text = "No items";
+            _currentPrice = 0f;
         }
 
         public string GetDescription()
