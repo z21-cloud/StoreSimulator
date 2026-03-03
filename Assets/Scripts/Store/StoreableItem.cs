@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using StoreSimulator.StoreableItems;
 
 namespace StoreSimulator.InteractableObjects
 {
@@ -8,9 +9,11 @@ namespace StoreSimulator.InteractableObjects
     {
         [SerializeField] private MoveToPosition mover;
         [SerializeField] private ThrowableSettings throwableSettings;
+        [SerializeField] private ItemData itemData;
 
         public IShelf CurrentShelf { get; private set; }
-        
+        public ItemCategory Category => itemData != null ? itemData.Category : ItemCategory.None;
+        public ItemData Data => itemData;
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
 
         private Rigidbody rb;

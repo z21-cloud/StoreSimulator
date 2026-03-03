@@ -3,20 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System;
+using StoreSimulator.StoreableItems;
 
 namespace StoreSimulator.InteractableObjects
 {
     public class Storage : MonoBehaviour, IInteractable, IStorage
     {
+        [Header("General settings")]
         [SerializeField] private List<ShellfSlot> slots;
 
-        //public bool IsEmpty { get; private set; }
+        [Header("Category settings")]
+        [SerializeField] private bool allowAnyCategory = false;
+        [SerializeField] private ItemCategory allowedCategory;
+        [SerializeField] private List<ItemData> allowedSpecificItems;
 
-        //public bool IsFull { get; private set; }
+        // use events instead
+        public bool CanPlaceItem(GameObject item)
+        {
+            if (!HasFreeSlot()) return false;
 
-        private int _occupiedCount = 0;
+            if (allowAnyCategory) return true;
 
-        public bool CanPlaceItem()
+            if (item.TryGetComponent<StoreableItem>(out var storable))
+            {
+                if(allowedSpecificItems.Count > 0)
+                {
+                    return allowedSpecificItems.Contains(storable.Data);
+                }
+
+                Debug.Log($"Storage: {storable.gameObject.name} category = {(allowedCategory & storable.Category) != 0}");
+                return (allowedCategory & storable.Category) != 0;
+            }
+
+            return false;
+        }
+
+        private bool HasFreeSlot()
         {
             foreach (var slot in slots)
             {
@@ -36,9 +58,9 @@ namespace StoreSimulator.InteractableObjects
 
         public void PlaceItem(GameObject item) //Vector3 playerPosition, bool findOccupied, 
         {
-            // FIND FREE SLOT
-            //ShellfSlot reservedSlot = GetClosestToPlayer(playerPosition, findOccupied);
+            // Should I get closest to player slot to place item or not?
 
+            // FIND FREE SLOT
             ShellfSlot reservedSlot = null;
             foreach (ShellfSlot slot in slots)
             {
@@ -52,8 +74,6 @@ namespace StoreSimulator.InteractableObjects
             if (reservedSlot != null)
             {
                 reservedSlot.Occupy(item);
-                //_occupiedCount++;
-                //_occupiedCount = Mathf.Clamp(_occupiedCount, 0, slots.Count);
                 //UpdateStates();
             }
         }
@@ -82,8 +102,7 @@ namespace StoreSimulator.InteractableObjects
 
         private void UpdateStates()
         {
-            //IsEmpty = _occupiedCount == 0;
-            //IsFull = _occupiedCount >= slots.Count;
+
         }
 
         public string GetDescription()
@@ -91,18 +110,6 @@ namespace StoreSimulator.InteractableObjects
             throw new NotImplementedException();
         }
 
-        /*private ShellfSlot GetClosestToPlayer(Vector3 playerPosition, bool findOccupied)
-        {
-            foreach (var slot in slots)
-            {
-                if(slot.IsOccupied == findOccupied)
-                {
-                    return slot;
-                }
-            }
-
-            return null;
-        }*/
     }
 }
 
