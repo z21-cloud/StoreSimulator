@@ -5,7 +5,7 @@ using StoreSimulator.StoreableItems;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public class StoreableItem : MonoBehaviour, IInteractable, IStoreable, IHoldable
+    public class StoreableItem : MonoBehaviour, IInteractable, IStoreable, IHoldable, IPricable
     {
         [Header("Move settings")]
         [SerializeField] private MoveToPosition mover;
@@ -13,6 +13,13 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private ThrowableSettings throwableSettings;
         [Header("Item's data settings")]
         [SerializeField] private ItemData itemData;
+
+        // private vars
+        private float _currentPrice = 0f;
+
+        // private components
+        private Rigidbody _rb;
+        private Collider _itemCollider;
 
         // properties
         // Linke Item -> Shelf
@@ -22,16 +29,19 @@ namespace StoreSimulator.InteractableObjects
         public ItemData Data => itemData;
         // ThrowForce
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
-
-        // private components
-        private Rigidbody rb;
-        private Collider itemCollider;
+        public float CurrentPrice
+        {
+            get => _currentPrice;
+            set => _currentPrice = Mathf.Max(0, value);
+        }
 
         private void Awake()
         {
             // cache
-            rb = GetComponent<Rigidbody>();
-            itemCollider = GetComponent<Collider>();
+            _rb = GetComponent<Rigidbody>();
+            _itemCollider = GetComponent<Collider>();
+
+            if (itemData != null) _currentPrice = itemData.BasePrice;
         }
 
         public void OnStored(GameObject slot)
@@ -89,7 +99,7 @@ namespace StoreSimulator.InteractableObjects
 
         public void Release(Vector3 impulse)
         {
-            if (rb == null) Debug.LogError($"HoldableObject: {gameObject.name} rigidbody is null");
+            if (_rb == null) Debug.LogError($"HoldableObject: {gameObject.name} rigidbody is null");
             transform.parent = null;
 
             // enable gravity & resets physics when release object
@@ -97,7 +107,7 @@ namespace StoreSimulator.InteractableObjects
             SetPhysics(isKinematic);
 
             // throw object in camera direction
-            if (impulse != Vector3.zero) rb.AddForce(impulse, ForceMode.Impulse);
+            if (impulse != Vector3.zero) _rb.AddForce(impulse, ForceMode.Impulse);
         }
 
         private void SetPhysics(bool value)
@@ -106,13 +116,13 @@ namespace StoreSimulator.InteractableObjects
             // rb.linearVelocity = Vector3.zero;
             // rb.angularVelocity = Vector3.zero;
 
-            rb.isKinematic = value;
+            _rb.isKinematic = value;
 
             /* 
              * kinematic = false => object in world, need collider = true
              * kinematic = true => object in hands, need collider = false
              */
-            itemCollider.enabled = !value;
+            _itemCollider.enabled = !value;
         }
 
         private void SetParentPosition(Transform holdPoint)

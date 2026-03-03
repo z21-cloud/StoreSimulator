@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System;
 using StoreSimulator.StoreableItems;
+using TMPro;
 
 namespace StoreSimulator.InteractableObjects
 {
@@ -16,6 +17,14 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private bool allowAnyCategory = false;
         [SerializeField] private ItemCategory allowedCategory;
         [SerializeField] private List<ItemData> allowedSpecificItems;
+
+        [Header("Price visual")]
+        [SerializeField] private TMP_Text priceText;
+
+        private void Start()
+        {
+            UpdatePrice();
+        }
 
         // use events instead
         public bool CanPlaceItem(GameObject item)
@@ -74,6 +83,10 @@ namespace StoreSimulator.InteractableObjects
             if (reservedSlot != null)
             {
                 reservedSlot.Occupy(item);
+                if(item.TryGetComponent<IPricable>(out var pricable))
+                {
+                    priceText.text = $"{pricable.CurrentPrice}$";
+                }
                 //UpdateStates();
             }
         }
@@ -97,12 +110,21 @@ namespace StoreSimulator.InteractableObjects
                 }
             }
 
-            return bestSlot != null ? bestSlot.Release() : null;
+            GameObject taken = null;
+            if(bestSlot != null)
+            {
+                taken = bestSlot.Release();
+                UpdatePrice();
+            }
+
+            return taken;
         }
 
-        private void UpdateStates()
+        private void UpdatePrice()
         {
+            if (CanTakeItem()) return;
 
+            priceText.text = "No items";
         }
 
         public string GetDescription()
