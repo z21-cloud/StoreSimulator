@@ -25,13 +25,13 @@ namespace StoreSimulator.InteractableObjects
 
         // private components
         private Rigidbody rb;
-        private BoxCollider boxCollider;
+        private Collider itemCollider;
 
         private void Awake()
         {
             // cache
             rb = GetComponent<Rigidbody>();
-            boxCollider = GetComponent<BoxCollider>();
+            itemCollider = GetComponent<Collider>();
         }
 
         public void OnStored(GameObject slot)
@@ -112,7 +112,7 @@ namespace StoreSimulator.InteractableObjects
              * kinematic = false => object in world, need collider = true
              * kinematic = true => object in hands, need collider = false
              */
-            boxCollider.enabled = !value;
+            itemCollider.enabled = !value;
         }
 
         private void SetParentPosition(Transform holdPoint)
