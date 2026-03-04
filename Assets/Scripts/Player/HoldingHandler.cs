@@ -57,6 +57,10 @@ namespace StoreSimulator.InteractableObjects
                 _heldObject = ((MonoBehaviour)holdable).gameObject;
                 holdable.Hold(holdPoint);
             }
+            else if(currentInteractable.TryGetComponent<IPriceTag>(out var priceTag))
+            {
+                priceTag.DoInteract();
+            }
         }
 
         private void TakeItem(GameObject currentInteractable)

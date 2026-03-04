@@ -1071,7 +1071,7 @@ MonoBehaviour:
   allowAnyCategory: 0
   allowedCategory: 1
   allowedSpecificItems: []
-  priceText: {fileID: 0}
+  priceText: {fileID: 5268094863713470231}
 --- !u!65 &1032652396482590845
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1433,7 +1433,7 @@ MonoBehaviour:
   allowAnyCategory: 0
   allowedCategory: 4
   allowedSpecificItems: []
-  priceText: {fileID: 0}
+  priceText: {fileID: 770647018679114482}
 --- !u!65 &1036679749399513548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1882,7 +1882,7 @@ MonoBehaviour:
   allowAnyCategory: 1
   allowedCategory: 2
   allowedSpecificItems: []
-  priceText: {fileID: 0}
+  priceText: {fileID: 7389144262022683748}
 --- !u!65 &2312346620173954068
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2862,6 +2862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4130934467689490103}
+  - component: {fileID: 7867341323435101909}
   m_Layer: 0
   m_Name: PriceLabel
   m_TagString: Untagged
@@ -2886,6 +2887,20 @@ Transform:
   - {fileID: 2412257760927778486}
   m_Father: {fileID: 8594026997160834839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7867341323435101909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4242354209487770143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e2fc3d406963341b96dfb1f1abbfb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 4603578475883959939}
+  priceUI: {fileID: 0}
 --- !u!1 &4301420903484628077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3067,6 +3082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1057940064952604495}
+  - component: {fileID: 3252278564284511464}
   m_Layer: 0
   m_Name: PriceLabel
   m_TagString: Untagged
@@ -3083,7 +3099,7 @@ Transform:
   m_GameObject: {fileID: 4349684661992152584}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.60400003, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3091,6 +3107,20 @@ Transform:
   - {fileID: 5030743003208169303}
   m_Father: {fileID: 7047116725985453113}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3252278564284511464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4349684661992152584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e2fc3d406963341b96dfb1f1abbfb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 3557922041732570058}
+  priceUI: {fileID: 0}
 --- !u!1 &4371182185001665722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3845,6 +3875,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2349481690734180637}
+  - component: {fileID: 7372672127305069890}
   m_Layer: 0
   m_Name: PriceLabel
   m_TagString: Untagged
@@ -3861,7 +3892,7 @@ Transform:
   m_GameObject: {fileID: 5323178934209914550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.211, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3869,6 +3900,20 @@ Transform:
   - {fileID: 1093028620327404533}
   m_Father: {fileID: 3355852911967580938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7372672127305069890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323178934209914550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e2fc3d406963341b96dfb1f1abbfb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 699151278205006545}
+  priceUI: {fileID: 0}
 --- !u!1 &5327344635918841692
 GameObject:
   m_ObjectHideFlags: 0
@@ -4692,6 +4737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8288109752671930502}
+  - component: {fileID: 4500749427850424813}
   m_Layer: 0
   m_Name: PriceLabel
   m_TagString: Untagged
@@ -4716,6 +4762,20 @@ Transform:
   - {fileID: 320545134892200878}
   m_Father: {fileID: 4243754256916508610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4500749427850424813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264432676616197458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e2fc3d406963341b96dfb1f1abbfb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 5633494530572152869}
+  priceUI: {fileID: 0}
 --- !u!1 &6366235114072803634
 GameObject:
   m_ObjectHideFlags: 0

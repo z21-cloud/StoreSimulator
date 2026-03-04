@@ -26,6 +26,7 @@ namespace StoreSimulator.InteractableObjects
         public IShelf CurrentShelf { get; private set; }
         // To get Item's category
         public ItemCategory Category => itemData != null ? itemData.Category : ItemCategory.None;
+        public ItemSubCategory SubCategory => itemData != null ? itemData.SubCategory : ItemSubCategory.None;
         public ItemData Data => itemData;
         // ThrowForce
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;

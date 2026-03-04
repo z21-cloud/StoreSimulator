@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6440020357588445236}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.4619734, y: 0.00000011920929, z: -1.3816625}
   m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
   m_ConstrainProportionsScale: 1
@@ -166,4 +166,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mover: {fileID: 3957724189056922035}
   throwableSettings: {fileID: 11400000, guid: 3d319f5c5fde8b941ba05e0c84d57466, type: 2}
-  itemData: {fileID: 11400000, guid: 2fa0d5238c2ba3b4c9dfa43757a09f9e, type: 2}
+  itemData: {fileID: 11400000, guid: a48a6ae5d9fed4748909591f4632f9f8, type: 2}

@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mover: {fileID: 6497792125146206591}
   throwableSettings: {fileID: 11400000, guid: 3d319f5c5fde8b941ba05e0c84d57466, type: 2}
-  itemData: {fileID: 11400000, guid: 2fa0d5238c2ba3b4c9dfa43757a09f9e, type: 2}
+  itemData: {fileID: 11400000, guid: 3d96528f63d2b7b4c8e8a59650fd8935, type: 2}
 --- !u!114 &6497792125146206591
 MonoBehaviour:
   m_ObjectHideFlags: 0

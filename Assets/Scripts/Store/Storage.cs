@@ -1,7 +1,5 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System;
 using StoreSimulator.StoreableItems;
 using TMPro;
@@ -21,11 +19,19 @@ namespace StoreSimulator.InteractableObjects
         [Header("Price visual")]
         [SerializeField] private TMP_Text priceText;
 
-        private float _currentPrice = 0f;
+        [Header("Price Manager")]
+        [SerializeField] private PricesManager priceManager;
+
+        // private vars
+        private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
+
+        private void OnEnable() => priceManager.RegisterStorage(this);    
+
+        private void OnDisable() => priceManager.UnregisterStorage(this);
 
         private void Start()
         {
-            UpdatePrice();
+            ResetPrice();
         }
 
         // use events instead
@@ -35,21 +41,31 @@ namespace StoreSimulator.InteractableObjects
 
             if (allowAnyCategory) return true;
 
-            if (item.TryGetComponent<StoreableItem>(out var storable))
+            if (item.TryGetComponent<IStoreable>(out var storable))
             {
                 if(allowedSpecificItems.Count > 0)
                 {
                     return allowedSpecificItems.Contains(storable.Data);
                 }
-
-                Debug.Log($"Storage: {storable.gameObject.name} category = {(allowedCategory & storable.Category) != 0}");
-                return (allowedCategory & storable.Category) != 0;
+                
+                // if shelf locked it's sub category:
+                if(_currentSubCategory != ItemSubCategory.None)
+                {
+                    Debug.Log($"Storage: {storable} sub category = {(_currentSubCategory & storable.SubCategory) != 0}");
+                    return (((allowedCategory & storable.Category) != 0) && ((_currentSubCategory & storable.SubCategory) != 0));
+                }
+                // if shelf has no it's own sub category: 
+                else
+                {
+                    Debug.Log($"Storage: {storable} category = {(allowedCategory & storable.Category) != 0}");
+                    return (allowedCategory & storable.Category) != 0;
+                }
             }
 
             return false;
         }
 
-        private bool HasFreeSlot()
+        public bool HasFreeSlot()
         {
             foreach (var slot in slots)
             {
@@ -85,20 +101,8 @@ namespace StoreSimulator.InteractableObjects
             if (reservedSlot != null)
             {
                 reservedSlot.Occupy(item);
-                if (item.TryGetComponent<IPricable>(out var pricable))
-                {
-                    if (_currentPrice == 0f)
-                    {
-                        _currentPrice = pricable.CurrentPrice;
-                    }
-                    else
-                    {
-                        pricable.CurrentPrice = _currentPrice;
-                    }
-                    
-                    priceText.text = $"{_currentPrice}$";
-                }
-                //UpdateStates();
+
+                UpdateStates(item);
             }
         }
 
@@ -111,6 +115,7 @@ namespace StoreSimulator.InteractableObjects
             {
                 if (slot.IsOccupied)
                 {
+                    // optimisation
                     float dist = (interactionPoint - slot.transform.position).sqrMagnitude;
 
                     if(minDistance > dist)
@@ -125,18 +130,60 @@ namespace StoreSimulator.InteractableObjects
             if(bestSlot != null)
             {
                 taken = bestSlot.Release();
-                UpdatePrice();
+
+                ResetStates();
             }
 
             return taken;
         }
 
-        private void UpdatePrice()
+        public void OnPriceInputChanged(float newPrice)
+        {
+            if (_currentSubCategory == ItemSubCategory.None) return;
+
+            priceManager.SetSubCategoryPrice(_currentSubCategory, newPrice);
+        }
+
+        private void UpdateStates(GameObject item)
+        {
+            if (item.TryGetComponent<IStoreable>(out var storeable))
+            {
+                // Lock shelf's sub category
+                if (_currentSubCategory == ItemSubCategory.None)
+                {
+                    _currentSubCategory = storeable.SubCategory;
+                }
+            }
+
+            RefreshPriceFromManager();
+        }
+
+        public void RefreshPriceFromManager()
+        {
+            if (_currentSubCategory == ItemSubCategory.None) return;
+
+            foreach (var slot in slots)
+            {
+                if (slot.IsOccupied && slot.GetStoredItem().TryGetComponent<IPricable>(out var pricable))
+                {
+                    float newPrice = priceManager.GetPriceForItem(slot.ItemData);
+                    pricable.CurrentPrice = newPrice;
+                    priceText.text = $"{newPrice}$";
+                }
+            }
+        }
+
+        private void ResetStates()
         {
             if (CanTakeItem()) return;
 
+            ResetPrice();
+            _currentSubCategory = ItemSubCategory.None;
+        }
+
+        private void ResetPrice()
+        {
             priceText.text = "No items";
-            _currentPrice = 0f;
         }
 
         public string GetDescription()
