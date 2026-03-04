@@ -5,7 +5,7 @@ using StoreSimulator.StoreableItems;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public class StoreableItem : MonoBehaviour, IInteractable, IStoreable, IHoldable, IPricable
+    public class StoreableItem : MonoBehaviour, IInteractable, IStoreable, IHoldable
     {
         [Header("Move settings")]
         [SerializeField] private MoveToPosition mover;
@@ -14,9 +14,6 @@ namespace StoreSimulator.InteractableObjects
         [Header("Item's data settings")]
         [SerializeField] private ItemData itemData;
 
-        // private vars
-        private float _currentPrice = 0f;
-
         // private components
         private Rigidbody _rb;
         private Collider _itemCollider;
@@ -24,25 +21,18 @@ namespace StoreSimulator.InteractableObjects
         // properties
         // Linke Item -> Shelf
         public IShelf CurrentShelf { get; private set; }
-        // To get Item's category
+        // To get Item's Data
+        public ItemData Data => itemData;
         public ItemCategory Category => itemData != null ? itemData.Category : ItemCategory.None;
         public ItemSubCategory SubCategory => itemData != null ? itemData.SubCategory : ItemSubCategory.None;
-        public ItemData Data => itemData;
         // ThrowForce
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
-        public float CurrentPrice
-        {
-            get => _currentPrice;
-            set => _currentPrice = Mathf.Max(0, value);
-        }
 
         private void Awake()
         {
             // cache
             _rb = GetComponent<Rigidbody>();
             _itemCollider = GetComponent<Collider>();
-
-            if (itemData != null) _currentPrice = itemData.BasePrice;
         }
 
         public void OnStored(GameObject slot)
@@ -88,6 +78,7 @@ namespace StoreSimulator.InteractableObjects
             throw new System.NotImplementedException();
         }
 
+        #region HOLDABLE
         public void Hold(Transform holdPoint)
         {
             // set object to player's hand
@@ -132,6 +123,7 @@ namespace StoreSimulator.InteractableObjects
             transform.position = holdPoint.position;
             transform.rotation = holdPoint.rotation;
         }
+        #endregion
     }
 }
 

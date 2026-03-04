@@ -4,33 +4,37 @@ using System.Collections.Generic;
 using TMPro;
 using StoreSimulator.InteractableObjects;
 
-public class PriceEditUI : MonoBehaviour
+namespace StoreSimulator.StoreUI
 {
-    [SerializeField] private TMP_InputField inputField;
-
-    private IStorage _activeStorage;
-
-    public void OpenForStorage(IStorage storage)
+    public class PriceEditUI : MonoBehaviour
     {
-        _activeStorage = storage;
-        gameObject.SetActive(true);
-        inputField.text = "";
-        Cursor.lockState = CursorLockMode.None;
-    }
+        [SerializeField] private TMP_InputField inputField;
 
-    public void ConfirmPrice()
-    {
-        if(float.TryParse(inputField.text, out float newPrice))
+        private IStorage _activeStorage;
+
+        public void OpenForStorage(IStorage storage)
         {
-            _activeStorage.OnPriceInputChanged(newPrice);
+            _activeStorage = storage;
+            gameObject.SetActive(true);
+            inputField.text = "";
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        public void ConfirmPrice()
+        {
+            if (float.TryParse(inputField.text, out float newPrice))
+            {
+                _activeStorage.OnPriceInputChanged(newPrice);
+                gameObject.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+
+        public void ClosePanel()
+        {
             gameObject.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
-
-    public void ClosePanel()
-    {
-        gameObject.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 }
+

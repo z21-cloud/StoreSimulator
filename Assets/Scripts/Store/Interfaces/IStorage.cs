@@ -8,7 +8,6 @@ namespace StoreSimulator.InteractableObjects
     {
         public bool CanPlaceItem(GameObject item);
         public bool CanTakeItem();
-        public void RefreshPriceFromManager();
         public void OnPriceInputChanged(float price);
         public void PlaceItem(GameObject item);
         public GameObject TakeItem(Vector3 interactionPoint);

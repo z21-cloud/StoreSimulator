@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using StoreSimulator.StoreableItems;
 using TMPro;
+using StoreSimulator.StoreManager;
 
 namespace StoreSimulator.InteractableObjects
 {
@@ -24,10 +25,6 @@ namespace StoreSimulator.InteractableObjects
 
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
-
-        private void OnEnable() => priceManager.RegisterStorage(this);    
-
-        private void OnDisable() => priceManager.UnregisterStorage(this);
 
         private void Start()
         {
@@ -102,7 +99,11 @@ namespace StoreSimulator.InteractableObjects
             {
                 reservedSlot.Occupy(item);
 
-                UpdateStates(item);
+                // updates current sub category
+                UpdateCurrentCategory(item);
+
+                //
+                UpdatePriceVisual();
             }
         }
 
@@ -142,9 +143,10 @@ namespace StoreSimulator.InteractableObjects
             if (_currentSubCategory == ItemSubCategory.None) return;
 
             priceManager.SetSubCategoryPrice(_currentSubCategory, newPrice);
+            UpdatePriceVisual();
         }
 
-        private void UpdateStates(GameObject item)
+        private void UpdateCurrentCategory(GameObject item)
         {
             if (item.TryGetComponent<IStoreable>(out var storeable))
             {
@@ -154,23 +156,14 @@ namespace StoreSimulator.InteractableObjects
                     _currentSubCategory = storeable.SubCategory;
                 }
             }
-
-            RefreshPriceFromManager();
         }
 
-        public void RefreshPriceFromManager()
+        private void UpdatePriceVisual()
         {
             if (_currentSubCategory == ItemSubCategory.None) return;
-
-            foreach (var slot in slots)
-            {
-                if (slot.IsOccupied && slot.GetStoredItem().TryGetComponent<IPricable>(out var pricable))
-                {
-                    float newPrice = priceManager.GetPriceForItem(slot.ItemData);
-                    pricable.CurrentPrice = newPrice;
-                    priceText.text = $"{newPrice}$";
-                }
-            }
+            
+            float price = priceManager.GetPriceForSubCategory(_currentSubCategory);
+            priceText.text = $"{price}$";
         }
 
         private void ResetStates()
@@ -184,6 +177,11 @@ namespace StoreSimulator.InteractableObjects
         private void ResetPrice()
         {
             priceText.text = "No items";
+        }
+
+        public ItemSubCategory GetItemSubCategory()
+        {
+            return _currentSubCategory;
         }
 
         public string GetDescription()

@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using StoreSimulator.StoreableItems;
+using StoreSimulator.StoreUI;
 
 namespace StoreSimulator.InteractableObjects
 {
@@ -13,6 +15,9 @@ namespace StoreSimulator.InteractableObjects
         {
             // if can't take item => storage is empty
             if (!storage.CanTakeItem()) return;
+
+            ItemSubCategory subCategory = storage.GetItemSubCategory();
+            if (subCategory == ItemSubCategory.None) return;
 
             priceUI.OpenForStorage(storage);
         }
