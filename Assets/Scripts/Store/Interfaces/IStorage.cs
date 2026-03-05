@@ -6,10 +6,11 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IStorage
     {
-        public bool CanPlaceItem(GameObject item);
+        public bool CanPlaceItem(IStoreable storable);
         public bool CanTakeItem();
-        public void OnPriceInputChanged(float price);
+        public bool HasFreeSlot();
         public void PlaceItem(GameObject item);
+        public GameObject PeekItem();
         public GameObject TakeItem(Vector3 interactionPoint);
     }
 }

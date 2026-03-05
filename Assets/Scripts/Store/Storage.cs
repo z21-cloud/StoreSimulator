@@ -7,7 +7,7 @@ using StoreSimulator.StoreManager;
 
 namespace StoreSimulator.InteractableObjects
 {
-    public class Storage : MonoBehaviour, IInteractable, IStorage
+    public class Storage : MonoBehaviour, IInteractable, IStorage, IPriceStorage
     {
         [Header("General settings")]
         [SerializeField] private List<ShellfSlot> slots;
@@ -25,6 +25,7 @@ namespace StoreSimulator.InteractableObjects
 
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
+        private ItemData _currentItemData;
 
         private void Start()
         {
@@ -32,34 +33,29 @@ namespace StoreSimulator.InteractableObjects
         }
 
         // use events instead
-        public bool CanPlaceItem(GameObject item)
+        public bool CanPlaceItem(IStoreable storable)
         {
             if (!HasFreeSlot()) return false;
 
             if (allowAnyCategory) return true;
 
-            if (item.TryGetComponent<IStoreable>(out var storable))
+            if (allowedSpecificItems.Count > 0)
             {
-                if(allowedSpecificItems.Count > 0)
-                {
-                    return allowedSpecificItems.Contains(storable.Data);
-                }
-                
-                // if shelf locked it's sub category:
-                if(_currentSubCategory != ItemSubCategory.None)
-                {
-                    Debug.Log($"Storage: {storable} sub category = {(_currentSubCategory & storable.SubCategory) != 0}");
-                    return (((allowedCategory & storable.Category) != 0) && ((_currentSubCategory & storable.SubCategory) != 0));
-                }
-                // if shelf has no it's own sub category: 
-                else
-                {
-                    Debug.Log($"Storage: {storable} category = {(allowedCategory & storable.Category) != 0}");
-                    return (allowedCategory & storable.Category) != 0;
-                }
+                return allowedSpecificItems.Contains(storable.Data);
             }
 
-            return false;
+            // if shelf locked it's sub category:
+            if (_currentSubCategory != ItemSubCategory.None)
+            {
+                Debug.Log($"Storage: {storable} sub category = {(_currentSubCategory & storable.SubCategory) != 0}");
+                return (((allowedCategory & storable.Category) != 0) && ((_currentSubCategory & storable.SubCategory) != 0));
+            }
+            // if shelf has no it's own sub category: 
+            else
+            {
+                Debug.Log($"Storage: {storable} category = {(allowedCategory & storable.Category) != 0}");
+                return (allowedCategory & storable.Category) != 0;
+            }
         }
 
         public bool HasFreeSlot()
@@ -119,7 +115,7 @@ namespace StoreSimulator.InteractableObjects
                     // optimisation
                     float dist = (interactionPoint - slot.transform.position).sqrMagnitude;
 
-                    if(minDistance > dist)
+                    if (minDistance > dist)
                     {
                         minDistance = dist;
                         bestSlot = slot;
@@ -128,7 +124,7 @@ namespace StoreSimulator.InteractableObjects
             }
 
             GameObject taken = null;
-            if(bestSlot != null)
+            if (bestSlot != null)
             {
                 taken = bestSlot.Release();
 
@@ -146,6 +142,22 @@ namespace StoreSimulator.InteractableObjects
             UpdatePriceVisual();
         }
 
+        public float GetCurrentPrice()
+        {
+            if (_currentItemData == null) return 0f;
+
+            float currentPrice = priceManager.GetPriceForItem(_currentItemData);
+            return currentPrice;
+        }
+
+        public float GetBasePrice()
+        {
+            if (_currentItemData == null) return 0f;
+
+            float basePrice = _currentItemData.BasePrice;
+            return basePrice;
+        }
+
         private void UpdateCurrentCategory(GameObject item)
         {
             if (item.TryGetComponent<IStoreable>(out var storeable))
@@ -154,6 +166,7 @@ namespace StoreSimulator.InteractableObjects
                 if (_currentSubCategory == ItemSubCategory.None)
                 {
                     _currentSubCategory = storeable.SubCategory;
+                    _currentItemData = storeable.Data;
                 }
             }
         }
@@ -161,9 +174,9 @@ namespace StoreSimulator.InteractableObjects
         private void UpdatePriceVisual()
         {
             if (_currentSubCategory == ItemSubCategory.None) return;
-            
-            float price = priceManager.GetPriceForSubCategory(_currentSubCategory);
-            priceText.text = $"{price}$";
+
+            float price = priceManager.GetPriceForItem(_currentItemData);
+            priceText.text = $"{price:F2}$";
         }
 
         private void ResetStates()
@@ -172,6 +185,7 @@ namespace StoreSimulator.InteractableObjects
 
             ResetPrice();
             _currentSubCategory = ItemSubCategory.None;
+            _currentItemData = null;
         }
 
         private void ResetPrice()
@@ -184,6 +198,7 @@ namespace StoreSimulator.InteractableObjects
             return _currentSubCategory;
         }
 
+        public GameObject PeekItem() => null;
         public string GetDescription()
         {
             throw new NotImplementedException();

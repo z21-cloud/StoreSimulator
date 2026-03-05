@@ -24,6 +24,9 @@ namespace StoreSimulator.InteractableObjects
         // Update is called once per frame
         private void Update()
         {
+            //GameObject interactableObject = 
+            //if (interactableObject == null) return;
+
             CurrentInteractable = DetectInteractable();
         }
 

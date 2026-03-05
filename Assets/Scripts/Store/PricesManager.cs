@@ -70,28 +70,6 @@ namespace StoreSimulator.StoreManager
             return data.BasePrice;
         }
 
-        public float GetPriceForSubCategory(ItemSubCategory subCategory)
-        {
-            if (_subCategoryOverride.TryGetValue(subCategory, out float customPrice))
-            {
-                Debug.Log($"Update prpice");
-
-                return customPrice;
-            }
-
-            return 0f;
-        }
-
-        public float GetPriceForCategory(ItemCategory category)
-        {
-            if (_categoryMultipliers.TryGetValue(category, out float multiplier))
-            {
-                return multiplier;
-            }
-
-            return 0f;
-        }
-
         public void SetSubCategoryPrice(ItemSubCategory subCategory, float price)
         {
             _subCategoryOverride[subCategory] = Mathf.Max(0, price);

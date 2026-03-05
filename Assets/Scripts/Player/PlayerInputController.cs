@@ -43,20 +43,29 @@ namespace StoreSimulator.PlayerController
             Jump();
 
             Interact();
+
+            Throw();
         }
 
         private void Jump()
         {
-            if (!input.isJumping) return;
+            if (!input.IsJumping) return;
             
             jumper.Jump();
         }
 
         private void Interact()
         {
-            if (!input.isInteracting) return;
+            if (!input.IsInteracting) return;
 
             picker.DoInteract();
+        }
+
+        private void Throw()
+        {
+            if (!input.IsThrow) return;
+
+            picker.DoThrow();
         }
 
         private void SetMovementDirection()

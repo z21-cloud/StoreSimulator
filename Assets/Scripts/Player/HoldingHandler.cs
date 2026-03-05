@@ -1,65 +1,48 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace StoreSimulator.InteractableObjects
 {
     public class HoldingHandler : MonoBehaviour
     {
-        [Header("Release force")]
-        [Tooltip("For release holdable objects")]
-        [SerializeField] private float releaseForce = 100f;
         [Header("Point for holding object")]
         [SerializeField] private Transform holdPoint;
 
-        // components
-        private GameObject _heldObject;
-        private Camera _mainCamera;
-
-        // consts
-        private const float DIRECTION_CAMERA_OFFSET = 0.2f;
-
-        private void Awake()
-        {
-            _mainCamera = Camera.main;
-        }
+        public GameObject HeldObject { get; private set; }
 
         public void DoInteract(GameObject currentInteractable)
         {
             // Interaction with holdable item
-            if (_heldObject != null)
+            if (HeldObject != null)
             {
                 //Place item
                 PlaceItem(currentInteractable);
-
-                if (_heldObject == null) return;
-
-                // Drop or throw gameobject
-                ReleaseHoldableObject();
-                return;
             }
-
-            if (currentInteractable == null) return;
-            
-            TakeItem(currentInteractable);
-
-            // interaction with object pickup or hold
-            if (currentInteractable.TryGetComponent<IPickable>(out var pickable))
+            else
             {
-                Debug.Log($"Pick up");
-                pickable.Pick();
-            }
-            else if (currentInteractable.TryGetComponent<IHoldable>(out var holdable))
-            {
-                // cache holdable object for releasing
-                Debug.Log("Taking from ground");
+                if (currentInteractable == null) return;
 
-                _heldObject = ((MonoBehaviour)holdable).gameObject;
-                holdable.Hold(holdPoint);
-            }
-            else if(currentInteractable.TryGetComponent<IPriceTag>(out var priceTag))
-            {
-                priceTag.DoInteract();
+                // interaction with object pickup or hold
+                if (currentInteractable.TryGetComponent<IPickable>(out var pickable))
+                {
+                    Debug.Log($"Pick up");
+                    pickable.Pick();
+                }
+                else if (currentInteractable.TryGetComponent<IHoldable>(out var holdable))
+                {
+                    // cache holdable object for releasing
+                    Debug.Log("Taking from ground");
+
+                    HeldObject = ((MonoBehaviour)holdable).gameObject;
+                    holdable.Hold(holdPoint);
+                }
+                else if (currentInteractable.TryGetComponent<IPriceTag>(out var priceTag))
+                {
+                    priceTag.DoInteract();
+                }
+                else
+                {
+                    TakeItem(currentInteractable);
+                }
             }
         }
 
@@ -82,19 +65,23 @@ namespace StoreSimulator.InteractableObjects
 
                 GameObject itemObj = storage.TakeItem(holdPoint.position);
 
+                Debug.Log("Taking from storage - storage collider");
+
                 if (itemObj != null)
                 {
                     itemObj.TryGetComponent(out targetStoreable);
                 }
             }
 
-            if(targetStoreable != null)
+            if (targetStoreable != null)
             {
                 GameObject objToHold = targetStoreable.OnPickedFromStore();
 
-                if(objToHold != null && objToHold.TryGetComponent<IHoldable>(out var holdable))
+                if (objToHold != null && objToHold.TryGetComponent<IHoldable>(out var holdable))
                 {
-                    _heldObject = objToHold;
+                    Debug.Log("Taking from storage - Move to hold");
+
+                    HeldObject = objToHold;
                     holdable.Hold(holdPoint);
                 }
             }
@@ -104,32 +91,46 @@ namespace StoreSimulator.InteractableObjects
         {
             if (currentInteractable != null &&
                 currentInteractable.TryGetComponent<IStorage>(out var storage) &&
-                _heldObject.TryGetComponent<IStoreable>(out var storeable))
+                HeldObject.TryGetComponent<IStoreable>(out var storeable))
             {
-                if (storage.CanPlaceItem(_heldObject))
+                if (storage.CanPlaceItem(storeable))
                 {
-                    storage.PlaceItem(_heldObject);
-                    _heldObject = null;
+                    storage.PlaceItem(HeldObject);
+                    HeldObject = null;
                     return;
                 }
             }
+
+            else if (currentInteractable != null &&
+                currentInteractable.TryGetComponent<IStorage>(out var shelfStorage) &&
+                HeldObject.TryGetComponent<IStorage>(out var boxStorage))
+            {
+                if (!boxStorage.CanTakeItem() || !shelfStorage.HasFreeSlot()) return;
+                Debug.Log("Peek item");
+                GameObject peekedItem = boxStorage.PeekItem();
+                if (peekedItem == null) return;
+
+                if (!peekedItem.TryGetComponent<IStoreable>(out var peekedStoreable)) return;
+                if (!shelfStorage.CanPlaceItem(peekedStoreable)) return;
+
+                Debug.Log("Try take & place item");
+                    
+                GameObject item = boxStorage.TakeItem(holdPoint.position);
+                if (item == null) return;
+
+                if(item.TryGetComponent<IStoreable>(out var itemStoreable))
+                {
+                    itemStoreable.OnPickedFromStore();
+                }
+
+                shelfStorage.PlaceItem(item);
+            }
         }
 
-        private void ReleaseHoldableObject()
+        public void ClearHeldObject()
         {
-            if (_heldObject.TryGetComponent<IHoldable>(out var holdable))
-            {
-                // vector for releasing holdable
-                Vector3 throwVector = (_mainCamera.transform.forward +
-                    Vector3.up * DIRECTION_CAMERA_OFFSET).normalized;
-                // get force from object
-                float forceMultiplier = holdable.ThrowForce;
-                // throw or release object (depends on force multiplier)
-                holdable.Release(throwVector * releaseForce * forceMultiplier);
-
-                // reset 
-                _heldObject = null;
-            }
+            HeldObject.transform.parent = null;
+            HeldObject = null;
         }
     }
 }

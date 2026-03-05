@@ -11,7 +11,8 @@ namespace StoreSimulator.PlayerInput
         public bool MouseLMB { get; }
         public float MouseX { get; }
         public float MouseY { get; }
-        public bool isJumping { get; }
-        public bool isInteracting { get; }
+        public bool IsJumping { get; }
+        public bool IsInteracting { get; }
+        public bool IsThrow { get; }
     }
 }
