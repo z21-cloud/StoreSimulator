@@ -87,6 +87,7 @@ namespace StoreSimulator.StoreableItems
         }
         #endregion
 
+        // can place item back in box
         public bool CanPlaceItem(IStoreable storeable)
         {
             if(!HasFreeSlot()) return false;
@@ -94,6 +95,7 @@ namespace StoreSimulator.StoreableItems
             return false;
         }
 
+        // if full
         public bool HasFreeSlot()
         {
             foreach (var slot in slots)
@@ -104,6 +106,7 @@ namespace StoreSimulator.StoreableItems
             return false;
         }
 
+        // if empty
         public bool CanTakeItem()
         {
             foreach (var slot in slots)
@@ -118,6 +121,7 @@ namespace StoreSimulator.StoreableItems
             throw new System.NotImplementedException();
         }
 
+        // give item to caller (unlink from CurrentSlot)
         public GameObject TakeItem(Vector3 interactionPoint)
         {
             foreach (var slot in slots)
@@ -131,6 +135,7 @@ namespace StoreSimulator.StoreableItems
             return null;
         }
 
+        // give item to caller (without unlink from CurrentSlot) 
         public GameObject PeekItem()
         {
             foreach (var slot in slots)

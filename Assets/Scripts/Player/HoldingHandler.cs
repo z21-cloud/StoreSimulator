@@ -11,7 +11,7 @@ namespace StoreSimulator.InteractableObjects
 
         public void DoInteract(GameObject currentInteractable)
         {
-            // Interaction with holdable item
+            // Interaction with holdable item (in playr's hands)
             if (HeldObject != null)
             {
                 //Place item
@@ -21,12 +21,14 @@ namespace StoreSimulator.InteractableObjects
             {
                 if (currentInteractable == null) return;
 
-                // interaction with object pickup or hold
+                // interaction with pickable object, not in hands
                 if (currentInteractable.TryGetComponent<IPickable>(out var pickable))
                 {
                     Debug.Log($"Pick up");
                     pickable.Pick();
                 }
+
+                // interaction with holdable object, not in hands
                 else if (currentInteractable.TryGetComponent<IHoldable>(out var holdable))
                 {
                     // cache holdable object for releasing
@@ -35,12 +37,14 @@ namespace StoreSimulator.InteractableObjects
                     HeldObject = ((MonoBehaviour)holdable).gameObject;
                     holdable.Hold(holdPoint);
                 }
+                // change price label to item category (for now: only if storage has items)
                 else if (currentInteractable.TryGetComponent<IPriceTag>(out var priceTag))
                 {
                     priceTag.DoInteract();
                 }
                 else
                 {
+                    // otherwise trying to take item
                     TakeItem(currentInteractable);
                 }
             }
@@ -50,6 +54,7 @@ namespace StoreSimulator.InteractableObjects
         {
             IStoreable targetStoreable = null;
 
+            // take item directly via it's own collider
             if (currentInteractable.TryGetComponent<IStoreable>(out var directStoreable))
             {
                 if (directStoreable.CurrentShelf != null)
@@ -59,6 +64,7 @@ namespace StoreSimulator.InteractableObjects
                     targetStoreable = directStoreable;
                 }
             }
+            // take item from storage 
             else if (currentInteractable.TryGetComponent<IStorage>(out var storage))
             {
                 if (!storage.CanTakeItem()) return;
@@ -73,6 +79,7 @@ namespace StoreSimulator.InteractableObjects
                 }
             }
 
+            // hold taken item from storage
             if (targetStoreable != null)
             {
                 GameObject objToHold = targetStoreable.OnPickedFromStore();
@@ -89,6 +96,7 @@ namespace StoreSimulator.InteractableObjects
 
         private void PlaceItem(GameObject currentInteractable)
         {
+            // place storeable item (from player's hands)
             if (currentInteractable != null &&
                 currentInteractable.TryGetComponent<IStorage>(out var storage) &&
                 HeldObject.TryGetComponent<IStoreable>(out var storeable))
@@ -101,34 +109,41 @@ namespace StoreSimulator.InteractableObjects
                 }
             }
 
+            // place storeable item (from BOX in player's hands)
             else if (currentInteractable != null &&
                 currentInteractable.TryGetComponent<IStorage>(out var shelfStorage) &&
                 HeldObject.TryGetComponent<IStorage>(out var boxStorage))
             {
+                // if box is empty or shelf is full
                 if (!boxStorage.CanTakeItem() || !shelfStorage.HasFreeSlot()) return;
-                Debug.Log("Peek item");
+
+                // Peek item to check it's category and shelf's category
+                Debug.Log("Peek item from box");
                 GameObject peekedItem = boxStorage.PeekItem();
                 if (peekedItem == null) return;
 
                 if (!peekedItem.TryGetComponent<IStoreable>(out var peekedStoreable)) return;
                 if (!shelfStorage.CanPlaceItem(peekedStoreable)) return;
 
-                Debug.Log("Try take & place item");
-                    
-                GameObject item = boxStorage.TakeItem(holdPoint.position);
+                // Take item from box's slot and give it to shelf's slot
+                Debug.Log("Place item from box");
+                GameObject item = boxStorage.TakeItem(holdPoint.position); // gives game object from slot
                 if (item == null) return;
 
                 if(item.TryGetComponent<IStoreable>(out var itemStoreable))
                 {
+                    // unlink item from CurrentSlot
                     itemStoreable.OnPickedFromStore();
                 }
 
+                // give gameobject to new storage
                 shelfStorage.PlaceItem(item);
             }
         }
 
         public void ClearHeldObject()
         {
+            // reset
             HeldObject.transform.parent = null;
             HeldObject = null;
         }
