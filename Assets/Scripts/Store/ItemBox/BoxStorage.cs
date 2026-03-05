@@ -90,9 +90,21 @@ namespace StoreSimulator.StoreableItems
         // can place item back in box
         public bool CanPlaceItem(IStoreable storeable)
         {
+            Debug.Log($"{HasFreeSlot()}");
             if(!HasFreeSlot()) return false;
 
-            return false;
+            Debug.Log($"{(boxData.AllowedCategory & storeable.Category) == 0}");
+            if ((boxData.AllowedCategory & storeable.Category) == 0) return false;
+
+            GameObject exsistingItem = PeekItem();
+            if(exsistingItem != null) Debug.Log($"{exsistingItem.name}");
+
+            if (exsistingItem != null && exsistingItem.TryGetComponent<IStoreable>(out var existingStoreable))
+            {
+                return (existingStoreable.SubCategory & storeable.SubCategory) != 0;
+            }
+
+            return true;
         }
 
         // if full
@@ -118,7 +130,17 @@ namespace StoreSimulator.StoreableItems
 
         public void PlaceItem(GameObject item)
         {
-            throw new System.NotImplementedException();
+            foreach (var slot in slots)
+            {
+                if(!slot.IsOccupied)
+                {
+                    //item.GetComponent<Rigidbody>().isKinematic = true;
+                    //item.GetComponent<Collider>().enabled = false;
+
+                    slot.Occupy(item);
+                    return;
+                }
+            }
         }
 
         // give item to caller (unlink from CurrentSlot)

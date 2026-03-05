@@ -13,6 +13,7 @@ namespace StoreSimulator.PlayerInput
         public float MouseY { get; }
         public bool IsJumping { get; }
         public bool IsInteracting { get; }
-        public bool IsThrow { get; }
+        public bool IsThrowwing { get; }
+        public bool IsPacking { get; }
     }
 }

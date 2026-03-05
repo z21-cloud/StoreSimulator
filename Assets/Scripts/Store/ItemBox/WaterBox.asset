@@ -15,3 +15,4 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 2647af4701e631e48b989141328c278f, type: 2}
   maxCapacity: 10
   itemPrefab: {fileID: 6550974380201587083, guid: a7a13c41c53ad3a4dbf307c95e523887, type: 3}
+  allowedCategory: 2

@@ -45,6 +45,15 @@ namespace StoreSimulator.PlayerController
             Interact();
 
             Throw();
+
+            Pack();
+        }
+
+        private void Pack()
+        {
+            if (!input.IsPacking) return;
+
+            picker.DoPack();
         }
 
         private void Jump()
@@ -63,7 +72,7 @@ namespace StoreSimulator.PlayerController
 
         private void Throw()
         {
-            if (!input.IsThrow) return;
+            if (!input.IsThrowwing) return;
 
             picker.DoThrow();
         }

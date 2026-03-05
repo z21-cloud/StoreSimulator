@@ -15,7 +15,8 @@ namespace StoreSimulator.PlayerInput
         public float MouseY { get; private set; }
         public bool IsJumping { get; private set; }
         public bool IsInteracting { get; private set; }
-        public bool IsThrow { get; private set; }
+        public bool IsThrowwing { get; private set; }
+        public bool IsPacking { get; private set; }
     
         // constants
         private const int LMB = 0; // left mouse button
@@ -29,11 +30,17 @@ namespace StoreSimulator.PlayerInput
             Jumping();
             Picking();
             Throwing();
+            Packing();
+        }
+
+        private void Packing()
+        {
+            IsPacking = Input.GetButtonDown("Pack");
         }
 
         private void Throwing()
         {
-            IsThrow = Input.GetButtonDown("Throw");
+            IsThrowwing = Input.GetButtonDown("Throw");
         }
 
         private void GetHorizontalInput()

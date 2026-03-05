@@ -144,7 +144,7 @@ namespace StoreSimulator.InteractableObjects
         public void ClearHeldObject()
         {
             // reset
-            HeldObject.transform.parent = null;
+            //HeldObject.transform.parent = null;
             HeldObject = null;
         }
     }

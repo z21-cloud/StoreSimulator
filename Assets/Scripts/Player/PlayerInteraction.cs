@@ -12,6 +12,8 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private HoldingHandler holdingHandler;
         [Header("Interaction detector")]
         [SerializeField] private PlayerThrowHandler throwHandler;
+        [Header("Interaction detector")]
+        [SerializeField] private PackingHandler packingHandler;
 
         // components
         private GameObject _currentInteractable;
@@ -31,6 +33,12 @@ namespace StoreSimulator.InteractableObjects
         {
             bool value = throwHandler.DoThrow(holdingHandler.HeldObject);
             if(value) holdingHandler.ClearHeldObject();
+        }
+
+        public void DoPack()
+        {
+            bool value = packingHandler.DoPackItem(holdingHandler.HeldObject, _currentInteractable);
+            if (value) holdingHandler.ClearHeldObject();
         }
 
         public IInteractable GetCurrentInteractable()
