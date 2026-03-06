@@ -38,6 +38,7 @@ namespace StoreSimulator.InteractableObjects
         public void DoPack()
         {
             bool value = packingHandler.DoPackItem(holdingHandler.HeldObject, _currentInteractable);
+            Debug.Log($"PlayerInteraction: {value}");
             if (value) holdingHandler.ClearHeldObject();
         }
 

@@ -198,7 +198,17 @@ namespace StoreSimulator.InteractableObjects
             return _currentSubCategory;
         }
 
-        public GameObject PeekItem() => null;
+        public GameObject PeekItem()
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.IsOccupied)
+                    return slot.GetStoredItem();
+            }
+
+            return null;
+        }
+
         public string GetDescription()
         {
             throw new NotImplementedException();

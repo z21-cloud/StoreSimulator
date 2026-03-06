@@ -90,14 +90,13 @@ namespace StoreSimulator.StoreableItems
         // can place item back in box
         public bool CanPlaceItem(IStoreable storeable)
         {
-            Debug.Log($"{HasFreeSlot()}");
+            Debug.Log($"BoxStorage: Has free slot - {HasFreeSlot()}");
             if(!HasFreeSlot()) return false;
 
-            Debug.Log($"{(boxData.AllowedCategory & storeable.Category) == 0}");
+            Debug.Log($"BoxStorage: ItemCategory & AllowedCategory - {(boxData.AllowedCategory & storeable.Category) != 0}");
             if ((boxData.AllowedCategory & storeable.Category) == 0) return false;
 
             GameObject exsistingItem = PeekItem();
-            if(exsistingItem != null) Debug.Log($"{exsistingItem.name}");
 
             if (exsistingItem != null && exsistingItem.TryGetComponent<IStoreable>(out var existingStoreable))
             {
@@ -132,11 +131,13 @@ namespace StoreSimulator.StoreableItems
         {
             foreach (var slot in slots)
             {
+                Debug.Log($"BoxStorage: Try find slot");
                 if(!slot.IsOccupied)
                 {
-                    //item.GetComponent<Rigidbody>().isKinematic = true;
-                    //item.GetComponent<Collider>().enabled = false;
+                    item.GetComponent<Rigidbody>().isKinematic = true;
+                    item.GetComponent<Collider>().enabled = false;
 
+                    Debug.Log($"Box storage: PlaceItem {item.name} in slot {slot.name} ; slot isOccupied {slot.IsOccupied}");
                     slot.Occupy(item);
                     return;
                 }
