@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 037e09779ac6f9248a95d088df9984bb, type: 3}
-  m_Name: Granola
+  m_Script: {fileID: 11500000, guid: 9f9b16f759e6ebb4fbd14f78654dd9e3, type: 3}
+  m_Name: SpriteOrder
   m_EditorClassIdentifier: 
-  itemName: Granola
-  basePrice: 1.45
-  category: 1
-  subCategory: 2048
-  prefab: {fileID: 7430490957887094376, guid: b3b8f0fc3c61227419be2a11e5e41a44, type: 3}
+  itemData: {fileID: 11400000, guid: e881995a8ce02d94e86160afd81ca02a, type: 2}
+  quantity: 5

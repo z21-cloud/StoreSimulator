@@ -42,6 +42,10 @@ namespace StoreSimulator.InteractableObjects
                 {
                     priceTag.DoInteract();
                 }
+                else if(currentInteractable.TryGetComponent<PCInteractor>(out var pc))
+                {
+                    pc.Interact();
+                }
                 else
                 {
                     // otherwise trying to take item

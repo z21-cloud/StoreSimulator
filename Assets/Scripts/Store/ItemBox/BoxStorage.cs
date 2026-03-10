@@ -7,31 +7,52 @@ namespace StoreSimulator.StoreableItems
 {
     public class BoxStorage : MonoBehaviour, IHoldable, IInteractable, IStorage
     {
-        [SerializeField] private BoxData boxData;
-        [SerializeField] private List<ShellfSlot> slots;
-
         [SerializeField] private ThrowableSettings throwableSettings;
+        [SerializeField] private List<SlotGroup> groups;
+        
+        private List<ShellfSlot> _slots = new List<ShellfSlot>();
+        private ItemCategory _allowedCategory;
         private Rigidbody _rb;
         private Collider _itemCollider;
-        private GameObject _itemPrefab;
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
             _itemCollider = GetComponent<Collider>();
-            _itemPrefab = boxData.ItemPrefab;
         }
 
-        private void Start()
+        public void Initialize(DeliveryOrder order)
         {
-            for (int i = 0; i < boxData.BoxMaxCapacity; i++)
+            _allowedCategory = order.ItemData.Category;
+
+            foreach (var group in groups)
+            {
+                bool match = ((group.Preset.Category & order.ItemData.Category) != 0) &&
+                             ((group.Preset.SubCategory & order.ItemData.SubCategory) != 0);
+
+                if (match)
+                {
+                    _slots = group.Slots;
+                    group.gameObject.SetActive(match);
+                    break;
+                }
+            }
+
+            if (_slots.Count == 0) return;
+            for (int i = 0; i < order.Quantity; i++)
             {
                 //_itemPrefab.GetComponent<Rigidbody>().isKinematic = true;
                 //_itemPrefab.GetComponent<Collider>().enabled = false;
-                GameObject item = Instantiate(_itemPrefab, slots[i].transform.position, Quaternion.identity);
+                GameObject item = Instantiate
+                    (
+                    order.ItemData.Prefab, 
+                    _slots[i].transform.position, 
+                    Quaternion.identity
+                    );
+
                 item.GetComponent<Rigidbody>().isKinematic = true;
                 item.GetComponent<Collider>().enabled = false;
-                slots[i].Occupy(item);
+                _slots[i].Occupy(item);
             }
         }
 
@@ -91,10 +112,10 @@ namespace StoreSimulator.StoreableItems
         public bool CanPlaceItem(IStoreable storeable)
         {
             Debug.Log($"BoxStorage: Has free slot - {HasFreeSlot()}");
-            if(!HasFreeSlot()) return false;
+            if(!HasFreeSlot() || _slots == null) return false;
 
-            Debug.Log($"BoxStorage: ItemCategory & AllowedCategory - {(boxData.AllowedCategory & storeable.Category) != 0}");
-            if ((boxData.AllowedCategory & storeable.Category) == 0) return false;
+            Debug.Log($"BoxStorage: ItemCategory & AllowedCategory - {(_allowedCategory & storeable.Category) != 0}");
+            if ((_allowedCategory & storeable.Category) == 0) return false;
 
             GameObject exsistingItem = PeekItem();
 
@@ -109,7 +130,7 @@ namespace StoreSimulator.StoreableItems
         // if full
         public bool HasFreeSlot()
         {
-            foreach (var slot in slots)
+            foreach (var slot in _slots)
             {
                 if (!slot.IsOccupied) return true;
             }
@@ -120,7 +141,7 @@ namespace StoreSimulator.StoreableItems
         // if empty
         public bool CanTakeItem()
         {
-            foreach (var slot in slots)
+            foreach (var slot in _slots)
             {
                 if (slot.IsOccupied) return true;
             }
@@ -129,7 +150,7 @@ namespace StoreSimulator.StoreableItems
 
         public void PlaceItem(GameObject item)
         {
-            foreach (var slot in slots)
+            foreach (var slot in _slots)
             {
                 Debug.Log($"BoxStorage: Try find slot");
                 if(!slot.IsOccupied)
@@ -147,7 +168,7 @@ namespace StoreSimulator.StoreableItems
         // give item to caller (unlink from CurrentSlot)
         public GameObject TakeItem(Vector3 interactionPoint)
         {
-            foreach (var slot in slots)
+            foreach (var slot in _slots)
             {
                 if (slot.IsOccupied)
                 {
@@ -161,7 +182,7 @@ namespace StoreSimulator.StoreableItems
         // give item to caller (without unlink from CurrentSlot) 
         public GameObject PeekItem()
         {
-            foreach (var slot in slots)
+            foreach (var slot in _slots)
             {
                 if (slot.IsOccupied)
                     return slot.GetStoredItem();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace StoreSimulator.StoreableItems
 {
+    [System.Flags]
     public enum ItemSubCategory 
     {
         None = 0,

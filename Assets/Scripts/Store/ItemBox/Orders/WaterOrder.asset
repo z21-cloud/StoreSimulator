@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526b635bd8f520c44b45a9a0009d19c9, type: 3}
-  m_Name: WaterBox
+  m_Script: {fileID: 11500000, guid: 9f9b16f759e6ebb4fbd14f78654dd9e3, type: 3}
+  m_Name: WaterOrder
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 2647af4701e631e48b989141328c278f, type: 2}
-  maxCapacity: 10
-  itemPrefab: {fileID: 6550974380201587083, guid: a7a13c41c53ad3a4dbf307c95e523887, type: 3}
-  allowedCategory: 2
+  quantity: 5
