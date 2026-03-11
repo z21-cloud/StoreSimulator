@@ -1072,6 +1072,7 @@ MonoBehaviour:
   allowedCategory: 1
   allowedSpecificItems: []
   priceText: {fileID: 5268094863713470231}
+  priceManager: {fileID: 0}
 --- !u!65 &1032652396482590845
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1434,6 +1435,7 @@ MonoBehaviour:
   allowedCategory: 4
   allowedSpecificItems: []
   priceText: {fileID: 770647018679114482}
+  priceManager: {fileID: 0}
 --- !u!65 &1036679749399513548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1883,6 +1885,7 @@ MonoBehaviour:
   allowedCategory: 2
   allowedSpecificItems: []
   priceText: {fileID: 7389144262022683748}
+  priceManager: {fileID: 0}
 --- !u!65 &2312346620173954068
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6555,6 +6558,7 @@ MonoBehaviour:
   allowedCategory: 2
   allowedSpecificItems: []
   priceText: {fileID: 3581647526732663617}
+  priceManager: {fileID: 0}
 --- !u!65 &8165308040594229908
 BoxCollider:
   m_ObjectHideFlags: 0

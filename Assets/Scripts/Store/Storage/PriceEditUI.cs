@@ -12,13 +12,14 @@ namespace StoreSimulator.StoreUI
         [SerializeField] private TMP_InputField inputField;
         [SerializeField] private TMP_Text currentPrice;
         [SerializeField] private TMP_Text basePrice;
+        [SerializeField] private GameObject panel;
 
         private IPriceStorage _activeStorage;
 
         public void OpenForStorage(IPriceStorage storage)
         {
             _activeStorage = storage;
-            gameObject.SetActive(true);
+            panel.SetActive(true);
             currentPrice.text = $"{storage.GetCurrentPrice():F2}$";
             basePrice.text = $"{storage.GetBasePrice():F2}$";
             inputField.text = "";
@@ -30,14 +31,14 @@ namespace StoreSimulator.StoreUI
             if (float.TryParse(inputField.text, out float newPrice))
             {
                 _activeStorage.OnPriceInputChanged(newPrice);
-                gameObject.SetActive(false);
+                panel.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
 
         public void ClosePanel()
         {
-            gameObject.SetActive(false);
+            panel.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
