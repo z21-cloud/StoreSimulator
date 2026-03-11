@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using StoreSimulator.StoreableItems;
+using StoreSimulator.Boxes;
 
 public class PCInteractor : MonoBehaviour, IInteractable
 {

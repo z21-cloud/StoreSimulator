@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 037e09779ac6f9248a95d088df9984bb, type: 3}
-  m_Name: Watermelon_Full
+  m_Script: {fileID: 11500000, guid: 9f9b16f759e6ebb4fbd14f78654dd9e3, type: 3}
+  m_Name: WatermelonOrder
   m_EditorClassIdentifier: 
-  itemName: Watermelon_Full
-  basePrice: 4.05
-  category: 1
-  subCategory: 64
-  prefab: {fileID: 8887084665529090899, guid: 2c8da5ba7a227b941ac7986042bb6685, type: 3}
+  itemData: {fileID: 11400000, guid: 77d93379a06fe9b4abd5ce383de8c96b, type: 2}
+  quantity: 4

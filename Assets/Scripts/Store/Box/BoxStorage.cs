@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
+using System;
+using StoreSimulator.Boxes;
 
 namespace StoreSimulator.StoreableItems
 {
@@ -111,8 +113,10 @@ namespace StoreSimulator.StoreableItems
         // can place item back in box
         public bool CanPlaceItem(IStoreable storeable)
         {
-            Debug.Log($"BoxStorage: Has free slot - {HasFreeSlot()}");
-            if(!HasFreeSlot() || _slots == null) return false;
+            if(!CanTakeItem())
+            {
+                return FindMatchingGroup(storeable) != null;
+            }
 
             Debug.Log($"BoxStorage: ItemCategory & AllowedCategory - {(_allowedCategory & storeable.Category) != 0}");
             if ((_allowedCategory & storeable.Category) == 0) return false;
@@ -124,8 +128,10 @@ namespace StoreSimulator.StoreableItems
                 return (existingStoreable.SubCategory & storeable.SubCategory) != 0;
             }
 
-            return true;
+            Debug.Log($"BoxStorage: Has free slot - {HasFreeSlot()}");
+            return HasFreeSlot();
         }
+
 
         // if full
         public bool HasFreeSlot()
@@ -150,6 +156,11 @@ namespace StoreSimulator.StoreableItems
 
         public void PlaceItem(GameObject item)
         {
+            if(!CanTakeItem() && item.TryGetComponent<IStoreable>(out var storeable))
+            {
+                SwitchSlotGroup(storeable);
+            }
+
             foreach (var slot in _slots)
             {
                 Debug.Log($"BoxStorage: Try find slot");
@@ -163,6 +174,35 @@ namespace StoreSimulator.StoreableItems
                     return;
                 }
             }
+        }
+
+        private void SwitchSlotGroup(IStoreable storeable)
+        {
+            SlotGroup matched = FindMatchingGroup(storeable);
+            if (matched == null) return;
+
+            foreach (var group in groups)
+            {
+                group.gameObject.SetActive(false);
+            }
+
+            matched.gameObject.SetActive(true);
+            _slots = matched.Slots;
+            _allowedCategory = storeable.Category;
+        }
+
+        private SlotGroup FindMatchingGroup(IStoreable storeable)
+        {
+            foreach (var group in groups)
+            {
+                if (((group.Preset.Category & storeable.Category) != 0) &&
+                    ((group.Preset.SubCategory & storeable.SubCategory) != 0))
+                {
+                    return group;
+                }
+            }
+
+            return null;
         }
 
         // give item to caller (unlink from CurrentSlot)
