@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: ColaOrder
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: fec095ab94f039043aee5f8d0dd746e1, type: 2}
+  icon: {fileID: 0}
+  boxCost: 1
   quantity: 5

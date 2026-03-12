@@ -9,9 +9,13 @@ namespace StoreSimulator.Boxes
     public class DeliveryOrder : ScriptableObject
     {
         [SerializeField] private ItemData itemData;
+        [SerializeField] private Sprite icon;
+        [SerializeField] private float boxCost;
         [SerializeField] private int quantity;
 
         public ItemData ItemData => itemData;
+        public Sprite Icon => icon;
+        public float BoxCost => boxCost;
         public int Quantity => quantity;
     }
 }

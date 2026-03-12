@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: SpriteOrder
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: e881995a8ce02d94e86160afd81ca02a, type: 2}
+  icon: {fileID: 0}
+  boxCost: 3
   quantity: 5

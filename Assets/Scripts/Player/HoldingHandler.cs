@@ -44,7 +44,7 @@ namespace StoreSimulator.InteractableObjects
                 }
                 else if(currentInteractable.TryGetComponent<PCInteractor>(out var pc))
                 {
-                    pc.Interact();
+                    pc.Open();
                 }
                 else
                 {

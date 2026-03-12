@@ -5,12 +5,12 @@ using System;
 
 public class PlayerWallet : MonoBehaviour, IWallet
 {
-    [SerializeField] private float balance;
-    public float Balance { get; private set; }
+    [SerializeField] private float startBalance = 500f;
+    public float Balance {get; private set;}
 
-    private void Awake()
+    void Awake()
     {
-        Balance = balance;
+        Balance = startBalance;
     }
 
     public void Add(float amount)

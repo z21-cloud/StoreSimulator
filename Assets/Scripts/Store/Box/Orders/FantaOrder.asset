@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: FantaOrder
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: b1474f9cc0b4bde41bdeaa57cc2d5d21, type: 2}
+  icon: {fileID: 0}
+  boxCost: 2
   quantity: 5

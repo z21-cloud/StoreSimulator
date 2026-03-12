@@ -17,3 +17,4 @@ MonoBehaviour:
   category: 2
   subCategory: 1024
   prefab: {fileID: 6550974380201587083, guid: a7a13c41c53ad3a4dbf307c95e523887, type: 3}
+  icon: {fileID: 21300000, guid: 7103ce8058100ae4f822f40c8fa41a29, type: 3}

@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: WatermelonOrder
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 77d93379a06fe9b4abd5ce383de8c96b, type: 2}
+  icon: {fileID: 21300000, guid: 7103ce8058100ae4f822f40c8fa41a29, type: 3}
+  boxCost: 4
   quantity: 4

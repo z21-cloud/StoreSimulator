@@ -16,3 +16,5 @@ MonoBehaviour:
   basePrice: 0.55
   category: 1
   subCategory: 32768
+  prefab: {fileID: 7645354772166818999, guid: 605cf26b525288544850afb8fc70ebc4, type: 3}
+  icon: {fileID: 21300000, guid: 7103ce8058100ae4f822f40c8fa41a29, type: 3}
