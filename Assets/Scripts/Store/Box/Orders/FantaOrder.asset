@@ -16,3 +16,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   boxCost: 2
   quantity: 5
+  boxPrefab: {fileID: 5123185910383111036, guid: 958e9159f9490644ea3c9ae627cb35cc, type: 3}

@@ -213,7 +213,6 @@ namespace StoreSimulator.InteractableObjects
         {
             throw new NotImplementedException();
         }
-
     }
 }
 

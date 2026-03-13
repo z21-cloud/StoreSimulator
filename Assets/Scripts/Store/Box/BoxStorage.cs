@@ -17,6 +17,7 @@ namespace StoreSimulator.StoreableItems
         private Rigidbody _rb;
         private Collider _itemCollider;
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
+        
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -131,7 +132,6 @@ namespace StoreSimulator.StoreableItems
             Debug.Log($"BoxStorage: Has free slot - {HasFreeSlot()}");
             return HasFreeSlot();
         }
-
 
         // if full
         public bool HasFreeSlot()

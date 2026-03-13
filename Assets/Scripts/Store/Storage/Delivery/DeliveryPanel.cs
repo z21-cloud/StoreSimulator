@@ -14,7 +14,7 @@ public class DeliveryPanel : MonoBehaviour
     [SerializeField] private OrderItem orderItemPrefab;
     [SerializeField] private Transform orderList;
     [SerializeField] private GameObject boxPrefab;
-    [SerializeField] private Transform deliveryZone;
+    [SerializeField] private DeliveryZone deliveryZone;
 
     [Header("UI")]
     [SerializeField] private TMP_Text balanceText;
@@ -59,15 +59,11 @@ public class DeliveryPanel : MonoBehaviour
             return;
         }
 
-        int offset = 0;
         foreach(var item in _orderItems)
         {
             for(int i = 0; i < item.Quantity; i++)
             {
-                Vector3 spawnPos = deliveryZone.position + Vector3.right * offset * 1.5f;
-                GameObject box = Instantiate(boxPrefab, spawnPos, Quaternion.identity);
-                box.GetComponent<BoxStorage>().Initialize(item.Order);
-                offset++;
+                deliveryZone.SpawnDeliveryBox(item.Order);
             }
         }
 

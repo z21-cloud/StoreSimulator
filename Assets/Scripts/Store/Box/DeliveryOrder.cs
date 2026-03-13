@@ -12,8 +12,10 @@ namespace StoreSimulator.Boxes
         [SerializeField] private Sprite icon;
         [SerializeField] private float boxCost;
         [SerializeField] private int quantity;
+        [SerializeField] private GameObject boxPrefab;
 
         public ItemData ItemData => itemData;
+        public GameObject BoxPrefab => boxPrefab;
         public Sprite Icon => icon;
         public float BoxCost => boxCost;
         public int Quantity => quantity;
