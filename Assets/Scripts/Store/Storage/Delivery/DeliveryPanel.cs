@@ -3,6 +3,7 @@ using StoreSimulator.Boxes;
 using StoreSimulator.StoreableItems;
 using StoreSimulator.StoreManager;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,8 +27,8 @@ public class DeliveryPanel : MonoBehaviour
     public void Init(IWallet wallet)
     {
         _wallet = wallet;
-        
-        if(_orderItems.Count > 0)
+
+        if (_orderItems.Count > 0)
         {
             foreach (var item in _orderItems)
             {
@@ -38,34 +39,47 @@ public class DeliveryPanel : MonoBehaviour
             return;
         }
 
-        foreach(var order in availableOrders)
+        foreach (var order in availableOrders)
         {
             OrderItem item = Instantiate(orderItemPrefab, orderList);
             item.Init(order);
             item.OnChanged += UpdateTotal;
             _orderItems.Add(item);
         }
-
+        
         UpdateTotal();
     }
 
     public void OnConfirm()
     {
+        if(!deliveryZone.HasFreeSlot()) return;
+        
         float price = CalculateTotal();
 
-        if(!_wallet.Spend(price))
+        if (!_wallet.CanAfford(price))
         {
             Debug.Log($"[DeliveryPanel]: not enough money");
             return;
         }
-
-        foreach(var item in _orderItems)
+        
+        foreach (var item in _orderItems)
         {
-            for(int i = 0; i < item.Quantity; i++)
+            if(deliveryZone.CurrentSlotsCount() < item.Quantity)
             {
-                deliveryZone.SpawnDeliveryBox(item.Order);
+                Debug.Log($"[DeliveryPanel]: Current free slots {deliveryZone.CurrentSlotsCount()} | order count {item.Quantity}");
+                return;
+            }
+
+            for (int i = 0; i < item.Quantity; i++)
+            {
+                GameObject box = Instantiate(item.Order.BoxPrefab, transform.position, Quaternion.identity);
+                box.GetComponent<BoxStorage>().Initialize(item.Order);
+                deliveryZone.PlaceBox(box);
             }
         }
+
+        Debug.Log($"[DeliveryPanel]: spended {price}$");
+        _wallet.Spend(price);
 
         UpdateTotal();
     }
@@ -79,9 +93,9 @@ public class DeliveryPanel : MonoBehaviour
     private float CalculateTotal()
     {
         float total = 0;
-        foreach(var item in _orderItems)
+        foreach (var item in _orderItems)
             total += item.Order.BoxCost * item.Quantity;
-        
+
         return total;
     }
 }

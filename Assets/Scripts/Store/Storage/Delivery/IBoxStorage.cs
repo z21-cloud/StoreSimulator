@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class IBoxStorage : MonoBehaviour
+public interface IBoxStorage
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public bool HasFreeSlot();
+    public bool CanTakeItem();
+    public void PlaceBox(GameObject box);
+    public GameObject TakeBox();
 }

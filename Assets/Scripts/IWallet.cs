@@ -6,6 +6,6 @@ public interface IWallet
 {
     public float Balance { get; }
     public void Add(float amount);
-    public bool Spend(float amount);
+    public void Spend(float amount);
     public bool CanAfford(float amount);
 }

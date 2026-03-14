@@ -16,6 +16,7 @@ namespace StoreSimulator.StoreableItems
         private ItemCategory _allowedCategory;
         private Rigidbody _rb;
         private Collider _itemCollider;
+        private IBoxOwner _owner;
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
         
         private void Awake()
@@ -59,9 +60,13 @@ namespace StoreSimulator.StoreableItems
             }
         }
 
+        public void SetOwner(IBoxOwner owner) => _owner = owner;
+
         #region HOLDABLE
         public void Hold(Transform holdPoint)
         {
+            _owner?.OnBoxRemoved(gameObject);
+            _owner = null;
             // set object to player's hand
             SetParentPosition(holdPoint);
 

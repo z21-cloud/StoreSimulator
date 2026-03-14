@@ -13,6 +13,11 @@ public class PlayerWallet : MonoBehaviour, IWallet
         Balance = startBalance;
     }
 
+    void Update()
+    {
+        Debug.Log($"[PlayerWallet]: Balance {Balance}$");
+    }
+
     public void Add(float amount)
     {
         Balance += amount;
@@ -20,14 +25,14 @@ public class PlayerWallet : MonoBehaviour, IWallet
 
     public bool CanAfford(float amount)
     {
-        return (Balance -= amount) >= 0;
+        if((Balance - amount) >= 0) return true;
+        return false;
     }
 
-    public bool Spend(float amount)
+    public void Spend(float amount)
     {
-        if (Balance < amount) return false;
-        
+        Debug.Log($"[PlayerWallet]: spended {amount}$");
         Balance -= amount;
-        return true;
+        Balance = Mathf.Max(0, Balance);
     }
 }
