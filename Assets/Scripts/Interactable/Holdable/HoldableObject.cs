@@ -9,8 +9,6 @@ namespace StoreSimulator.InteractableObjects
     public class HoldableObject : MonoBehaviour, IHoldable, IInteractable
     {
         [SerializeField] private ThrowableSettings throwableSettings;
-        // for UI or Inventory
-        public event Action OnHolding;
 
         private Rigidbody rb;
 

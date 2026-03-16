@@ -9,14 +9,14 @@ namespace StoreSimulator.StoreableItems
     {
         [SerializeField] private ThrowableSettings throwableSettings;
         [SerializeField] private List<SlotGroup> groups;
-        
+
         private List<ShellfSlot> _slots = new List<ShellfSlot>();
         private ItemCategory _allowedCategory;
         private Rigidbody _rb;
         private Collider _itemCollider;
         private IBoxOwner _owner;
         public float ThrowForce => throwableSettings != null ? throwableSettings.GetThrowForce() : 1f;
-        
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -43,14 +43,12 @@ namespace StoreSimulator.StoreableItems
             if (_slots.Count == 0) return;
             for (int i = 0; i < order.Quantity; i++)
             {
-                //_itemPrefab.GetComponent<Rigidbody>().isKinematic = true;
-                //_itemPrefab.GetComponent<Collider>().enabled = false;
                 GameObject item = Instantiate
-                    (
-                    order.ItemData.Prefab, 
-                    _slots[i].transform.position, 
+                (
+                    order.ItemData.Prefab,
+                    _slots[i].transform.position,
                     Quaternion.identity
-                    );
+                );
 
                 item.GetComponent<Rigidbody>().isKinematic = true;
                 item.GetComponent<Collider>().enabled = false;
@@ -117,7 +115,7 @@ namespace StoreSimulator.StoreableItems
         // can place item back in box
         public bool CanPlaceItem(IStoreable storeable)
         {
-            if(!CanTakeItem())
+            if (!CanTakeItem())
             {
                 return FindMatchingGroup(storeable) != null;
             }
@@ -159,7 +157,7 @@ namespace StoreSimulator.StoreableItems
 
         public void PlaceItem(GameObject item)
         {
-            if(!CanTakeItem() && item.TryGetComponent<IStoreable>(out var storeable))
+            if (!CanTakeItem() && item.TryGetComponent<IStoreable>(out var storeable))
             {
                 SwitchSlotGroup(storeable);
             }
@@ -167,7 +165,7 @@ namespace StoreSimulator.StoreableItems
             foreach (var slot in _slots)
             {
                 Debug.Log($"BoxStorage: Try find slot");
-                if(!slot.IsOccupied)
+                if (!slot.IsOccupied)
                 {
                     item.GetComponent<Rigidbody>().isKinematic = true;
                     item.GetComponent<Collider>().enabled = false;

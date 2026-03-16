@@ -5,16 +5,11 @@ namespace StoreSimulator.MoneySystem
     public class PlayerWallet : MonoBehaviour, IWallet
     {
         [SerializeField] private float startBalance = 500f;
-        public float Balance {get; private set;}
+        public float Balance { get; private set; }
 
         private void Awake()
         {
             Balance = startBalance;
-        }
-
-        private void Update()
-        {
-            Debug.Log($"[PlayerWallet]: Balance {Balance}$");
         }
 
         public void Add(float amount)
@@ -24,7 +19,7 @@ namespace StoreSimulator.MoneySystem
 
         public bool CanAfford(float amount)
         {
-            if((Balance - amount) >= 0) return true;
+            if ((Balance - amount) >= 0) return true;
             return false;
         }
 
