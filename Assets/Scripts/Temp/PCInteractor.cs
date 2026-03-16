@@ -24,6 +24,9 @@ namespace StoreSimulator.Delivery
         [Header("Player wallet script")]
         [SerializeField] private PlayerWallet playerWallet;
 
+        [Header("Player UI Balance")]
+        [SerializeField] private BalanceUI balanceUI;
+
         public DeliveryPanel DeliveryPanel => deliveryPanel;
 
         private void Start()
@@ -34,8 +37,14 @@ namespace StoreSimulator.Delivery
 
         public void Open()
         {
+            // disable player banalce ui
+            balanceUI.BalanceUISetActive(false);
+            
+            // enable PC screen
             screenRoot.SetActive(true);
             mainMenu.SetActive(true);
+            
+            // controls player's input
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             playerInputController.enabled = false;
@@ -44,8 +53,15 @@ namespace StoreSimulator.Delivery
 
         public void Close()
         {
+            // enable and update player banalce ui
+            balanceUI.UpdateBalanceUI();
+            balanceUI.BalanceUISetActive(true);
+
+            // disable PC screen
             screenRoot.SetActive(false);
             deliveryPanel.gameObject.SetActive(false);
+
+            // controls player's input
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             playerInputController.enabled = true;

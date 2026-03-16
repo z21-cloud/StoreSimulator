@@ -4,6 +4,7 @@ namespace StoreSimulator.MoneySystem
 {
     public class PlayerWallet : MonoBehaviour, IWallet
     {
+       
         [SerializeField] private float startBalance = 500f;
         public float Balance { get; private set; }
 
