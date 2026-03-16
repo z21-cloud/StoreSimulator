@@ -14,6 +14,7 @@ namespace StoreSimulator.Delivery
         public bool IsFull => currentCount >= MaxCapacity;
         public int currentCount = 0;
         public int MaxCapacity => columns * rows * maxLevels;
+        public int maxItemsInQueue = 15;
     }
 }
 
