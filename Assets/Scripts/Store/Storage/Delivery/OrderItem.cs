@@ -4,7 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OrderItem : MonoBehaviour
+namespace StoreSimulator.Delivery
+{
+    public class OrderItem : MonoBehaviour
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text quantityText;
@@ -65,3 +67,5 @@ public class OrderItem : MonoBehaviour
         priceText.text = $"{total:F2}$";
     }
 }
+}
+

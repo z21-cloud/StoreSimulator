@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
-using StoreSimulator.StoreableItems;
-using StoreSimulator.Boxes;
 using StoreSimulator.PlayerController;
 using StoreSimulator.PlayerCamera;
+using StoreSimulator.Delivery;
+using StoreSimulator.MoneySystem;
 
-public class PCInteractor : MonoBehaviour, IInteractable
+namespace StoreSimulator.Delivery
+{
+    public class PCInteractor : MonoBehaviour, IInteractable
 {
     //[SerializeField] private DeliveryOrder waterOrder;
     //[SerializeField] private GameObject boxPrefab;
@@ -65,3 +67,5 @@ public class PCInteractor : MonoBehaviour, IInteractable
         throw new System.NotImplementedException();
     }
 }
+}
+

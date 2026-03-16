@@ -1,38 +1,39 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
 
-public class PlayerWallet : MonoBehaviour, IWallet
+namespace StoreSimulator.MoneySystem
 {
-    [SerializeField] private float startBalance = 500f;
-    public float Balance {get; private set;}
-
-    void Awake()
+    public class PlayerWallet : MonoBehaviour, IWallet
     {
-        Balance = startBalance;
-    }
+        [SerializeField] private float startBalance = 500f;
+        public float Balance {get; private set;}
 
-    void Update()
-    {
-        Debug.Log($"[PlayerWallet]: Balance {Balance}$");
-    }
+        private void Awake()
+        {
+            Balance = startBalance;
+        }
 
-    public void Add(float amount)
-    {
-        Balance += amount;
-    }
+        private void Update()
+        {
+            Debug.Log($"[PlayerWallet]: Balance {Balance}$");
+        }
 
-    public bool CanAfford(float amount)
-    {
-        if((Balance - amount) >= 0) return true;
-        return false;
-    }
+        public void Add(float amount)
+        {
+            Balance += amount;
+        }
 
-    public void Spend(float amount)
-    {
-        Debug.Log($"[PlayerWallet]: spended {amount}$");
-        Balance -= amount;
-        Balance = Mathf.Max(0, Balance);
+        public bool CanAfford(float amount)
+        {
+            if((Balance - amount) >= 0) return true;
+            return false;
+        }
+
+        public void Spend(float amount)
+        {
+            Debug.Log($"[PlayerWallet]: spended {amount}$");
+            Balance -= amount;
+            Balance = Mathf.Max(0, Balance);
+        }
     }
 }
+

@@ -1,6 +1,10 @@
 using UnityEngine;
 
-public interface IBoxOwner
+namespace StoreSimulator.Boxes
+{
+    public interface IBoxOwner
 {
     public void OnBoxRemoved(GameObject box);
 }
+}
+

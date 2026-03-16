@@ -1,3 +1,4 @@
+using StoreSimulator.Delivery;
 using UnityEngine;
 
 namespace StoreSimulator.InteractableObjects

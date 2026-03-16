@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using StoreSimulator.Boxes;
+using StoreSimulator.MoneySystem;
 using StoreSimulator.StoreableItems;
-using StoreSimulator.StoreManager;
 using TMPro;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class DeliveryPanel : MonoBehaviour
+namespace StoreSimulator.Delivery
+{
+    public class DeliveryPanel : MonoBehaviour
 {
     [Header("Orders")]
     [SerializeField] private List<DeliveryOrder> availableOrders;
@@ -99,3 +98,5 @@ public class DeliveryPanel : MonoBehaviour
         return total;
     }
 }
+}
+

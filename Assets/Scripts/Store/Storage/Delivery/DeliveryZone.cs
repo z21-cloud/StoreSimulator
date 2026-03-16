@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using StoreSimulator.Boxes;
-using StoreSimulator.InteractableObjects;
 using StoreSimulator.StoreableItems;
 using UnityEngine;
 
-public class DeliveryZone : MonoBehaviour, IBoxStorage, IBoxOwner
+namespace StoreSimulator.Delivery
+{
+    public class DeliveryZone : MonoBehaviour, IBoxStorage, IBoxOwner
 {
     [SerializeField] private List<Transform> slots;
     [SerializeField] private DeliveryConfig config;
@@ -56,3 +57,5 @@ public class DeliveryZone : MonoBehaviour, IBoxStorage, IBoxOwner
         config.currentCount--;
     }
 }
+}
+

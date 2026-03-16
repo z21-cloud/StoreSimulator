@@ -2,10 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public interface IWallet
+namespace StoreSimulator.MoneySystem
 {
-    public float Balance { get; }
-    public void Add(float amount);
-    public void Spend(float amount);
-    public bool CanAfford(float amount);
+    public interface IWallet
+    {
+        public float Balance { get; }
+        public void Add(float amount);
+        public void Spend(float amount);
+        public bool CanAfford(float amount);
+    }
 }
