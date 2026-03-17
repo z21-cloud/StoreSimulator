@@ -61,7 +61,7 @@ namespace StoreSimulator.StoreableItems
         #region HOLDABLE
         public void Hold(Transform holdPoint)
         {
-            _owner?.OnBoxRemoved(gameObject);
+            _owner?.OnBoxRemoved(this);
             _owner = null;
             // set object to player's hand
             SetParentPosition(holdPoint);

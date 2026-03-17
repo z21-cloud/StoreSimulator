@@ -11,6 +11,7 @@ public class DeliveryQueue<T> where T : MonoBehaviour
 
     public bool IsFull => _count == _capacity;
     public bool IsEmpty => _count == 0;
+    public int Count => _count;
 
     public DeliveryQueue(int capacity = 15)
     {

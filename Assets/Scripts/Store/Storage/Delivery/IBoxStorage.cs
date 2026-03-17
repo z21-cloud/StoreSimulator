@@ -1,3 +1,4 @@
+using StoreSimulator.StoreableItems;
 using UnityEngine;
 
 namespace StoreSimulator.Boxes
@@ -6,8 +7,8 @@ namespace StoreSimulator.Boxes
 {
     public bool HasFreeSlot();
     public bool CanTakeItem();
-    public void PlaceBox(GameObject box);
-    public GameObject TakeBox();
+    public void PlaceBox(BoxStorage box);
+    public BoxStorage TakeBox();
 }
 }
 

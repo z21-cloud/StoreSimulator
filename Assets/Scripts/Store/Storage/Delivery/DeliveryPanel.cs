@@ -20,6 +20,9 @@ namespace StoreSimulator.Delivery
         [Tooltip("Delivery Zone script that spawns orders at pallete")]
         [SerializeField] private DeliveryZone deliveryZone;
 
+        [Header("Box pool")]
+        [SerializeField] private BoxPooling boxPooling;
+
         [Header("UI")]
         [SerializeField] private TMP_Text balanceText;
         [SerializeField] private TMP_Text totalPriceText;
@@ -88,8 +91,8 @@ namespace StoreSimulator.Delivery
                 // Instatiate order
                 for (int i = 0; i < item.Quantity; i++)
                 {
-                    GameObject box = Instantiate(item.Order.BoxPrefab, transform.position, Quaternion.identity);
-                    box.GetComponent<BoxStorage>().Initialize(item.Order);
+                    BoxStorage box = boxPooling.GetBoxStorage();
+                    box.Initialize(item.Order);
                     deliveryZone.PlaceBox(box);
                 }
             }
