@@ -47,6 +47,7 @@ public class ObjectPooling<T> where T : MonoBehaviour
 
     public void Release(T obj)
     {
+        obj.transform.parent = _parent;
         obj.gameObject.SetActive(false);
     }
 }
