@@ -17,7 +17,8 @@ namespace StoreSimulator.PlayerInput
         public bool IsInteracting { get; private set; }
         public bool IsThrowwing { get; private set; }
         public bool IsPacking { get; private set; }
-    
+        public bool IsBuilding { get; private set; }
+
         // constants
         private const int LMB = 0; // left mouse button
 
@@ -31,6 +32,7 @@ namespace StoreSimulator.PlayerInput
             Picking();
             Throwing();
             Packing();
+            Building();
         }
 
         private void Packing()
@@ -71,6 +73,11 @@ namespace StoreSimulator.PlayerInput
         private void Picking()
         {
             IsInteracting = Input.GetButtonDown("Interact");
+        }
+
+        private void Building()
+        {
+            IsBuilding = Input.GetButtonDown("Build");
         }
     }
 }

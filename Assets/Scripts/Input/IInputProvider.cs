@@ -15,5 +15,6 @@ namespace StoreSimulator.PlayerInput
         public bool IsInteracting { get; }
         public bool IsThrowwing { get; }
         public bool IsPacking { get; }
+        public bool IsBuilding { get; }
     }
 }

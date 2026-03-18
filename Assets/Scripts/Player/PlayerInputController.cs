@@ -47,6 +47,24 @@ namespace StoreSimulator.PlayerController
             Throw();
 
             Pack();
+
+            Build();
+
+            Place();
+        }
+
+        private void Build()
+        {
+            if(!input.IsBuilding) return;
+
+            picker.ToggleBuildingMode();
+        }
+
+        private void Place()
+        {
+            if(!input.MouseLMB) return;
+
+            picker.DoPlace();
         }
 
         private void Pack()

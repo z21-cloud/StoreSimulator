@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace StoreSimulator.InteractableObjects
 {
+    public enum PlayerMode { Default, Building }
     public class PlayerInteraction : MonoBehaviour
     {
         [Header("Interaction detector")]
@@ -14,25 +15,49 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private PlayerThrowHandler throwHandler;
         [Header("Interaction detector")]
         [SerializeField] private PackingHandler packingHandler;
+        [Header("Building ")]
+        [SerializeField] private BuildingHandler buildingHandler;
 
-        // components
+        private PlayerMode _currentMode = PlayerMode.Default;
+
+
         private GameObject _currentInteractable;
-        
+
         private void Update()
         {
             _currentInteractable = interactionDetector.CurrentInteractable;
+            Debug.Log(_currentMode);
+            Debug.Log(_currentInteractable);
         }
 
+        public void ToggleBuildingMode()
+        {
+            _currentMode = _currentMode == PlayerMode.Default
+                        ? PlayerMode.Building
+                        : PlayerMode.Default;
+            
+            if(_currentMode == PlayerMode.Default) buildingHandler.CancelHolding();
+        }
         // Interaction with gameobjects
         public void DoInteract()
         {
-            holdingHandler.DoInteract(_currentInteractable);
+            if(_currentMode == PlayerMode.Building)
+                buildingHandler.DoInteract(_currentInteractable);
+            
+            else
+                holdingHandler.DoInteract(_currentInteractable);
+        }
+
+        public void DoPlace()
+        {
+            if(_currentMode != PlayerMode.Building) return;
+            buildingHandler.DoPlace();
         }
 
         public void DoThrow()
         {
             bool value = throwHandler.DoThrow(holdingHandler.HeldObject);
-            if(value) holdingHandler.ClearHeldObject();
+            if (value) holdingHandler.ClearHeldObject();
         }
 
         public void DoPack()

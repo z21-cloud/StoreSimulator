@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7544001716125599742}
   - component: {fileID: 552822441108984233}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3597079474941008733}
   - component: {fileID: 4692355141065447694}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 987053386943688579}
   - component: {fileID: 7560620625650555484}
   - component: {fileID: 2986079569608126166}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -172,9 +174,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &673342100277569885
 GameObject:
@@ -188,7 +192,7 @@ GameObject:
   - component: {fileID: 3934256240610609275}
   - component: {fileID: 1132096670507120322}
   - component: {fileID: 312577963323319969}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +293,7 @@ GameObject:
   - component: {fileID: 684211620708244475}
   - component: {fileID: 3381889825408220722}
   - component: {fileID: 3423266758214363506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,6 +343,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -360,9 +366,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &996036537051047835
 GameObject:
@@ -375,7 +383,7 @@ GameObject:
   - component: {fileID: 7470779274046350816}
   - component: {fileID: 6964788277249758649}
   - component: {fileID: 770647018679114482}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,6 +475,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -510,7 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2645462467756267379}
   - component: {fileID: 3232023317948222926}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +565,7 @@ GameObject:
   - component: {fileID: 8466642223563328756}
   - component: {fileID: 886813855925948043}
   - component: {fileID: 7627728604336878691}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,6 +615,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -627,9 +638,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1189117067988823327
 GameObject:
@@ -641,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2296062044023512969}
   - component: {fileID: 67139868540217677}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +700,7 @@ GameObject:
   - component: {fileID: 5338102784891214141}
   - component: {fileID: 5736330934193050145}
   - component: {fileID: 8273126392771779785}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,6 +750,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -758,9 +773,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1213276837839507799
 GameObject:
@@ -774,7 +791,7 @@ GameObject:
   - component: {fileID: 3742752341525101292}
   - component: {fileID: 5989194888508987371}
   - component: {fileID: 7531947737589340009}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -824,6 +841,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -845,9 +864,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7531947737589340009
 BoxCollider:
@@ -880,7 +901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8947996590842315176}
   - component: {fileID: 8691755819415859386}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -926,7 +947,7 @@ GameObject:
   - component: {fileID: 1676325555143805154}
   - component: {fileID: 1970515854869364268}
   - component: {fileID: 6521782942072734242}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,6 +997,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -997,9 +1020,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1401376998884075470
 GameObject:
@@ -1012,7 +1037,7 @@ GameObject:
   - component: {fileID: 7047116725985453113}
   - component: {fileID: 3557922041732570058}
   - component: {fileID: 1032652396482590845}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShelfSpace (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,7 +1129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9221156831623769718}
   - component: {fileID: 3414879674535122765}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1149,7 +1174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4846273234180250526}
   - component: {fileID: 5441776579954233632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1194,7 +1219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3760578509882018769}
   - component: {fileID: 5777725110398851569}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1239,7 +1264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775039991074851941}
   - component: {fileID: 9062302148226359230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1284,7 +1309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8690852454056334509}
   - component: {fileID: 8482255064043069882}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1329,7 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2932800712995684343}
   - component: {fileID: 4868348328696845485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1375,7 +1400,7 @@ GameObject:
   - component: {fileID: 4243754256916508610}
   - component: {fileID: 5633494530572152869}
   - component: {fileID: 1036679749399513548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShelfSpace (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1467,7 +1492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3367921435706391256}
   - component: {fileID: 6808410091149675254}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1512,7 +1537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9091952673148591282}
   - component: {fileID: 1207455021441804273}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1557,7 +1582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6091656642421776223}
   - component: {fileID: 6205978400269521457}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1603,7 +1628,7 @@ GameObject:
   - component: {fileID: 5181396174680457855}
   - component: {fileID: 3291951103112489223}
   - component: {fileID: 3581647526732663617}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1695,6 +1720,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1739,7 +1765,7 @@ GameObject:
   - component: {fileID: 97026836159507459}
   - component: {fileID: 9073463489256674759}
   - component: {fileID: 1993327468755650567}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1789,6 +1815,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1810,9 +1838,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2352333468628700552
 GameObject:
@@ -1825,7 +1855,7 @@ GameObject:
   - component: {fileID: 3355852911967580938}
   - component: {fileID: 699151278205006545}
   - component: {fileID: 2312346620173954068}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShelfSpace (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1918,7 +1948,7 @@ GameObject:
   - component: {fileID: 3944227035311188082}
   - component: {fileID: 7794713031896476859}
   - component: {fileID: 256488748430911379}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1968,6 +1998,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1989,9 +2021,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2398763069932207141
 GameObject:
@@ -2004,7 +2038,7 @@ GameObject:
   - component: {fileID: 7537938393919387338}
   - component: {fileID: 7322354348355559865}
   - component: {fileID: 8379186228473532575}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2054,6 +2088,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2075,9 +2111,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2447004201934094834
 GameObject:
@@ -2088,7 +2126,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7383548778969785923}
-  m_Layer: 0
+  - component: {fileID: 5697139846672869387}
+  m_Layer: 7
   m_Name: Active Shelf Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2115,6 +2154,20 @@ Transform:
   - {fileID: 3355852911967580938}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5697139846672869387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2447004201934094834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8b200dda9e8f045ac9d4d1c8580e0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildableItem
+  itemSize: {x: 2, y: 1}
+  ghostPrefab: {fileID: 6720724965167688849, guid: 8619e415f8132da48bcd0844231a1779, type: 3}
 --- !u!1 &2455184903354717912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,7 +2178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 125901338386826820}
   - component: {fileID: 1288685752212683503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2171,7 +2224,7 @@ GameObject:
   - component: {fileID: 7582209990772180594}
   - component: {fileID: 20313194353748191}
   - component: {fileID: 4571407964937253272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2221,6 +2274,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2242,9 +2297,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2775358205582691571
 GameObject:
@@ -2257,7 +2314,7 @@ GameObject:
   - component: {fileID: 6218506274562740349}
   - component: {fileID: 9094969242944460343}
   - component: {fileID: 7648404292596574319}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2307,6 +2364,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2328,9 +2387,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2849176132151671192
 GameObject:
@@ -2342,7 +2403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3245563421991414884}
   - component: {fileID: 8811237193361411170}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2388,7 +2449,7 @@ GameObject:
   - component: {fileID: 4645891634839448087}
   - component: {fileID: 7751894240209754235}
   - component: {fileID: 8089060000031179259}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2438,6 +2499,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2459,9 +2522,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3117486485477747218
 GameObject:
@@ -2473,7 +2538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2708029437171652708}
   - component: {fileID: 6113009089382157842}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2519,7 +2584,7 @@ GameObject:
   - component: {fileID: 7970618259406315669}
   - component: {fileID: 4264436641198519871}
   - component: {fileID: 8740896846718272426}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2569,6 +2634,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2590,9 +2657,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3427943477150304021
 GameObject:
@@ -2605,7 +2674,7 @@ GameObject:
   - component: {fileID: 6217888414888744168}
   - component: {fileID: 8493697330903895289}
   - component: {fileID: 828234926016703573}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2655,6 +2724,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2676,9 +2747,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3626578334994395302
 GameObject:
@@ -2690,7 +2763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7746118845033195525}
   - component: {fileID: 1288147754569321428}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2735,7 +2808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5264632233205331849}
   - component: {fileID: 4557959920643185541}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2781,7 +2854,7 @@ GameObject:
   - component: {fileID: 5739164192595350675}
   - component: {fileID: 8205730357577794679}
   - component: {fileID: 3282517346628090892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2831,6 +2904,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2852,9 +2927,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4242354209487770143
 GameObject:
@@ -2866,7 +2943,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4130934467689490103}
   - component: {fileID: 7867341323435101909}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PriceLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2915,7 +2992,7 @@ GameObject:
   - component: {fileID: 6990868467398345208}
   - component: {fileID: 4645899774976570924}
   - component: {fileID: 3469160829349258585}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2965,6 +3042,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2986,9 +3065,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4322279474716043964
 GameObject:
@@ -3001,7 +3082,7 @@ GameObject:
   - component: {fileID: 8363111991266680727}
   - component: {fileID: 418404054895414986}
   - component: {fileID: 7055410208488775609}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3051,6 +3132,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3072,9 +3155,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4349684661992152584
 GameObject:
@@ -3086,7 +3171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057940064952604495}
   - component: {fileID: 3252278564284511464}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PriceLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3134,7 +3219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 408300107901952309}
   - component: {fileID: 2134400956002648769}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3179,7 +3264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4171385918156352756}
   - component: {fileID: 3680380053937503529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3224,7 +3309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8468030629464962373}
   - component: {fileID: 1509514584340924812}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3270,7 +3355,7 @@ GameObject:
   - component: {fileID: 2738186847069878124}
   - component: {fileID: 8292038639921993445}
   - component: {fileID: 7389144262022683748}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3362,6 +3447,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3406,7 +3492,7 @@ GameObject:
   - component: {fileID: 6329756810610791980}
   - component: {fileID: 3215032785215435353}
   - component: {fileID: 2971513192770497852}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3456,6 +3542,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3477,9 +3565,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4992534637669247095
 GameObject:
@@ -3492,7 +3582,7 @@ GameObject:
   - component: {fileID: 2994784670767235247}
   - component: {fileID: 8234757126269414805}
   - component: {fileID: 6871096442456535603}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3542,6 +3632,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3563,9 +3655,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4999622914674355732
 GameObject:
@@ -3579,7 +3673,7 @@ GameObject:
   - component: {fileID: 7591902351841126406}
   - component: {fileID: 6576492508275366449}
   - component: {fileID: 1765025521313667853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3629,6 +3723,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3650,9 +3746,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1765025521313667853
 BoxCollider:
@@ -3686,7 +3784,7 @@ GameObject:
   - component: {fileID: 1892452788572300223}
   - component: {fileID: 5069103549302541368}
   - component: {fileID: 2424171196951641100}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3736,6 +3834,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3757,9 +3857,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5210688545936375229
 GameObject:
@@ -3773,7 +3875,7 @@ GameObject:
   - component: {fileID: 4975414165574415323}
   - component: {fileID: 416395113438356383}
   - component: {fileID: 7088042613404561928}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3823,6 +3925,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3844,9 +3948,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7088042613404561928
 BoxCollider:
@@ -3879,7 +3985,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2349481690734180637}
   - component: {fileID: 7372672127305069890}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PriceLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3928,7 +4034,7 @@ GameObject:
   - component: {fileID: 2667239451144703632}
   - component: {fileID: 940650215790011913}
   - component: {fileID: 627868066852338406}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3978,6 +4084,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3999,9 +4107,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5328581804475757366
 GameObject:
@@ -4015,7 +4125,7 @@ GameObject:
   - component: {fileID: 8938699341726733701}
   - component: {fileID: 6365240084030635947}
   - component: {fileID: 6895325382061978728}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4116,7 +4226,7 @@ GameObject:
   - component: {fileID: 3439824701366395312}
   - component: {fileID: 4429089381142340104}
   - component: {fileID: 2537126925399706056}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4166,6 +4276,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4187,9 +4299,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5466003145677573325
 GameObject:
@@ -4201,7 +4315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3311858036812541471}
   - component: {fileID: 8418646324128764297}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4246,7 +4360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8393506498741959413}
   - component: {fileID: 8459789006340127383}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4292,7 +4406,7 @@ GameObject:
   - component: {fileID: 4432235223992110448}
   - component: {fileID: 4738317823132291730}
   - component: {fileID: 3903536921698549790}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4342,6 +4456,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4363,9 +4479,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5759633909194111147
 GameObject:
@@ -4377,7 +4495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2199228463339306844}
   - component: {fileID: 1455582518358654171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4422,7 +4540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5549514666271214424}
   - component: {fileID: 5785940473502238105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4469,7 +4587,7 @@ GameObject:
   - component: {fileID: 3684786718676344924}
   - component: {fileID: 9067982047371729527}
   - component: {fileID: 2296771951567967052}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4570,7 +4688,7 @@ GameObject:
   - component: {fileID: 2615104184024444296}
   - component: {fileID: 7856759931925027237}
   - component: {fileID: 786353369766550145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4620,6 +4738,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4641,9 +4761,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6152691201259682896
 GameObject:
@@ -4656,7 +4778,7 @@ GameObject:
   - component: {fileID: 3079231121336253285}
   - component: {fileID: 3689265975465573969}
   - component: {fileID: 6503315766079728389}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4706,6 +4828,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4727,9 +4851,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6264432676616197458
 GameObject:
@@ -4741,7 +4867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8288109752671930502}
   - component: {fileID: 4500749427850424813}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PriceLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4790,7 +4916,7 @@ GameObject:
   - component: {fileID: 8048189572362417779}
   - component: {fileID: 8262023856359877010}
   - component: {fileID: 3761637127190586450}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,6 +4966,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4861,9 +4989,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6371043692747562192
 GameObject:
@@ -4876,7 +5006,7 @@ GameObject:
   - component: {fileID: 382145311494726002}
   - component: {fileID: 5992960318504010625}
   - component: {fileID: 3561585593375559316}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4926,6 +5056,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4947,9 +5079,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6526757097336558935
 GameObject:
@@ -4961,7 +5095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7298606272918966113}
   - component: {fileID: 794472246211370902}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5007,7 +5141,7 @@ GameObject:
   - component: {fileID: 138129813713984747}
   - component: {fileID: 8374021643508670729}
   - component: {fileID: 7933224952772203644}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5057,6 +5191,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5078,9 +5214,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6599639043849802152
 GameObject:
@@ -5093,7 +5231,7 @@ GameObject:
   - component: {fileID: 5084997077919025915}
   - component: {fileID: 5746203059949170547}
   - component: {fileID: 5268094863713470231}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5185,6 +5323,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5229,7 +5368,7 @@ GameObject:
   - component: {fileID: 2337280181063041040}
   - component: {fileID: 6370420314727155724}
   - component: {fileID: 7238323588246482474}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5279,6 +5418,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5300,9 +5441,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7194783086413249079
 GameObject:
@@ -5314,7 +5457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6499018400614900901}
   - component: {fileID: 9086855368430802150}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5360,7 +5503,7 @@ GameObject:
   - component: {fileID: 1425931553349975671}
   - component: {fileID: 8615669937848507485}
   - component: {fileID: 9152472667474560375}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5410,6 +5553,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5431,9 +5576,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7267026251951362394
 GameObject:
@@ -5446,7 +5593,7 @@ GameObject:
   - component: {fileID: 2365873742963546682}
   - component: {fileID: 5294773749202136536}
   - component: {fileID: 951104804449865361}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5496,6 +5643,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5517,9 +5666,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7312321696478023676
 GameObject:
@@ -5531,7 +5682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7443211156957672152}
   - component: {fileID: 3984097937387055437}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5577,7 +5728,7 @@ GameObject:
   - component: {fileID: 5271708344299814101}
   - component: {fileID: 69609897377767554}
   - component: {fileID: 4133414007382147209}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5627,6 +5778,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5648,9 +5801,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7523250438285416440
 GameObject:
@@ -5662,7 +5817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6498735302406435994}
   - component: {fileID: 3614843385751040834}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5707,7 +5862,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7881571445452313877}
   - component: {fileID: 5535127452221722344}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5753,7 +5908,7 @@ GameObject:
   - component: {fileID: 1201629826545578338}
   - component: {fileID: 7024588269159080119}
   - component: {fileID: 7246347265868105699}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5803,6 +5958,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5824,9 +5981,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7756589726825128893
 GameObject:
@@ -5838,7 +5997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7265629653994356838}
   - component: {fileID: 3387291556397062959}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5883,7 +6042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2818657678854110774}
   - component: {fileID: 4551873017192359017}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5929,7 +6088,7 @@ GameObject:
   - component: {fileID: 2405366092134490810}
   - component: {fileID: 8610821711118661914}
   - component: {fileID: 5630382339703025252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5979,6 +6138,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6000,9 +6161,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7954434534680114720
 GameObject:
@@ -6014,7 +6177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1252748776780180637}
   - component: {fileID: 8681315829314947033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6059,7 +6222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3747360945751925064}
   - component: {fileID: 6684186035475800806}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6104,7 +6267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2896911669917832989}
   - component: {fileID: 8188922041811074697}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6149,7 +6312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3564569054364718600}
   - component: {fileID: 8555925457886071432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6195,7 +6358,7 @@ GameObject:
   - component: {fileID: 4397643424396846025}
   - component: {fileID: 1835432572611491598}
   - component: {fileID: 4773053249915696833}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6245,6 +6408,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6266,9 +6431,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8257859451174911242
 GameObject:
@@ -6280,7 +6447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8219358806296684731}
   - component: {fileID: 8508588453681348219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6326,7 +6493,7 @@ GameObject:
   - component: {fileID: 2274265662702042386}
   - component: {fileID: 7581131397490686151}
   - component: {fileID: 546184369679238023}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6376,6 +6543,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6397,9 +6566,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8365001799348884779
 GameObject:
@@ -6412,7 +6583,7 @@ GameObject:
   - component: {fileID: 5567836707468599359}
   - component: {fileID: 1980642186155483418}
   - component: {fileID: 7400054607755040900}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6462,6 +6633,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6483,9 +6656,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8445159644088042431
 GameObject:
@@ -6498,7 +6673,7 @@ GameObject:
   - component: {fileID: 8594026997160834839}
   - component: {fileID: 4603578475883959939}
   - component: {fileID: 8165308040594229908}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShelfSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6591,7 +6766,7 @@ GameObject:
   - component: {fileID: 5248004125413956872}
   - component: {fileID: 4871403952496265322}
   - component: {fileID: 3242464810822232346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6641,6 +6816,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6662,9 +6839,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8812774986956145857
 GameObject:
@@ -6678,7 +6857,7 @@ GameObject:
   - component: {fileID: 5017965462964383609}
   - component: {fileID: 7703533504577319821}
   - component: {fileID: 1869931850503123260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6728,6 +6907,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6749,9 +6930,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1869931850503123260
 BoxCollider:
@@ -6785,7 +6968,7 @@ GameObject:
   - component: {fileID: 5869924559982272893}
   - component: {fileID: 8753572042931592216}
   - component: {fileID: 7414615929433446927}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6835,6 +7018,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6856,9 +7041,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8916391851012307833
 GameObject:
@@ -6870,7 +7057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2710761103704550903}
   - component: {fileID: 141178053372997253}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6915,7 +7102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2311866356551143570}
   - component: {fileID: 6310452366826527847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slot_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6961,7 +7148,7 @@ GameObject:
   - component: {fileID: 5687212983446422845}
   - component: {fileID: 7923753124366218039}
   - component: {fileID: 4550429482054683893}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7011,6 +7198,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7032,9 +7221,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9028648512687473069
 GameObject:
@@ -7047,7 +7238,7 @@ GameObject:
   - component: {fileID: 2383288762085297278}
   - component: {fileID: 6992194636111422364}
   - component: {fileID: 1576019638548279035}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7097,6 +7288,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7118,9 +7311,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9095923293486307482
 GameObject:
@@ -7134,7 +7329,7 @@ GameObject:
   - component: {fileID: 1504097744744746471}
   - component: {fileID: 5781008229207066947}
   - component: {fileID: 1211009057273277593}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7235,6 +7430,10 @@ PrefabInstance:
     - target: {fileID: 5423563024557879423, guid: ba85512b1098bca4aadb8fab9fa3c369, type: 3}
       propertyPath: m_Name
       value: case_short_single
+      objectReference: {fileID: 0}
+    - target: {fileID: 5423563024557879423, guid: ba85512b1098bca4aadb8fab9fa3c369, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7876372048408700404, guid: ba85512b1098bca4aadb8fab9fa3c369, type: 3}
       propertyPath: m_LocalPosition.x
