@@ -33,12 +33,12 @@ public class NPCController : MonoBehaviour
     {
         Debug.Log($"[NPC Conrtoller]: Current state is {_currentState}");
 
-        switch(_currentState)
+        switch (_currentState)
         {
-            case NPCState.Idle:             HandleIdle();    break;
-            case NPCState.MovingToStorage:  HandleMoving();  break;
-            case NPCState.Buying:           HandleBuying();  break;
-            case NPCState.Leaving:          HandleLeaving(); break;
+            case NPCState.Idle: HandleIdle(); break;
+            case NPCState.MovingToStorage: HandleMoving(); break;
+            case NPCState.Buying: HandleBuying(); break;
+            case NPCState.Leaving: HandleLeaving(); break;
         }
     }
 
@@ -49,15 +49,20 @@ public class NPCController : MonoBehaviour
 
     private void HandleIdle()
     {
-        goalStorage = GetStorage();
+        mover.MoveTo(store.position, interactionDistance);
 
-        if(goalStorage != null)
+        if (!mover.IsMoving)
         {
-            ChangeState(NPCState.MovingToStorage);
-        }
-        else
-        {
-            ChangeState(NPCState.Leaving);
+            goalStorage = GetStorage();
+
+            if (goalStorage != null)
+            {
+                ChangeState(NPCState.MovingToStorage);
+            }
+            else
+            {
+                ChangeState(NPCState.Leaving);
+            }
         }
     }
 
@@ -65,7 +70,7 @@ public class NPCController : MonoBehaviour
     {
         mover.MoveTo(((MonoBehaviour)goalStorage).transform.position, interactionDistance);
 
-        if(!mover.IsMoving) ChangeState(NPCState.Buying);
+        if (!mover.IsMoving) ChangeState(NPCState.Buying);
     }
 
     private void HandleBuying()
@@ -78,7 +83,7 @@ public class NPCController : MonoBehaviour
     {
         mover.MoveTo(leavePoint.position, interactionDistance);
 
-        if(!mover.IsMoving) Destroy(gameObject);
+        if (!mover.IsMoving) Destroy(gameObject);
     }
 
     private IStorage GetStorage()
@@ -88,10 +93,10 @@ public class NPCController : MonoBehaviour
 
     private void BuyItem()
     {
-        if(boughtObj != null) return;
+        if (boughtObj != null) return;
 
         GameObject go = goalStorage.TakeItem(transform.position);
-        if(go.TryGetComponent<IStoreable>(out var storeable))
+        if (go.TryGetComponent<IStoreable>(out var storeable))
         {
             boughtObj = storeable.OnPickedFromStore();
             boughtObj.transform.position = storageForItems.position;
