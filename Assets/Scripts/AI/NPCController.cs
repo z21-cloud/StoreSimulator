@@ -2,35 +2,83 @@ using System;
 using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
+public enum NPCState
+{
+    Idle,
+    MovingToStorage,
+    Buying,
+    Leaving
+}
+
 public class NPCController : MonoBehaviour
 {
     [SerializeField] private float interactionDistance = 2f;
     [SerializeField] private NPCMover mover;
     [SerializeField] private Transform goal;
+    [SerializeField] private Transform store;
+    [SerializeField] private Transform leavePoint;
     [SerializeField] private Transform storageForItems;
 
     private IStorage goalStorage;
     private GameObject boughtObj;
+    private NPCState _currentState;
+
+    void Start()
+    {
+        _currentState = NPCState.Idle;
+        goalStorage = null;
+    }
 
     void Update()
     {
-        if(goalStorage == null)
+        Debug.Log($"[NPC Conrtoller]: Current state is {_currentState}");
+
+        switch(_currentState)
         {
-            goalStorage = GetStorage();  
-            return;  
+            case NPCState.Idle:             HandleIdle();    break;
+            case NPCState.MovingToStorage:  HandleMoving();  break;
+            case NPCState.Buying:           HandleBuying();  break;
+            case NPCState.Leaving:          HandleLeaving(); break;
         }
-
-        Moving();
-
-        if(mover.IsMoving) return;
-        BuyItem();
     }
 
-    private void Moving()
+    private void ChangeState(NPCState newState)
     {
-        if(!mover.IsMoving) return;
-        
+        _currentState = newState;
+    }
+
+    private void HandleIdle()
+    {
+        goalStorage = GetStorage();
+
+        if(goalStorage != null)
+        {
+            ChangeState(NPCState.MovingToStorage);
+        }
+        else
+        {
+            ChangeState(NPCState.Leaving);
+        }
+    }
+
+    private void HandleMoving()
+    {
         mover.MoveTo(((MonoBehaviour)goalStorage).transform.position, interactionDistance);
+
+        if(!mover.IsMoving) ChangeState(NPCState.Buying);
+    }
+
+    private void HandleBuying()
+    {
+        BuyItem();
+        ChangeState(NPCState.Leaving);
+    }
+
+    private void HandleLeaving()
+    {
+        mover.MoveTo(leavePoint.position, interactionDistance);
+
+        if(!mover.IsMoving) Destroy(gameObject);
     }
 
     private IStorage GetStorage()
@@ -49,7 +97,6 @@ public class NPCController : MonoBehaviour
             boughtObj.transform.position = storageForItems.position;
             boughtObj.transform.parent = storageForItems;
         }
-        //Destroy(go);
         Debug.Log($"[NPCConrtoller]: taken");
     }
 }
