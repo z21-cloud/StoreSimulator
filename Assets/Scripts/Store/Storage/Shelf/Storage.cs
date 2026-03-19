@@ -101,6 +101,8 @@ namespace StoreSimulator.InteractableObjects
 
                 //
                 UpdatePriceVisual();
+
+                StorageRegistry.Instance.RegisterStorage(this);
             }
         }
 
@@ -213,6 +215,11 @@ namespace StoreSimulator.InteractableObjects
         public string GetDescription()
         {
             throw new NotImplementedException();
+        }
+
+        public void OnDisable()
+        {
+            StorageRegistry.Instance.UnregisterStorage(this);
         }
     }
 }
