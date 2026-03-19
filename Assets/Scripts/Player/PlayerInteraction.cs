@@ -17,6 +17,8 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private PackingHandler packingHandler;
         [Header("Building ")]
         [SerializeField] private BuildingHandler buildingHandler;
+        [Header("Building UI")]
+        [SerializeField] private GameObject buildingUI;
 
         private PlayerMode _currentMode = PlayerMode.Default;
 
@@ -37,6 +39,7 @@ namespace StoreSimulator.InteractableObjects
                         : PlayerMode.Default;
             
             if(_currentMode == PlayerMode.Default) buildingHandler.CancelHolding();
+            buildingUI.SetActive(_currentMode == PlayerMode.Building);
         }
         // Interaction with gameobjects
         public void DoInteract()

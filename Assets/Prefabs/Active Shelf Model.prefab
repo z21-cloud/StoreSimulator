@@ -2168,6 +2168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BuildableItem
   itemSize: {x: 2, y: 1}
   ghostPrefab: {fileID: 6720724965167688849, guid: 8619e415f8132da48bcd0844231a1779, type: 3}
+  wallOffset: 0.35
 --- !u!1 &2455184903354717912
 GameObject:
   m_ObjectHideFlags: 0

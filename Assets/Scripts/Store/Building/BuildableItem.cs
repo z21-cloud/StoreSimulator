@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class BuildableItem : MonoBehaviour, IBuildable, IInteractable
 {
-    [SerializeField] private Vector2Int itemSize;
+    [SerializeField] private Vector2 itemSize;
     [SerializeField] private GameObject ghostPrefab;
-    public Vector2Int Size => itemSize;
+    [SerializeField] private float wallOffset = 0f;
 
+    public Vector2 Size => itemSize;
+    public float WallOffset => wallOffset;
     public GameObject GhostPrefab => ghostPrefab;
 
     public string GetDescription()

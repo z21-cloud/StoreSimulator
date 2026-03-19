@@ -2,8 +2,9 @@ using UnityEngine;
 
 public interface IBuildable
 {
-    public Vector2Int Size { get; }
+    public Vector2 Size { get; }
     public GameObject GhostPrefab { get; }
+    public float WallOffset { get; }
     public void OnPlaced();
     public void OnRemoved();
 }
