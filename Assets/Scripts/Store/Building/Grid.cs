@@ -17,6 +17,11 @@ public class Grid : MonoBehaviour
 
     void Awake()
     {
+        CreateGrid();
+    }
+
+    public void CreateGrid()
+    {
         InitialGrid();
         invisiblePlane.transform.localScale = new Vector3(gridSize.x * slotSize.x, 1f, gridSize.y * slotSize.y);
 

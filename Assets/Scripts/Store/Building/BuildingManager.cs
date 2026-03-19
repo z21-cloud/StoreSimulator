@@ -1,12 +1,25 @@
 using System.Collections.Generic;
+using StoreSimulator.InteractableObjects;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
     [SerializeField] private Grid grid;
+    [SerializeField] private BuildingUIController buyMenu;
 
+    private bool _activeMenu = false;
     private Dictionary<IBuildable, List<Vector2Int>> _occupiedCells = new();
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log(_activeMenu);
+            _activeMenu = !_activeMenu;
+            buyMenu.Open();
+        }
+    }
 
     public bool CanPlace(Vector2Int baseCoords, Vector2 size)
     {

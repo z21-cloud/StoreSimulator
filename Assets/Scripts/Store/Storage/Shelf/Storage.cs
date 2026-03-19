@@ -29,6 +29,7 @@ namespace StoreSimulator.InteractableObjects
 
         private void Start()
         {
+            priceManager = PricesManager.Instance;
             ResetPrice();
         }
 

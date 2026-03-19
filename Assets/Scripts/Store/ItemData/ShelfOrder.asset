@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f9b16f759e6ebb4fbd14f78654dd9e3, type: 3}
+  m_Name: ShelfOrder
+  m_EditorClassIdentifier: Assembly-CSharp::StoreSimulator.Boxes.DeliveryOrder
+  itemData: {fileID: 11400000, guid: 8a73ead7a58f2f04facb44d34b6710cd, type: 2}
+  icon: {fileID: 0}
+  boxCost: 25
+  quantity: 1
+  boxPrefab: {fileID: 2447004201934094834, guid: 2ec014425464e9648983822e292435f2, type: 3}

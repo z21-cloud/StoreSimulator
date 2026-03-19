@@ -30,6 +30,11 @@ namespace StoreSimulator.MoneySystem
             Balance -= amount;
             Balance = Mathf.Max(0, Balance);
         }
+
+        public void SetMoney(float amount)
+        {
+            Balance = amount;
+        }
     }
 }
 

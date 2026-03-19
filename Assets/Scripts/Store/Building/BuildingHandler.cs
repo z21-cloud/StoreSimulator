@@ -12,6 +12,8 @@ public class BuildingHandler : MonoBehaviour
     private GridCell _targetCell;
     private float _currentRotationY = 0f;
 
+    public IBuildable Buildable => _heldBuildable;
+
     private Vector3 GetWallOffset(float rotationY, float wallDepth)
     {
         Vector3 backDir = Quaternion.Euler(0, rotationY, 0) * Vector3.back;
@@ -65,7 +67,6 @@ public class BuildingHandler : MonoBehaviour
         if(buildable == null) return;
         
         //if (!currentInteractable.TryGetComponent<IBuildable>(out _)) return;
-
 
         Debug.Log($"[BuildingHandler] remembered: {currentInteractable.gameObject.name}");
         _heldBuildable = buildable;
@@ -127,4 +128,6 @@ public class BuildingHandler : MonoBehaviour
         _targetCell = null;
         _currentRotationY = 0f;
     }
+
+    public bool HasHeldBuildable() => _heldBuildable != null;
 }
