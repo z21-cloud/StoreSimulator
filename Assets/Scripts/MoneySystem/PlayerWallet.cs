@@ -4,7 +4,7 @@ namespace StoreSimulator.MoneySystem
 {
     public class PlayerWallet : MonoBehaviour, IWallet
     {
-       
+        [SerializeField] private BalanceUI balanceUI;
         [SerializeField] private float startBalance = 500f;
         public float Balance { get; private set; }
 
@@ -16,6 +16,7 @@ namespace StoreSimulator.MoneySystem
         public void Add(float amount)
         {
             Balance += amount;
+            balanceUI.UpdateBalanceUI();
         }
 
         public bool CanAfford(float amount)
@@ -29,11 +30,13 @@ namespace StoreSimulator.MoneySystem
             Debug.Log($"[PlayerWallet]: spended {amount}$");
             Balance -= amount;
             Balance = Mathf.Max(0, Balance);
+            balanceUI.UpdateBalanceUI();
         }
 
         public void SetMoney(float amount)
         {
             Balance = amount;
+            balanceUI.UpdateBalanceUI();
         }
     }
 }

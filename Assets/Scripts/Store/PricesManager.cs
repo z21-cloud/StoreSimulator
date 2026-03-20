@@ -41,7 +41,7 @@ namespace StoreSimulator.StoreManager
          * 4. ������� ������������ ������� ��� ��� PricesManager
          * 5. �������� UI, ����� ����� ��� ������ ������
          */
-        public static PricesManager Instance;
+        public static PricesManager Instance { get; private set; }
 
         private Dictionary<ItemSubCategory, float> _subCategoryOverride = new Dictionary<ItemSubCategory, float>();
         private Dictionary<ItemCategory, float> _categoryMultipliers = new Dictionary<ItemCategory, float>();

@@ -54,7 +54,6 @@ namespace StoreSimulator.Delivery
         public void Close()
         {
             // enable and update player banalce ui
-            balanceUI.UpdateBalanceUI();
             balanceUI.BalanceUISetActive(true);
 
             // disable PC screen

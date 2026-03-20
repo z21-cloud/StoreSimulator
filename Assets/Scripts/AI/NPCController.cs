@@ -112,6 +112,7 @@ public class NPCController : MonoBehaviour
             boughtObj = storeable.OnPickedFromStore();
             boughtObj.transform.position = storageForItems.position;
             boughtObj.transform.parent = storageForItems;
+            BuyManager.Instance.IncreasePlayerWallet(storeable);
         }
         Debug.Log($"[NPCConrtoller]: taken");
     }
