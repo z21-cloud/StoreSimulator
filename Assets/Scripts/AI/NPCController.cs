@@ -7,7 +7,8 @@ public enum NPCState
     Idle,
     MovingToStorage,
     Buying,
-    Leaving
+    Leaving,
+    Waiting
 }
 
 public class NPCController : MonoBehaviour
@@ -18,14 +19,17 @@ public class NPCController : MonoBehaviour
     [SerializeField] private Transform store;
     [SerializeField] private Transform leavePoint;
     [SerializeField] private Transform storageForItems;
+    [SerializeField] private float waitTime = 5f;
 
     private IStorage goalStorage;
     private GameObject boughtObj;
     private NPCState _currentState;
+    private float waitBeforeShop;
 
     void Start()
     {
         _currentState = NPCState.Idle;
+        waitBeforeShop = waitTime;
         goalStorage = null;
     }
 
@@ -39,6 +43,7 @@ public class NPCController : MonoBehaviour
             case NPCState.MovingToStorage: HandleMoving(); break;
             case NPCState.Buying: HandleBuying(); break;
             case NPCState.Leaving: HandleLeaving(); break;
+            case NPCState.Waiting: HandleWaiting(); break;
         }
     }
 
@@ -81,9 +86,15 @@ public class NPCController : MonoBehaviour
 
     private void HandleLeaving()
     {
+        goalStorage = null;
+
         mover.MoveTo(leavePoint.position, interactionDistance);
 
-        if (!mover.IsMoving) Destroy(gameObject);
+        if (!mover.IsMoving)
+        {
+            Destroy(boughtObj);
+            ChangeState(NPCState.Waiting);
+        }
     }
 
     private IStorage GetStorage()
@@ -103,5 +114,15 @@ public class NPCController : MonoBehaviour
             boughtObj.transform.parent = storageForItems;
         }
         Debug.Log($"[NPCConrtoller]: taken");
+    }
+
+    private void HandleWaiting()
+    {
+        waitBeforeShop -= Time.deltaTime;
+        if (waitBeforeShop <= 0f)
+        {
+            ChangeState(NPCState.Idle);
+            waitBeforeShop = waitTime;
+        }
     }
 }

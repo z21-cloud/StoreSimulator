@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9d038eb8ecfa34d9e462f5b9ad2926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCMover
-  speed: 1
+  speed: 10
 --- !u!114 &97537997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +349,7 @@ MonoBehaviour:
   store: {fileID: 1237966187}
   leavePoint: {fileID: 2104323775}
   storageForItems: {fileID: 703781860}
+  waitTime: 5
 --- !u!136 &97537998
 CapsuleCollider:
   m_ObjectHideFlags: 0
