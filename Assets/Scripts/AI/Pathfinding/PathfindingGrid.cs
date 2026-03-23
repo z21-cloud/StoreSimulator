@@ -4,7 +4,7 @@ using UnityEngine;
 public class PathfindingGrid : MonoBehaviour
 {
     [SerializeField] private Vector2Int gridSize = new Vector2Int(10, 10);
-    [SerializeField] private Vector2Int nodeSize = new Vector2Int(1, 1);
+    [SerializeField] private Vector2 nodeSize = new Vector2(1, 1);
     [SerializeField] private LayerMask unwalkableMask;
     [SerializeField] private bool debug;
 
@@ -104,7 +104,7 @@ public class PathfindingGrid : MonoBehaviour
             }
         }
 
-        return RetracePath(startNode, goalNode);
+        return RetracePath(goalNode, startNode);
     }
 
     private List<PathNode> FindNeighbours(PathNode node)
@@ -121,7 +121,7 @@ public class PathfindingGrid : MonoBehaviour
 
     private bool PhysicsCheck(Vector3 position)
     {
-        Collider[] cols = Physics.OverlapSphere(position, nodeSize.x * 0.5f, unwalkableMask);
+        Collider[] cols = Physics.OverlapSphere(position, nodeSize.x, unwalkableMask);
         return cols.Length > 0;
     }
 
@@ -148,7 +148,7 @@ public class PathfindingGrid : MonoBehaviour
         List<PathNode> temp = new List<PathNode>();
         PathNode current = goalNode;
 
-        while (current != startNode)
+        while (current != null)
         {
             temp.Add(current);
             current = current.parent;
@@ -175,7 +175,7 @@ public class PathfindingGrid : MonoBehaviour
             Gizmos.color = node.isWalkable ? Color.green : Color.red;
 
             Vector3 size = new Vector3(nodeSize.x, 0.1f, nodeSize.y);
-            Gizmos.DrawCube(node.worldPosition, size * 0.9f); // 0.9f чтобы зазор между нодами
+            Gizmos.DrawWireCube(node.worldPosition, size * 0.9f); // 0.9f чтобы зазор между нодами
         }
     }
 }

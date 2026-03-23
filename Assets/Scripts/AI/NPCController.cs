@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
@@ -20,11 +21,14 @@ public class NPCController : MonoBehaviour
     [SerializeField] private Transform leavePoint;
     [SerializeField] private Transform storageForItems;
     [SerializeField] private float waitTime = 5f;
+    [SerializeField] private PathfindingGrid pathfinding;
 
     private IStorage goalStorage;
     private GameObject boughtObj;
     private NPCState _currentState;
     private float waitBeforeShop;
+
+    private Queue<Vector3> _currentPath = new Queue<Vector3>();
 
     void Start()
     {
@@ -49,14 +53,23 @@ public class NPCController : MonoBehaviour
 
     private void ChangeState(NPCState newState)
     {
+        if (newState == NPCState.MovingToStorage)
+        {
+            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalStorage).transform.position);
+            _currentPath = new Queue<Vector3>(path);
+        }
+        if (newState == NPCState.Leaving)
+        {
+            var path = pathfinding.FindPath(transform.position, leavePoint.position);
+            _currentPath = new Queue<Vector3>(path);
+        }
+
         _currentState = newState;
     }
 
     private void HandleIdle()
     {
-        mover.MoveTo(store.position, interactionDistance);
-
-        if (!mover.IsMoving)
+        if (_currentPath.Count == 0)
         {
             goalStorage = GetStorage();
 
@@ -68,14 +81,27 @@ public class NPCController : MonoBehaviour
             {
                 ChangeState(NPCState.Leaving);
             }
+            return;
         }
+
+        Vector3 target = _currentPath.Peek();
+        mover.MoveTo(target, interactionDistance);
+
+        if (!mover.IsMoving) _currentPath.Dequeue();
     }
 
     private void HandleMoving()
     {
-        mover.MoveTo(((MonoBehaviour)goalStorage).transform.position, interactionDistance);
+        if (_currentPath.Count == 0)
+        {
+            ChangeState(NPCState.Buying);
+            return;
+        }
 
-        if (!mover.IsMoving) ChangeState(NPCState.Buying);
+        Vector3 target = _currentPath.Peek();
+        mover.MoveTo(target, interactionDistance);
+
+        if (!mover.IsMoving) _currentPath.Dequeue();
     }
 
     private void HandleBuying()
@@ -88,13 +114,18 @@ public class NPCController : MonoBehaviour
     {
         goalStorage = null;
 
-        mover.MoveTo(leavePoint.position, interactionDistance);
-
-        if (!mover.IsMoving)
+        if (_currentPath.Count == 0)
         {
             Destroy(boughtObj);
             ChangeState(NPCState.Waiting);
+            return;
         }
+
+        Vector3 target = _currentPath.Peek();
+        mover.MoveTo(target, interactionDistance);
+
+
+        if (!mover.IsMoving) _currentPath.Dequeue();
     }
 
     private IStorage GetStorage()
