@@ -21,7 +21,7 @@ public class NPCController : MonoBehaviour
     [SerializeField] private Transform leavePoint;
     [SerializeField] private Transform storageForItems;
     [SerializeField] private float waitTime = 5f;
-    [SerializeField] private PathfindingGrid pathfinding;
+    [SerializeField] private AStar pathfinding;
 
     private IStorage goalStorage;
     private GameObject boughtObj;

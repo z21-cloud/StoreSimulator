@@ -12,22 +12,7 @@ public class PathfindingGrid : MonoBehaviour
     // index : node
     private Dictionary<Vector2Int, PathNode> grid;
 
-    // re write priority queueu
-    private PriorityQueue<PathNode> queue;
-    // unique checked nodes
     private Vector3 gridOrigin; // minimal grid position
-
-    private Vector2Int[] directions =
-    {
-        new Vector2Int(1, 0),
-        new Vector2Int(0, -1),
-        new Vector2Int(-1, 0),
-        new Vector2Int(0, 1),
-        new Vector2Int(1, 1),
-        new Vector2Int(1, -1),
-        new Vector2Int(-1, -1),
-        new Vector2Int(-1, 1),
-    };
 
     void Awake()
     {
@@ -36,6 +21,7 @@ public class PathfindingGrid : MonoBehaviour
         CreateGrid();
     }
 
+    // grid creation
     private void CreateGrid()
     {
         grid = new Dictionary<Vector2Int, PathNode>();
@@ -48,6 +34,7 @@ public class PathfindingGrid : MonoBehaviour
                 float posZ = gridOrigin.z + y * nodeSize.y + nodeSize.y / 2f;
                 float posY = gridOrigin.y + 1f; // 1f = offset
 
+                // world position
                 Vector3 worldPosition = new Vector3
                 (
                     posX,
@@ -56,6 +43,8 @@ public class PathfindingGrid : MonoBehaviour
                 );
 
                 Vector2Int coords = new Vector2Int(x, y);
+                
+                // node creation
                 PathNode node = new PathNode
                 (
                     worldPosition,
@@ -65,93 +54,27 @@ public class PathfindingGrid : MonoBehaviour
                     null
                 );
 
+                // walkable or not
                 if (PhysicsCheck(worldPosition))
                 {
                     node.isWalkable = false;
                     node.hCost = float.MaxValue;
                 }
 
+                // add to dictionary
                 grid[coords] = node;
             }
         }
     }
 
-    public List<Vector3> FindPath(Vector3 startPosition, Vector3 goalPosition)
-    {
-        if (startPosition == Vector3.zero || goalPosition == Vector3.zero)
-        {
-            Debug.LogWarning($"[Pathfinding]: start or goal position is null");
-            return null;
-        }
-
-        if (startPosition == goalPosition)
-        {
-            return new List<Vector3> { startPosition };
-        }
-
-        ResetNodes();
-        queue = new PriorityQueue<PathNode>();
-
-        PathNode startNode = WorldToGrid(startPosition);
-        PathNode goalNode = WorldToGrid(goalPosition);
-
-        startNode.gCost = 0f;
-        startNode.hCost = GetHeuristics(startNode, goalNode);
-        startNode.parent = null;
-
-        queue.Enqueue(startNode, startNode.fCost);
-
-        while (queue.Count > 0)
-        {
-            PathNode currentNode = queue.Dequeue();
-
-            if (currentNode == goalNode) return RetracePath(goalNode);
-
-            if (!currentNode.isWalkable) continue;
-
-            List<PathNode> neighbourds = FindNeighbours(currentNode);
-
-            foreach (var neighbour in neighbourds)
-            {
-                if (!neighbour.isWalkable) continue;
-
-                float movementCost = GetMovementCost(currentNode, neighbour);
-                float tempGCost = currentNode.gCost + movementCost;
-
-                if (tempGCost < neighbour.gCost)
-                {
-                    neighbour.gCost = tempGCost;
-                    neighbour.hCost = GetHeuristics(neighbour, goalNode); 
-                    neighbour.parent = currentNode;
-                    
-                    queue.Enqueue(neighbour, neighbour.fCost);
-                }
-            }
-        }
-
-        Debug.LogError($"Can't find path");
-        return null;
-    }
-
-    private List<PathNode> FindNeighbours(PathNode node)
-    {
-        List<PathNode> neighbourds = new List<PathNode>();
-        foreach (Vector2Int direction in directions)
-        {
-            Vector2Int checkCoords = node.gridIndex + direction;
-            if (grid.TryGetValue(checkCoords, out var neighbour)) neighbourds.Add(neighbour);
-        }
-
-        return neighbourds;
-    }
-
+    // Creates sphere at every node position to check if it's walkable or not
     private bool PhysicsCheck(Vector3 position)
     {
         Collider[] cols = Physics.OverlapSphere(position, nodeSize.x, unwalkableMask);
         return cols.Length > 0;
     }
 
-    private PathNode WorldToGrid(Vector3 position)
+    public PathNode WorldToGrid(Vector3 position)
     {
         int posX = Mathf.FloorToInt((position.x - gridOrigin.x) / nodeSize.x);
         int posZ = Mathf.FloorToInt((position.z - gridOrigin.z) / nodeSize.y);
@@ -160,7 +83,7 @@ public class PathfindingGrid : MonoBehaviour
         return null;
     }
 
-    private float GetMovementCost(PathNode from, PathNode to)
+    public float GetMovementCost(PathNode from, PathNode to)
     {
         int dx = Mathf.Abs(from.gridIndex.x - to.gridIndex.x);
         int dy = Mathf.Abs(from.gridIndex.y - to.gridIndex.y);
@@ -171,7 +94,7 @@ public class PathfindingGrid : MonoBehaviour
         else return nodeCost;
     }
 
-    private float GetHeuristics(PathNode from, PathNode to)
+    public float GetHeuristics(PathNode from, PathNode to)
     {
         int dx = Mathf.Abs(from.gridIndex.x - to.gridIndex.x);
         int dy = Mathf.Abs(from.gridIndex.y - to.gridIndex.y);
@@ -182,7 +105,7 @@ public class PathfindingGrid : MonoBehaviour
         return straight * (dx + dy) + (diagonal - 2 * straight) * Mathf.Min(dx, dy);
     }
 
-    private void ResetNodes()
+    public void ResetNodes()
     {
         foreach (var node in grid.Values)
         {
@@ -192,26 +115,18 @@ public class PathfindingGrid : MonoBehaviour
         }
     }
 
-    public List<Vector3> RetracePath(PathNode goalNode)
+    public bool TryGetNode(Vector2Int coords, out PathNode node)
     {
-        List<PathNode> temp = new List<PathNode>();
-        PathNode current = goalNode;
-
-        while (current != null)
+        if(grid.ContainsKey(coords)) 
         {
-            temp.Add(current);
-            current = current.parent;
+            node = grid[coords];
+            return true;
         }
-
-        temp.Reverse();
-
-        List<Vector3> result = new List<Vector3>();
-        foreach (var node in temp)
+        else 
         {
-            result.Add(node.worldPosition);
+            node = null;
+            return false;
         }
-
-        return result;
     }
 
     private void OnDrawGizmos()
