@@ -39,7 +39,7 @@ public class NPCController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"[NPC Conrtoller]: Current state is {_currentState}");
+        //Debug.Log($"[NPC Conrtoller]: Current state is {_currentState}");
 
         switch (_currentState)
         {
@@ -55,7 +55,7 @@ public class NPCController : MonoBehaviour
     {
         if (newState == NPCState.MovingToStorage)
         {
-            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalStorage).transform.position);
+            var path = pathfinding.FindPath(transform.position, goalStorage.InteractionPoint.position);
             _currentPath = new Queue<Vector3>(path);
         }
         if (newState == NPCState.Leaving)
@@ -86,6 +86,7 @@ public class NPCController : MonoBehaviour
 
         Vector3 target = _currentPath.Peek();
         mover.MoveTo(target, interactionDistance);
+        transform.LookAt(target);
 
         if (!mover.IsMoving) _currentPath.Dequeue();
     }
@@ -100,7 +101,7 @@ public class NPCController : MonoBehaviour
 
         Vector3 target = _currentPath.Peek();
         mover.MoveTo(target, interactionDistance);
-
+        transform.LookAt(target);
         if (!mover.IsMoving) _currentPath.Dequeue();
     }
 
@@ -123,7 +124,7 @@ public class NPCController : MonoBehaviour
 
         Vector3 target = _currentPath.Peek();
         mover.MoveTo(target, interactionDistance);
-
+        transform.LookAt(target);
 
         if (!mover.IsMoving) _currentPath.Dequeue();
     }
@@ -138,6 +139,7 @@ public class NPCController : MonoBehaviour
         if (boughtObj != null) return;
 
         GameObject go = goalStorage.TakeItem(transform.position);
+        transform.LookAt(((MonoBehaviour)goalStorage).transform.position);
         if (go.TryGetComponent<IStoreable>(out var storeable))
         {
             boughtObj = storeable.OnPickedFromStore();

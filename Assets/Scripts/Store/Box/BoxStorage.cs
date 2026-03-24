@@ -10,6 +10,8 @@ namespace StoreSimulator.StoreableItems
         [SerializeField] private ThrowableSettings throwableSettings;
         [SerializeField] private List<SlotGroup> groups;
 
+        public Transform InteractionPoint => null;
+
         private List<ShellfSlot> _slots = new List<ShellfSlot>();
         private ItemCategory _allowedCategory;
         private Rigidbody _rb;
@@ -229,6 +231,11 @@ namespace StoreSimulator.StoreableItems
                     return slot.GetStoredItem();
             }
 
+            return null;
+        }
+
+        public Transform PickUpPoint()
+        {
             return null;
         }
     }

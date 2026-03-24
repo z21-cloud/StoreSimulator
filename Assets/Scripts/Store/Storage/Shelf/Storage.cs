@@ -23,14 +23,24 @@ namespace StoreSimulator.InteractableObjects
         [Header("Price Manager")]
         [SerializeField] private PricesManager priceManager;
 
+        [Header("Pick Up point for NPC's")]
+        [SerializeField] private Transform pickupPostion;
+
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
         private ItemData _currentItemData;
+
+        public Transform InteractionPoint => pickupPostion;
 
         private void Start()
         {
             priceManager = PricesManager.Instance;
             ResetPrice();
+        }
+
+        public Transform PickUpPoint()
+        {
+            return pickupPostion;
         }
 
         // use events instead

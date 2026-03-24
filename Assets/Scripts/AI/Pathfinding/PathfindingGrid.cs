@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using UnityEngine;
 
 public class PathfindingGrid : MonoBehaviour
@@ -6,27 +7,26 @@ public class PathfindingGrid : MonoBehaviour
     [SerializeField] private Vector2Int gridSize = new Vector2Int(10, 10);
     [SerializeField] private Vector2 nodeSize = new Vector2(1, 1);
     [SerializeField] private LayerMask unwalkableMask;
-    [SerializeField] private bool debug;
+    [SerializeField] private float nodeCost = 1f;
 
     // index : node
     private Dictionary<Vector2Int, PathNode> grid;
 
     // re write priority queueu
-    private Queue<PathNode> queue;
+    private PriorityQueue<PathNode> queue;
     // unique checked nodes
-    private HashSet<PathNode> hashset;
     private Vector3 gridOrigin; // minimal grid position
 
     private Vector2Int[] directions =
     {
-        new Vector2Int(1, 1),
-        new Vector2Int(1, -1),
         new Vector2Int(1, 0),
         new Vector2Int(0, -1),
-        new Vector2Int(-1, -1),
         new Vector2Int(-1, 0),
-        new Vector2Int(-1, 1),
         new Vector2Int(0, 1),
+        new Vector2Int(1, 1),
+        new Vector2Int(1, -1),
+        new Vector2Int(-1, -1),
+        new Vector2Int(-1, 1),
     };
 
     void Awake()
@@ -61,11 +61,16 @@ public class PathfindingGrid : MonoBehaviour
                     worldPosition,
                     coords,
                     true,
-                    1f,
+                    nodeCost,
                     null
                 );
 
-                if (PhysicsCheck(worldPosition)) node.isWalkable = false;
+                if (PhysicsCheck(worldPosition))
+                {
+                    node.isWalkable = false;
+                    node.hCost = float.MaxValue;
+                }
+
                 grid[coords] = node;
             }
         }
@@ -73,38 +78,59 @@ public class PathfindingGrid : MonoBehaviour
 
     public List<Vector3> FindPath(Vector3 startPosition, Vector3 goalPosition)
     {
+        if (startPosition == Vector3.zero || goalPosition == Vector3.zero)
+        {
+            Debug.LogWarning($"[Pathfinding]: start or goal position is null");
+            return null;
+        }
+
+        if (startPosition == goalPosition)
+        {
+            return new List<Vector3> { startPosition };
+        }
+
         ResetNodes();
+        queue = new PriorityQueue<PathNode>();
 
         PathNode startNode = WorldToGrid(startPosition);
         PathNode goalNode = WorldToGrid(goalPosition);
 
-        hashset = new HashSet<PathNode>();
-        queue = new Queue<PathNode>();
+        startNode.gCost = 0f;
+        startNode.hCost = GetHeuristics(startNode, goalNode);
+        startNode.parent = null;
 
-        PathNode currentNode = null;
-        queue.Enqueue(startNode);
-        hashset.Add(startNode);
+        queue.Enqueue(startNode, startNode.fCost);
 
         while (queue.Count > 0)
         {
-            currentNode = queue.Dequeue();
+            PathNode currentNode = queue.Dequeue();
 
-            if (currentNode == goalNode) break;
+            if (currentNode == goalNode) return RetracePath(goalNode);
+
+            if (!currentNode.isWalkable) continue;
 
             List<PathNode> neighbourds = FindNeighbours(currentNode);
 
             foreach (var neighbour in neighbourds)
             {
-                if (hashset.Contains(neighbour)) continue;
                 if (!neighbour.isWalkable) continue;
 
-                neighbour.parent = currentNode;
-                queue.Enqueue(neighbour);
-                hashset.Add(neighbour);
+                float movementCost = GetMovementCost(currentNode, neighbour);
+                float tempGCost = currentNode.gCost + movementCost;
+
+                if (tempGCost < neighbour.gCost)
+                {
+                    neighbour.gCost = tempGCost;
+                    neighbour.hCost = GetHeuristics(neighbour, goalNode); 
+                    neighbour.parent = currentNode;
+                    
+                    queue.Enqueue(neighbour, neighbour.fCost);
+                }
             }
         }
 
-        return RetracePath(goalNode, startNode);
+        Debug.LogError($"Can't find path");
+        return null;
     }
 
     private List<PathNode> FindNeighbours(PathNode node)
@@ -134,16 +160,39 @@ public class PathfindingGrid : MonoBehaviour
         return null;
     }
 
+    private float GetMovementCost(PathNode from, PathNode to)
+    {
+        int dx = Mathf.Abs(from.gridIndex.x - to.gridIndex.x);
+        int dy = Mathf.Abs(from.gridIndex.y - to.gridIndex.y);
+
+        bool isDiagonal = dx == 1 && dy == 1;
+
+        if (isDiagonal) return nodeCost * 1.4f;
+        else return nodeCost;
+    }
+
+    private float GetHeuristics(PathNode from, PathNode to)
+    {
+        int dx = Mathf.Abs(from.gridIndex.x - to.gridIndex.x);
+        int dy = Mathf.Abs(from.gridIndex.y - to.gridIndex.y);
+
+        float diagonal = 1.4f;
+        float straight = nodeCost;
+
+        return straight * (dx + dy) + (diagonal - 2 * straight) * Mathf.Min(dx, dy);
+    }
+
     private void ResetNodes()
     {
         foreach (var node in grid.Values)
         {
-            node.nodeCost = 0f;
+            node.gCost = float.MaxValue;
+            node.hCost = 0f;
             node.parent = null;
         }
     }
 
-    public List<Vector3> RetracePath(PathNode goalNode, PathNode startNode)
+    public List<Vector3> RetracePath(PathNode goalNode)
     {
         List<PathNode> temp = new List<PathNode>();
         PathNode current = goalNode;

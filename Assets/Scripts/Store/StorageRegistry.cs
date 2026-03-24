@@ -21,7 +21,7 @@ public class StorageRegistry : MonoBehaviour
 
     public void RegisterStorage(IStorage storage)
     {
-        if(storages.Contains(storage) || !storage.CanTakeItem()) return;
+        if(storages.Contains(storage) || !storage.CanTakeItem() && storage.InteractionPoint != null) return;
 
         storages.Add(storage);
     }
