@@ -55,7 +55,7 @@ public class NPCController : MonoBehaviour
     {
         if (newState == NPCState.MovingToStorage)
         {
-            var path = pathfinding.FindPath(transform.position, goalStorage.InteractionPoint.position);
+            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalStorage).transform.position);
             _currentPath = new Queue<Vector3>(path);
         }
         if (newState == NPCState.Leaving)

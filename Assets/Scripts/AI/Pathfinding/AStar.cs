@@ -41,6 +41,19 @@ public class AStar : MonoBehaviour
         PathNode startNode = grid.WorldToGrid(startPosition);
         PathNode goalNode = grid.WorldToGrid(goalPosition);
 
+        if(!goalNode.isWalkable)
+        {
+            List<PathNode> suggestedNodes = FindNeighbours(goalNode);
+            foreach(var suggestedNode in suggestedNodes)
+            {
+                if(suggestedNode.isWalkable) 
+                {
+                    goalNode = suggestedNode;
+                    break;
+                } 
+            }
+        }
+
         startNode.gCost = 0f;
         startNode.hCost = grid.GetHeuristics(startNode, goalNode);
         startNode.parent = null;
