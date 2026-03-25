@@ -43,12 +43,12 @@ public class AStar : MonoBehaviour
 
         if(!goalNode.isWalkable)
         {
-            List<PathNode> suggestedNodes = FindNeighbours(goalNode);
-            foreach(var suggestedNode in suggestedNodes)
+            List<PathNode> goalNeighbours = FindNeighbours(goalNode);
+            foreach(var goalNeighbour in goalNeighbours)
             {
-                if(suggestedNode.isWalkable) 
+                if(goalNeighbour.isWalkable) 
                 {
-                    goalNode = suggestedNode;
+                    goalNode = goalNeighbour;
                     break;
                 } 
             }

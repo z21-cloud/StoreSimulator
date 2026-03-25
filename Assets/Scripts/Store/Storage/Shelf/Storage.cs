@@ -32,6 +32,12 @@ namespace StoreSimulator.InteractableObjects
 
         public Transform InteractionPoint => pickupPostion;
 
+        void OnEnable()
+        {
+            Debug.Log("А я должен быть после");
+            StorageRegistry.Instance.RegisterStorage(this);
+        }
+
         private void Start()
         {
             priceManager = PricesManager.Instance;
@@ -112,7 +118,6 @@ namespace StoreSimulator.InteractableObjects
                 //
                 UpdatePriceVisual();
 
-                StorageRegistry.Instance.RegisterStorage(this);
             }
         }
 

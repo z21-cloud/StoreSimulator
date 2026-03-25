@@ -7,6 +7,7 @@ public enum NPCState
 {
     Idle,
     MovingToStorage,
+    TakingFromShelf,
     Buying,
     Leaving,
     Waiting
@@ -23,8 +24,9 @@ public class NPCController : MonoBehaviour
     [SerializeField] private float waitTime = 5f;
     [SerializeField] private AStar pathfinding;
 
-    private IStorage goalStorage;
-    private GameObject boughtObj;
+    private IStorage goalShelf;
+    private ICashStorage goalCashStorage;
+    private IStoreable boughtItem;
     private NPCState _currentState;
     private float waitBeforeShop;
 
@@ -34,20 +36,18 @@ public class NPCController : MonoBehaviour
     {
         _currentState = NPCState.Idle;
         waitBeforeShop = waitTime;
-        goalStorage = null;
+        goalShelf = null;
     }
 
     void Update()
     {
-        //Debug.Log($"[NPC Conrtoller]: Current state is {_currentState}");
-
         switch (_currentState)
         {
             case NPCState.Idle: HandleIdle(); break;
             case NPCState.MovingToStorage: HandleMoving(); break;
+            case NPCState.TakingFromShelf: HandleTakingFromShelf(); break;
             case NPCState.Buying: HandleBuying(); break;
             case NPCState.Leaving: HandleLeaving(); break;
-            case NPCState.Waiting: HandleWaiting(); break;
         }
     }
 
@@ -55,7 +55,12 @@ public class NPCController : MonoBehaviour
     {
         if (newState == NPCState.MovingToStorage)
         {
-            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalStorage).transform.position);
+            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalShelf).transform.position);
+            _currentPath = new Queue<Vector3>(path);
+        }
+        if(newState == NPCState.Buying)
+        {
+            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalCashStorage).transform.position);
             _currentPath = new Queue<Vector3>(path);
         }
         if (newState == NPCState.Leaving)
@@ -71,9 +76,9 @@ public class NPCController : MonoBehaviour
     {
         if (_currentPath.Count == 0)
         {
-            goalStorage = GetStorage();
+            goalShelf = GetStorage();
 
-            if (goalStorage != null)
+            if (goalShelf != null)
             {
                 ChangeState(NPCState.MovingToStorage);
             }
@@ -84,6 +89,11 @@ public class NPCController : MonoBehaviour
             return;
         }
 
+        GoThrowPath();
+    }
+
+    private void GoThrowPath()
+    {
         Vector3 target = _currentPath.Peek();
         mover.MoveTo(target, interactionDistance);
         transform.LookAt(target);
@@ -95,38 +105,60 @@ public class NPCController : MonoBehaviour
     {
         if (_currentPath.Count == 0)
         {
-            ChangeState(NPCState.Buying);
+            ChangeState(NPCState.TakingFromShelf);
             return;
         }
 
-        Vector3 target = _currentPath.Peek();
-        mover.MoveTo(target, interactionDistance);
-        transform.LookAt(target);
-        if (!mover.IsMoving) _currentPath.Dequeue();
+        GoThrowPath();
+    }
+
+    private void HandleTakingFromShelf()
+    {
+        BuyItem();
+        
+        goalCashStorage = GetCashStorage();
+
+        if(goalCashStorage != null)
+        {
+            ChangeState(NPCState.Buying);
+        }
+        else
+        {
+            HandleWaiting();
+        }
     }
 
     private void HandleBuying()
     {
-        BuyItem();
-        ChangeState(NPCState.Leaving);
+        if (_currentPath.Count == 0)
+        {
+            if(goalCashStorage.IsAvailable)
+            {
+                goalCashStorage.BuyItem(boughtItem);
+                boughtItem = null;
+                ChangeState(NPCState.Leaving);
+            }
+            else
+            {
+                HandleWaiting();
+            }
+            return;
+        }
+
+        GoThrowPath();
     }
 
     private void HandleLeaving()
     {
-        goalStorage = null;
+        goalShelf = null;
 
         if (_currentPath.Count == 0)
         {
-            Destroy(boughtObj);
-            ChangeState(NPCState.Waiting);
+            ChangeState(NPCState.Idle);
             return;
         }
 
-        Vector3 target = _currentPath.Peek();
-        mover.MoveTo(target, interactionDistance);
-        transform.LookAt(target);
-
-        if (!mover.IsMoving) _currentPath.Dequeue();
+        GoThrowPath();
     }
 
     private IStorage GetStorage()
@@ -134,18 +166,23 @@ public class NPCController : MonoBehaviour
         return StorageRegistry.Instance.GetRandomStorage();
     }
 
+    private ICashStorage GetCashStorage()
+    {
+        return StorageRegistry.Instance.GetRandomCashStorage();
+    }
+
     private void BuyItem()
     {
-        if (boughtObj != null) return;
+        if (boughtItem != null) return;
 
-        GameObject go = goalStorage.TakeItem(transform.position);
-        transform.LookAt(((MonoBehaviour)goalStorage).transform.position);
+        GameObject go = goalShelf.TakeItem(transform.position);
+        transform.LookAt(((MonoBehaviour)goalShelf).transform.position);
         if (go.TryGetComponent<IStoreable>(out var storeable))
         {
-            boughtObj = storeable.OnPickedFromStore();
-            boughtObj.transform.position = storageForItems.position;
-            boughtObj.transform.parent = storageForItems;
-            BuyManager.Instance.IncreasePlayerWallet(storeable);
+            boughtItem = storeable;
+            storeable.OnPickedFromStore();
+            ((MonoBehaviour)storeable).transform.position = storageForItems.position;
+            ((MonoBehaviour)storeable).transform.parent = storageForItems;
         }
         Debug.Log($"[NPCConrtoller]: taken");
     }
@@ -155,7 +192,7 @@ public class NPCController : MonoBehaviour
         waitBeforeShop -= Time.deltaTime;
         if (waitBeforeShop <= 0f)
         {
-            ChangeState(NPCState.Idle);
+            ChangeState(_currentState);
             waitBeforeShop = waitTime;
         }
     }

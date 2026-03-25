@@ -5,11 +5,13 @@ using UnityEngine;
 public class StorageRegistry : MonoBehaviour
 {
     private List<IStorage> storages = new List<IStorage>();
+    private List<ICashStorage> cashStorages = new List<ICashStorage>();
 
     public static StorageRegistry Instance {get; private set;}
 
     void Awake()
     {
+        Debug.Log("Я создал синглтон");
         if(Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -21,7 +23,7 @@ public class StorageRegistry : MonoBehaviour
 
     public void RegisterStorage(IStorage storage)
     {
-        if(storages.Contains(storage) || !storage.CanTakeItem() && storage.InteractionPoint != null) return;
+        if(storages.Contains(storage)) return;
 
         storages.Add(storage);
     }
@@ -48,9 +50,43 @@ public class StorageRegistry : MonoBehaviour
         }
         else
         {
-            storages.Remove(storages[randomIndex]);
+            Debug.Log($"[StorageRegistry]: No storages left! Return null");
+            return null;
+        }
+    }
+
+    public void RegisterCashStorage(ICashStorage cashStorage)
+    {
+        if(cashStorages.Contains(cashStorage)) return;
+
+        cashStorages.Add(cashStorage);
+    }
+
+    public void UnregisterCashStorage(ICashStorage cashStorage)
+    {
+        if(!cashStorages.Contains(cashStorage)) return;
+
+        cashStorages.Remove(cashStorage);
+    }
+
+    public ICashStorage GetRandomCashStorage()
+    {
+        if(cashStorages.Count <= 0)
+        {
+            Debug.Log($"[StorageRegistry]: No cash storages left! Return null");
+            return null;
+        }
+        int randomIndex = Random.Range(0, cashStorages.Count);
+
+        if(!cashStorages[randomIndex].IsOccupied)
+        {
+            return cashStorages[randomIndex];
+        }
+        else
+        {
+            cashStorages.Remove(cashStorages[randomIndex]);
         }
 
-        return GetRandomStorage();
+        return GetRandomCashStorage();
     }
 }

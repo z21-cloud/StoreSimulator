@@ -65,12 +65,14 @@ public class PathfindingGrid : MonoBehaviour
                 grid[coords] = node;
             }
         }
+
+        Debug.Log($"[PathfindingGird]: Created; {grid.Count}");
     }
 
     // Creates sphere at every node position to check if it's walkable or not
     private bool PhysicsCheck(Vector3 position)
     {
-        Collider[] cols = Physics.OverlapSphere(position, nodeSize.x, unwalkableMask);
+        Collider[] cols = Physics.OverlapSphere(position, nodeSize.x / 2, unwalkableMask);
         return cols.Length > 0;
     }
 
@@ -126,6 +128,14 @@ public class PathfindingGrid : MonoBehaviour
         {
             node = null;
             return false;
+        }
+    }
+
+    public void UpdateGrid()
+    {
+        foreach(var node in grid.Values)
+        {
+            node.isWalkable = !PhysicsCheck(node.worldPosition);
         }
     }
 

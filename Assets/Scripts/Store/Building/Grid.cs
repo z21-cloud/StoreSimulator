@@ -71,6 +71,8 @@ public class Grid : MonoBehaviour
                 vis.transform.parent = transform;
             }
         }
+
+        Debug.Log($"[BuildableGrid]: Created {grid.Count}");
     }
 
     public GridCell GetCell(Vector3 position)

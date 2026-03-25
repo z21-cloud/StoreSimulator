@@ -28,8 +28,6 @@ namespace StoreSimulator.InteractableObjects
         private void Update()
         {
             _currentInteractable = interactionDetector.CurrentInteractable;
-            Debug.Log(_currentMode);
-            Debug.Log(_currentInteractable);
         }
 
         public void ToggleBuildingMode()

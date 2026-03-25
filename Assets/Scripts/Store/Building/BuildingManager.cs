@@ -7,6 +7,7 @@ public class BuildingManager : MonoBehaviour
 {
     [SerializeField] private Grid grid;
     [SerializeField] private BuildingUIController buyMenu;
+    [SerializeField] private PathfindingGrid pathfindingGrid;
 
     private bool _activeMenu = false;
     private Dictionary<IBuildable, List<Vector2Int>> _occupiedCells = new();
@@ -63,6 +64,8 @@ public class BuildingManager : MonoBehaviour
             }
         }
         _occupiedCells[buildable] = coords;
+
+        pathfindingGrid.UpdateGrid();
     }
     public IBuildable TakeBuildable(Vector3 position)
     {
@@ -84,6 +87,7 @@ public class BuildingManager : MonoBehaviour
             _occupiedCells.Remove(buildable);
         }
 
+        pathfindingGrid.UpdateGrid();
         return buildable;
     }
 
