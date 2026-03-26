@@ -10,7 +10,7 @@ namespace StoreSimulator.StoreableItems
         [SerializeField] private ThrowableSettings throwableSettings;
         [SerializeField] private List<SlotGroup> groups;
 
-        public Transform InteractionPoint => null;
+        public Vector3 InteractionPoint => transform.position;
 
         private List<ShellfSlot> _slots = new List<ShellfSlot>();
         private ItemCategory _allowedCategory;

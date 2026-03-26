@@ -8,9 +8,11 @@ public class CashStorage : MonoBehaviour, ICashStorage
     [SerializeField] private Transform raycastPosition;
     [SerializeField] private float raycastDistance;
     [SerializeField] private LayerMask interactableMask;
+    [SerializeField] private bool auto;
 
     public bool IsOccupied { get; private set; }
     public bool IsAvailable { get; private set; }
+    public Vector3 InteractionPoint => transform.position;
 
     public void BuyItem(IStoreable storeable)
     {
@@ -22,7 +24,8 @@ public class CashStorage : MonoBehaviour, ICashStorage
 
     void Update()
     {
-        IsAvailable = findPlayer.FindPlayer;
+        if(!auto) IsAvailable = findPlayer.FindPlayer;
+        else IsAvailable = true;
 
         TryFindNPC();
     }

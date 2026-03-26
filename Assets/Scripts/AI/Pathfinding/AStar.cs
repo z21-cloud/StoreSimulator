@@ -66,8 +66,6 @@ public class AStar : MonoBehaviour
 
             if (currentNode == goalNode) return RetracePath(goalNode);
 
-            if (!currentNode.isWalkable) continue;
-
             List<PathNode> neighbourds = FindNeighbours(currentNode);
 
             foreach (var neighbour in neighbourds)

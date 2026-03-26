@@ -3,45 +3,39 @@ using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
-public enum NPCState
-{
-    Idle,
-    MovingToStorage,
-    TakingFromShelf,
-    Buying,
-    Leaving,
-    Waiting
-}
-
 public class NPCController : MonoBehaviour
 {
-    [SerializeField] private float interactionDistance = 2f;
-    [SerializeField] private NPCMover mover;
-    [SerializeField] private Transform goal;
-    [SerializeField] private Transform store;
-    [SerializeField] private Transform leavePoint;
-    [SerializeField] private Transform storageForItems;
+    [Header("Parameters")]
     [SerializeField] private float waitTime = 5f;
-    [SerializeField] private AStar pathfinding;
 
-    private IStorage goalShelf;
-    private ICashStorage goalCashStorage;
+    [Header("NPC states")]
+    [SerializeField] private NPCStates states;
+
+    [Header("Movement logic")]
+    [SerializeField] private NPCMovement movement;
+
+    [Header("Position of each path for NPC")]
+    [SerializeField] private Transform storeEnterPoint;
+    [SerializeField] private Transform storeLeavePoint;
+    [SerializeField] private Transform storageForItems;
+
+    private IStorage shelf;
+    private ICashStorage cashStorage;
     private IStoreable boughtItem;
-    private NPCState _currentState;
     private float waitBeforeShop;
 
-    private Queue<Vector3> _currentPath = new Queue<Vector3>();
 
     void Start()
     {
-        _currentState = NPCState.Idle;
         waitBeforeShop = waitTime;
-        goalShelf = null;
+        ChangeState(states.CurrentState);
     }
 
     void Update()
     {
-        switch (_currentState)
+        movement.Tick();
+
+        switch (states.CurrentState)
         {
             case NPCState.Idle: HandleIdle(); break;
             case NPCState.MovingToStorage: HandleMoving(); break;
@@ -53,32 +47,37 @@ public class NPCController : MonoBehaviour
 
     private void ChangeState(NPCState newState)
     {
+        if (newState == NPCState.Idle)
+        {
+            movement.SetDestination(storeEnterPoint.position);
+        }
         if (newState == NPCState.MovingToStorage)
         {
-            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalShelf).transform.position);
-            _currentPath = new Queue<Vector3>(path);
+            movement.SetDestination(shelf.InteractionPoint);
         }
-        if(newState == NPCState.Buying)
+        if (newState == NPCState.Buying)
         {
-            var path = pathfinding.FindPath(transform.position, ((MonoBehaviour)goalCashStorage).transform.position);
-            _currentPath = new Queue<Vector3>(path);
+            movement.SetDestination(cashStorage.InteractionPoint);
         }
         if (newState == NPCState.Leaving)
         {
-            var path = pathfinding.FindPath(transform.position, leavePoint.position);
-            _currentPath = new Queue<Vector3>(path);
+            Debug.Log($"[AI] Catch bug there. Can't find path - 2!");
+            movement.SetDestination(storeLeavePoint.position);
         }
 
-        _currentState = newState;
+        states.SetState(newState);
     }
 
     private void HandleIdle()
     {
-        if (_currentPath.Count == 0)
+        Debug.Log($"[AI]: Idle state");
+        if (movement.HasReached)
         {
-            goalShelf = GetStorage();
+            shelf = GetStorage();
 
-            if (goalShelf != null)
+            Debug.Log($"[AI]: Try get shelf");
+
+            if (shelf != null)
             {
                 ChangeState(NPCState.MovingToStorage);
             }
@@ -88,77 +87,82 @@ public class NPCController : MonoBehaviour
             }
             return;
         }
-
-        GoThrowPath();
-    }
-
-    private void GoThrowPath()
-    {
-        Vector3 target = _currentPath.Peek();
-        mover.MoveTo(target, interactionDistance);
-        transform.LookAt(target);
-
-        if (!mover.IsMoving) _currentPath.Dequeue();
     }
 
     private void HandleMoving()
     {
-        if (_currentPath.Count == 0)
+        Debug.Log($"[AI]: Moving to shelf");
+
+        if (movement.HasReached)
         {
             ChangeState(NPCState.TakingFromShelf);
             return;
         }
-
-        GoThrowPath();
     }
 
     private void HandleTakingFromShelf()
     {
-        BuyItem();
-        
-        goalCashStorage = GetCashStorage();
+        Debug.Log($"[AI]: Taking from shelf");
 
-        if(goalCashStorage != null)
+        if (!TryTakingFromShelf())
+        {
+            Debug.Log($"[AI] Catch bug there. Can't find path! - 1");
+            ChangeState(NPCState.Leaving);
+            return;
+        }
+
+        cashStorage = GetCashStorage();
+
+        Debug.Log($"[AI]: Try to find cash storage");
+
+        if (cashStorage != null)
         {
             ChangeState(NPCState.Buying);
         }
         else
         {
+            Debug.Log($"[AI]: Cash Storage is null, waiting...");
             HandleWaiting();
+            return;
         }
     }
 
     private void HandleBuying()
     {
-        if (_currentPath.Count == 0)
+        Debug.Log($"[AI]: Moving to cash storage");
+
+        if (movement.HasReached)
         {
-            if(goalCashStorage.IsAvailable)
+            Debug.Log($"[AI]: Try to buy item");
+
+            if (cashStorage.IsAvailable)
             {
-                goalCashStorage.BuyItem(boughtItem);
+                Debug.Log($"[AI]: Item bought succesfully");
+                cashStorage.BuyItem(boughtItem);
                 boughtItem = null;
                 ChangeState(NPCState.Leaving);
             }
             else
             {
+                Debug.Log($"[AI]: Waiting player to buy item");
                 HandleWaiting();
             }
             return;
         }
 
-        GoThrowPath();
     }
 
     private void HandleLeaving()
     {
-        goalShelf = null;
+        Debug.Log($"[AI]: Leaving store");
 
-        if (_currentPath.Count == 0)
+        shelf = null;
+
+        if (movement.HasReached)
         {
             ChangeState(NPCState.Idle);
             return;
         }
-
-        GoThrowPath();
     }
 
     private IStorage GetStorage()
@@ -171,28 +175,47 @@ public class NPCController : MonoBehaviour
         return StorageRegistry.Instance.GetRandomCashStorage();
     }
 
-    private void BuyItem()
+    private bool TryTakingFromShelf()
     {
-        if (boughtItem != null) return;
-
-        GameObject go = goalShelf.TakeItem(transform.position);
-        transform.LookAt(((MonoBehaviour)goalShelf).transform.position);
-        if (go.TryGetComponent<IStoreable>(out var storeable))
+        if (boughtItem != null)
         {
-            boughtItem = storeable;
-            storeable.OnPickedFromStore();
-            ((MonoBehaviour)storeable).transform.position = storageForItems.position;
-            ((MonoBehaviour)storeable).transform.parent = storageForItems;
+            Debug.Log("[AI]: Can't take item, don't have enough slots");
+            return false;
         }
-        Debug.Log($"[NPCConrtoller]: taken");
+
+        transform.LookAt(shelf.InteractionPoint);
+
+        if (shelf.CanTakeItem())
+        {
+            GameObject go = shelf.TakeItem(transform.position);
+            if (go.TryGetComponent<IStoreable>(out var storeable))
+            {
+                boughtItem = storeable;
+
+                GameObject boughtGO = storeable.OnPickedFromStore();
+                boughtGO.transform.position = storageForItems.position;
+                boughtGO.transform.parent = storageForItems;
+
+                Debug.Log($"[AI]: take storeable");
+                return true;
+            }
+
+            Debug.Log($"[AI]: Taken item is not StoreableItem!");
+            return false;
+        }
+
+        Debug.Log($"[AI]: Can't take item. Shelf is empty");
+        return false;
     }
 
     private void HandleWaiting()
     {
+        Debug.Log($"[AI]: Waiting state...");
+
         waitBeforeShop -= Time.deltaTime;
         if (waitBeforeShop <= 0f)
         {
-            ChangeState(_currentState);
+            ChangeState(states.CurrentState);
             waitBeforeShop = waitTime;
         }
     }

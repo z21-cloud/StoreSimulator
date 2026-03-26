@@ -4,7 +4,7 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IStorage
     {
-        public Transform InteractionPoint { get; }
+        public Vector3 InteractionPoint { get; }
         public bool CanPlaceItem(IStoreable storable);
         public bool CanTakeItem();
         public bool HasFreeSlot();

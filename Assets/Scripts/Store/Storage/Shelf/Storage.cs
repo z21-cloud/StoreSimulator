@@ -24,17 +24,17 @@ namespace StoreSimulator.InteractableObjects
         [SerializeField] private PricesManager priceManager;
 
         [Header("Pick Up point for NPC's")]
-        [SerializeField] private Transform pickupPostion;
+        [SerializeField] private Transform interactionPosition;
 
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
         private ItemData _currentItemData;
 
-        public Transform InteractionPoint => pickupPostion;
+        public Vector3 InteractionPoint => interactionPosition.position;
 
         void OnEnable()
         {
-            Debug.Log("А я должен быть после");
+            Debug.Log($"Register storage");
             StorageRegistry.Instance.RegisterStorage(this);
         }
 
@@ -42,11 +42,6 @@ namespace StoreSimulator.InteractableObjects
         {
             priceManager = PricesManager.Instance;
             ResetPrice();
-        }
-
-        public Transform PickUpPoint()
-        {
-            return pickupPostion;
         }
 
         // use events instead
