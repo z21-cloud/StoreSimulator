@@ -141,15 +141,14 @@ public class PathfindingGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (grid == null) return; // грида ещё не создана
+        if (grid == null) return; 
 
         foreach (var node in grid.Values)
         {
-            // цвет ВНУТРИ цикла — вот где чаще всего ошибка
             Gizmos.color = node.isWalkable ? Color.green : Color.red;
 
             Vector3 size = new Vector3(nodeSize.x, 0.1f, nodeSize.y);
-            Gizmos.DrawWireCube(node.worldPosition, size * 0.9f); // 0.9f чтобы зазор между нодами
+            Gizmos.DrawWireCube(node.worldPosition, size * 0.9f);
         }
     }
 }

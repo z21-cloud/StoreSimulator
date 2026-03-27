@@ -102,7 +102,7 @@ public class BuildingHandler : MonoBehaviour
 
         var original = ((MonoBehaviour)_heldBuildable).gameObject;
         
-        Vector3 finalPos = CalculateVisualPositions(_targetCell, size, grid.SlotSize) + GetWallOffset(_currentRotationY, _heldBuildable.WallOffset);
+        Vector3 finalPos = CalculateVisualPositions(_targetCell, size, grid.SlotSize) + GetWallOffset(_currentRotationY, _heldBuildable.WallOffset) + Vector3.up * _heldBuildable.YOffset;
 
         original.transform.position = finalPos;
         original.transform.rotation = Quaternion.Euler(0, _currentRotationY, 0);

@@ -1043,7 +1043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7047116725985453113
 Transform:
   m_ObjectHideFlags: 0
@@ -1407,7 +1407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4243754256916508610
 Transform:
   m_ObjectHideFlags: 0
@@ -1863,7 +1863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3355852911967580938
 Transform:
   m_ObjectHideFlags: 0
@@ -2172,6 +2172,7 @@ MonoBehaviour:
   itemSize: {x: 2, y: 1}
   ghostPrefab: {fileID: 6720724965167688849, guid: 8619e415f8132da48bcd0844231a1779, type: 3}
   wallOffset: 0.35
+  yOffset: 0
 --- !u!1 &2455184903354717912
 GameObject:
   m_ObjectHideFlags: 0

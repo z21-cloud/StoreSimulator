@@ -9,8 +9,9 @@ public class Grid : MonoBehaviour
     [SerializeField] private Vector2 slotSize = new Vector2(1, 1);
     [SerializeField] private GameObject invisiblePlane;
     [SerializeField] private GameObject gridCellImage;
-    [SerializeField] private bool debug;
     [SerializeField] private List<GameObject> buildablePrefabs;
+    [SerializeField] private bool debug;
+    [SerializeField] private BuildingManager buildingManager;
     public Vector2 SlotSize => slotSize;
     private Dictionary<string, GameObject> _prefabRegistry;
     private Dictionary<Vector2Int, GridCell> grid;
@@ -18,6 +19,37 @@ public class Grid : MonoBehaviour
     void Awake()
     {
         CreateGrid();
+    }
+
+    void Start()
+    {
+        RegisterPlacedObjects();
+    }
+
+    private void RegisterPlacedObjects()
+    {
+        var buildables = BuildingService.Instance.GetAllBuildable();
+
+        if(buildables == null)
+        {
+            Debug.Log($"[BuildingGrid]: No buildables registered");
+            return;
+        }
+
+        foreach(var buildable in buildables)
+        {
+            Vector2Int coords = WorldToGrid(((MonoBehaviour)buildable).transform.position);
+
+            if(!TryGetCell(coords, out _)) 
+            {
+                Debug.Log($"[BuildingGrid]: can't find grid by next coords: {coords}");
+                continue;
+            }
+
+            Debug.Log($"[BuildingGrid]: Place buildable: {((MonoBehaviour)buildable).gameObject.name}");
+
+            buildingManager.PlaceBuildable(coords, buildable, buildable.Size);
+        }
     }
 
     public void CreateGrid()
@@ -100,9 +132,9 @@ public class Grid : MonoBehaviour
     {
         if (!debug) return;
 
-        Gizmos.color = Color.red;
         foreach (var cell in grid.Values)
         {
+            Gizmos.color = cell.IsOccupied ? Color.red : Color.green;
             Gizmos.DrawWireCube(cell.worldPosittion, new Vector3(1f, 1f, 1f));
         }
     }
