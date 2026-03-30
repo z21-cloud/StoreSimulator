@@ -1491,27 +1491,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1879796017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &271892672 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6854684750043444892, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
-  m_PrefabInstance: {fileID: 3025061788622117600}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &271892674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271892672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d8b200dda9e8f045ac9d4d1c8580e0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BuildableItem
-  itemSize: {x: 3, y: 2}
-  ghostPrefab: {fileID: 4385543670770186784, guid: d2ac6b025197b314b854f0d701c91c82, type: 3}
-  wallOffset: 0
-  yOffset: 0.35
 --- !u!1 &286424566
 GameObject:
   m_ObjectHideFlags: 0
@@ -13022,7 +13001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6312173198795878144, guid: 0a87076d862fce1409075f4f1dbb8d7a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.4300003
+      value: -5.5699997
       objectReference: {fileID: 0}
     - target: {fileID: 6312173198795878144, guid: 0a87076d862fce1409075f4f1dbb8d7a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13156,14 +13135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CashBox
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4303485516001338043, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6854684750043444892, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 271892674}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
 --- !u!1001 &3525840131987588451
 PrefabInstance:

@@ -100,7 +100,7 @@ public class BuildingHandler : MonoBehaviour
         Vector2 size = _heldBuildable.Size;
         if(!buildingManager.CanPlace(_targetCell.gridPosition, size)) return;
 
-        var original = ((MonoBehaviour)_heldBuildable).gameObject;
+        GameObject original = ((MonoBehaviour)_heldBuildable).gameObject;
         
         Vector3 finalPos = CalculateVisualPositions(_targetCell, size, grid.SlotSize) + GetWallOffset(_currentRotationY, _heldBuildable.WallOffset) + Vector3.up * _heldBuildable.YOffset;
 
@@ -108,13 +108,9 @@ public class BuildingHandler : MonoBehaviour
         original.transform.rotation = Quaternion.Euler(0, _currentRotationY, 0);
         original.SetActive(true);
 
-        Destroy(_heldPrefab);
-        _heldPrefab = null;
-
         buildingManager.PlaceBuildable(_targetCell.gridPosition, _heldBuildable, size);
-        _heldBuildable = null;
-        _targetCell = null;
-        _currentRotationY = 0f;
+        
+        CancelHolding();
     }
 
     public void CancelHolding()

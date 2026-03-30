@@ -28,25 +28,25 @@ public class Grid : MonoBehaviour
 
     private void RegisterPlacedObjects()
     {
-        var buildables = BuildingService.Instance.GetAllBuildable();
+        List<IBuildable> buildables = BuildingService.Instance.GetAllBuildable();
 
-        if(buildables == null)
+        if (buildables == null)
         {
             Debug.Log($"[BuildingGrid]: No buildables registered");
             return;
         }
 
-        foreach(var buildable in buildables)
+        foreach (var buildable in buildables)
         {
-            Vector2Int coords = WorldToGrid(((MonoBehaviour)buildable).transform.position);
+            Vector2Int coords = WorldToGrid(buildable.BuildPosition);
 
-            if(!TryGetCell(coords, out _)) 
+            if (!TryGetCell(coords, out _))
             {
                 Debug.Log($"[BuildingGrid]: can't find grid by next coords: {coords}");
                 continue;
             }
 
-            Debug.Log($"[BuildingGrid]: Place buildable: {((MonoBehaviour)buildable).gameObject.name}");
+            Debug.Log($"[BuildingGrid]: Place buildable: {buildable}");
 
             buildingManager.PlaceBuildable(coords, buildable, buildable.Size);
         }
@@ -55,6 +55,7 @@ public class Grid : MonoBehaviour
     public void CreateGrid()
     {
         InitialGrid();
+
         invisiblePlane.transform.localScale = new Vector3(gridSize.x * slotSize.x, 1f, gridSize.y * slotSize.y);
 
         invisiblePlane.transform.position = new Vector3
@@ -128,14 +129,15 @@ public class Grid : MonoBehaviour
         return grid.TryGetValue(coords, out cell);
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (!debug) return;
 
         foreach (var cell in grid.Values)
         {
             Gizmos.color = cell.IsOccupied ? Color.red : Color.green;
-            Gizmos.DrawWireCube(cell.worldPosittion, new Vector3(1f, 1f, 1f));
+            Vector3 size = new Vector3(0.9f, 0.9f, 0.9f);
+            Gizmos.DrawWireCube(cell.worldPosittion, size);
         }
     }
 }
