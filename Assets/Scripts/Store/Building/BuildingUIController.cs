@@ -4,74 +4,77 @@ using StoreSimulator.PlayerCamera;
 using StoreSimulator.PlayerController;
 using UnityEngine;
 
-public class BuildingUIController : MonoBehaviour
+namespace StoreSimulator.BuildingSystem
 {
-    [SerializeField] private GameObject buildingUI;
-    //[SerializeField] private List<StoreOrder> availableOrders;
-    //[SerializeField] private Transform orderList;
-    [SerializeField] private Transform spawnPosition;
-    [SerializeField] private StoreOrder shelfOrder;
-
-    [SerializeField] private PlayerInputController playerInputController;
-    [SerializeField] private PlayerLook playerLook;
-    [SerializeField] private PlayerWallet playerWallet;
-    [SerializeField] private BuildingHandler buildingHandler;
-    [SerializeField] private BalanceUI balanceUI;
-
-    // store order = delivery order
-    // order shelf = orderItem
-    public void Open()
+    public class BuildingUIController : MonoBehaviour
     {
-        buildingUI.SetActive(true);
-        balanceUI.gameObject.SetActive(false);
+        [SerializeField] private GameObject buildingUI;
+        //[SerializeField] private List<StoreOrder> availableOrders;
+        //[SerializeField] private Transform orderList;
+        [SerializeField] private Transform spawnPosition;
+        [SerializeField] private StoreOrder shelfOrder;
 
-        Cursor.visible = true;
+        [SerializeField] private PlayerInputController playerInputController;
+        [SerializeField] private PlayerLook playerLook;
+        [SerializeField] private PlayerWallet playerWallet;
+        [SerializeField] private BuildingHandler buildingHandler;
+        [SerializeField] private BalanceUI balanceUI;
 
-        Cursor.lockState = CursorLockMode.None;
-
-        playerInputController.enabled = false;
-        playerLook.enabled = false;
-    }
-
-    /*public void Init()
-    {
-        foreach(var order in availableOrders)
+        // store order = delivery order
+        // order shelf = orderItem
+        public void Open()
         {
-            OrderShelf storeOrder = Instantiate(shelfOrderPrefab, orderList);
-            storeOrder.Init(order);
-        }
-    }*/
+            buildingUI.SetActive(true);
+            balanceUI.gameObject.SetActive(false);
 
-    public void OnBuy()
-    {
-        if(buildingHandler.Buildable != null) return;
+            Cursor.visible = true;
 
-        float price = shelfOrder.Cost;
+            Cursor.lockState = CursorLockMode.None;
 
-        if(!playerWallet.CanAfford(price))
-        {
-            Debug.Log($"[Building UI]: can't buy shelf");
-            return;
+            playerInputController.enabled = false;
+            playerLook.enabled = false;
         }
 
-        GameObject go = Instantiate(shelfOrder.Prefab, spawnPosition);
-        buildingHandler.DoInteract(go);
+        /*public void Init()
+        {
+            foreach(var order in availableOrders)
+            {
+                OrderShelf storeOrder = Instantiate(shelfOrderPrefab, orderList);
+                storeOrder.Init(order);
+            }
+        }*/
 
-        playerWallet.Spend(price);
-        balanceUI.UpdateBalanceUI();
-        Close();
-    }
+        public void OnBuy()
+        {
+            if (buildingHandler.Buildable != null) return;
 
-    public void Close()
-    {
-        buildingUI.SetActive(false);
-        balanceUI.gameObject.SetActive(true);
+            float price = shelfOrder.Cost;
 
-        Cursor.visible = false;
+            if (!playerWallet.CanAfford(price))
+            {
+                Debug.Log($"[Building UI]: can't buy shelf");
+                return;
+            }
 
-        Cursor.lockState = CursorLockMode.Locked;
+            GameObject go = Instantiate(shelfOrder.Prefab, spawnPosition);
+            buildingHandler.DoInteract(go);
 
-        playerInputController.enabled = true;
-        playerLook.enabled = true;
+            playerWallet.Spend(price);
+            balanceUI.UpdateBalanceUI();
+            Close();
+        }
+
+        public void Close()
+        {
+            buildingUI.SetActive(false);
+            balanceUI.gameObject.SetActive(true);
+
+            Cursor.visible = false;
+
+            Cursor.lockState = CursorLockMode.Locked;
+
+            playerInputController.enabled = true;
+            playerLook.enabled = true;
+        }
     }
 }

@@ -32,16 +32,16 @@ namespace StoreSimulator.InteractableObjects
 
         public Vector3 InteractionPoint => interactionPosition.position;
 
-        void OnEnable()
+        void Awake()
         {
-            Debug.Log($"Register storage");
-            StorageRegistry.Instance.RegisterStorage(this);
+            ResetPrice();
         }
 
-        private void Start()
+        void OnEnable()
         {
+            // Debug.Log($"Register storage");
+            StorageRegistry.Instance.RegisterStorage(this);
             priceManager = PricesManager.Instance;
-            ResetPrice();
         }
 
         // use events instead

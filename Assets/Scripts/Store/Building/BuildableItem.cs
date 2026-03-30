@@ -1,58 +1,61 @@
 using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
-public class BuildableItem : MonoBehaviour, IBuildable, IInteractable
+namespace StoreSimulator.BuildingSystem
 {
-    [SerializeField] private Vector2 itemSize;
-    [SerializeField] private GameObject ghostPrefab;
-    [SerializeField] private float wallOffset = 0f;
-    [SerializeField] private float yOffset = .5f;
-
-    public Vector2 Size => itemSize;
-    public GameObject GhostPrefab => ghostPrefab;
-    public float WallOffset => wallOffset;
-    public float YOffset => yOffset;
-    public Vector3 BuildPosition { get; private set; }
-    public float BuildRotationY => transform.eulerAngles.y;
-
-    private void Start()
+    public class BuildableItem : MonoBehaviour, IBuildable, IInteractable
     {
-        BuildingService.Instance.RegisterBuildable(this);
-        GetMinPosition();
-    }
+        [SerializeField] private Vector2 itemSize;
+        [SerializeField] private GameObject ghostPrefab;
+        [SerializeField] private float wallOffset = 0f;
+        [SerializeField] private float yOffset = .5f;
 
-    private void GetMinPosition()
-    {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        public Vector2 Size => itemSize;
+        public GameObject GhostPrefab => ghostPrefab;
+        public float WallOffset => wallOffset;
+        public float YOffset => yOffset;
+        public Vector3 BuildPosition { get; private set; }
+        public float BuildRotationY => transform.eulerAngles.y;
 
-        if (renderers.Length == 0)
+        private void Start()
         {
-            BuildPosition = transform.position;
-            return;
+            BuildingRegisterService.Instance.RegisterBuildable(this);
+            GetMinPosition();
         }
 
-        Bounds bounds = renderers[0].bounds;
-
-        for (int i = 1; i < renderers.Length; i++)
+        private void GetMinPosition()
         {
-            bounds.Encapsulate(renderers[i].bounds);
+            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+
+            if (renderers.Length == 0)
+            {
+                BuildPosition = transform.position;
+                return;
+            }
+
+            Bounds bounds = renderers[0].bounds;
+
+            for (int i = 1; i < renderers.Length; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+
+            BuildPosition = bounds.min;
         }
 
-        BuildPosition = bounds.min;
-    }
+        public string GetDescription()
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public string GetDescription()
-    {
-        throw new System.NotImplementedException();
-    }
+        public void OnPlaced()
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public void OnPlaced()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnRemoved()
-    {
-        throw new System.NotImplementedException();
+        public void OnRemoved()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

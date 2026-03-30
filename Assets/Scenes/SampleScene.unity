@@ -7763,6 +7763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1343269364}
   - component: {fileID: 1343269365}
+  - component: {fileID: 1343269366}
   m_Layer: 0
   m_Name: StorageRegistryService
   m_TagString: Untagged
@@ -7797,6 +7798,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6995fc403f378a4da6439c8ac90a5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StorageRegistry
+--- !u!114 &1343269366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343269363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cb6f03e0fa1264c886bd4b2b560901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CashStorageRegistry
 --- !u!1 &1344451344
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using UnityEngine;
 public class StorageRegistry : MonoBehaviour
 {
     private List<IStorage> storages = new List<IStorage>();
-    private List<ICashStorage> cashStorages = new List<ICashStorage>();
 
     public static StorageRegistry Instance { get; private set; }
 
@@ -24,9 +23,7 @@ public class StorageRegistry : MonoBehaviour
     {
         if (storages.Contains(storage)) return;
 
-        GameObject temp = ((MonoBehaviour)storage).gameObject;
-
-        Debug.Log($"[StorageRegistry]: Registered {temp.name}");
+        //Debug.Log($"[StorageRegistry]: Registered {((MonoBehaviour)storage).gameObject.name}");
 
         storages.Add(storage);
     }
@@ -35,9 +32,7 @@ public class StorageRegistry : MonoBehaviour
     {
         if (!storages.Contains(storage)) return;
 
-        GameObject temp = ((MonoBehaviour)storage).gameObject;
-
-        Debug.Log($"[StorageRegistry]: Registered {temp.name}");
+        //Debug.Log($"[StorageRegistry]: Unregistered {((MonoBehaviour)storage).gameObject.name}");
 
         storages.Remove(storage);
     }
@@ -62,39 +57,5 @@ public class StorageRegistry : MonoBehaviour
         int randomIndex = Random.Range(0, storages.Count);
         Debug.Log($"[StorageRegistry]: Returning empty storage");
         return storages[randomIndex];
-    }
-
-    public void RegisterCashStorage(ICashStorage cashStorage)
-    {
-        if (cashStorages.Contains(cashStorage)) return;
-
-        cashStorages.Add(cashStorage);
-    }
-
-    public void UnregisterCashStorage(ICashStorage cashStorage)
-    {
-        if (!cashStorages.Contains(cashStorage)) return;
-
-        cashStorages.Remove(cashStorage);
-    }
-
-    public ICashStorage GetRandomCashStorage()
-    {
-        if (cashStorages.Count <= 0)
-        {
-            Debug.Log($"[StorageRegistry]: No cash storages left! Return null");
-            return null;
-        }
-        int randomIndex = Random.Range(0, cashStorages.Count);
-
-        if (!cashStorages[randomIndex].IsOccupied)
-        {
-            return cashStorages[randomIndex];
-        }
-        else
-        {
-            Debug.Log($"[StorageRegistry]: No cash storages left! Return null");
-            return null;
-        }
     }
 }

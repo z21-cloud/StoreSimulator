@@ -1,51 +1,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingService : MonoBehaviour
+namespace StoreSimulator.BuildingSystem
 {
-    [SerializeField] BuildingManager buildingManager;
-
-    public static BuildingService Instance;
-
-    private List<IBuildable> buildables = new List<IBuildable>();
-    
-    private void Awake()
+    public class BuildingRegisterService : MonoBehaviour
     {
-        if(Instance != null && Instance != this)
+        [SerializeField] BuildingManager buildingManager;
+
+        public static BuildingRegisterService Instance;
+
+        private List<IBuildable> buildables = new List<IBuildable>();
+
+        private void Awake()
         {
-            Destroy(this);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+
+            buildables = new List<IBuildable>();
+
+            Instance = this;
         }
 
-        buildables = new List<IBuildable>();
+        public void RegisterBuildable(IBuildable buildable)
+        {
+            if (buildables.Contains(buildable)) return;
 
-        Instance = this;
-    }
+            // Debug.Log($"[BuildingService]: Registere - {((MonoBehaviour)buildable).gameObject.name}");
 
-    public void RegisterBuildable(IBuildable buildable)
-    {
-        if(buildables.Contains(buildable)) return;
+            buildables.Add(buildable);
+        }
 
-        Debug.Log($"[BuildingService]: Registere - {((MonoBehaviour)buildable).gameObject.name}");
+        public List<IBuildable> GetAllBuildable()
+        {
+            if (buildables.Count <= 0) return null;
 
-        buildables.Add(buildable);
-    }
+            // Debug.Log($"[BuildingService]: Returns - {buildables.Count}");
 
-    public List<IBuildable> GetAllBuildable()
-    {
-        if(buildables.Count <= 0) return null;
+            return buildables;
+        }
 
-        Debug.Log($"[BuildingService]: Returns - {buildables.Count}");
+        public void UnregisterBuildable(IBuildable buildable)
+        {
+            if (!buildables.Contains(buildable)) return;
 
-        return buildables;
-    }
+            // Debug.Log($"[BuildingService]: Unregistere - {((MonoBehaviour)buildable).gameObject.name}");
 
-    public void UnregisterBuildable(IBuildable buildable)
-    {
-        if(!buildables.Contains(buildable)) return;
-
-        Debug.Log($"[BuildingService]: Unregistere - {((MonoBehaviour)buildable).gameObject.name}");
-
-        buildables.Remove(buildable);
+            buildables.Remove(buildable);
+        }
     }
 }

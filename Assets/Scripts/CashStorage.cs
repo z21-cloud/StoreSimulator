@@ -49,11 +49,11 @@ public class CashStorage : MonoBehaviour, ICashStorage
 
     private void Start()
     {
-        StorageRegistry.Instance.RegisterCashStorage(this);
+        CashStorageRegistry.Instance.RegisterCashStorage(this);
     }
 
     private void OnDisable()
     {
-        StorageRegistry.Instance.UnregisterCashStorage(this);
+        CashStorageRegistry.Instance.UnregisterCashStorage(this);
     }
 }

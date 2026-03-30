@@ -172,7 +172,7 @@ public class NPCController : MonoBehaviour
 
     private ICashStorage GetCashStorage()
     {
-        return StorageRegistry.Instance.GetRandomCashStorage();
+        return CashStorageRegistry.Instance.GetRandomCashStorage();
     }
 
     private bool TryTakingFromShelf()
