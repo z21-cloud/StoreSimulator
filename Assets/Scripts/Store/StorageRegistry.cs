@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
+using StoreSimulator.StoreableItems;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StorageRegistry : MonoBehaviour
@@ -35,6 +37,24 @@ public class StorageRegistry : MonoBehaviour
         //Debug.Log($"[StorageRegistry]: Unregistered {((MonoBehaviour)storage).gameObject.name}");
 
         storages.Remove(storage);
+    }
+
+    public List<IStorage> GetStorageByNeeds(ItemCategory category)
+    {
+        if(storages.Count == 0) return null;
+
+        var result = new List<IStorage>();
+        foreach(var storage in storages)
+        {
+            GameObject peeked = storage.PeekItem();
+            //Debug.Log($"[StorageRegistry]: Peeked Item is {peeked.name}");
+            if(peeked != null && peeked.TryGetComponent<IStoreable>(out var storeable))
+            {
+                if((storeable.Category & category) != 0) result.Add(storage);
+            }
+        }
+
+        return result;
     }
 
     public IStorage GetRandomStorage()

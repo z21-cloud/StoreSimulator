@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Apple
   basePrice: 1.25
+  foodRestore: 20
+  thirstRestore: 0
   category: 1
   subCategory: 1
   prefab: {fileID: 371311341219604599, guid: df8acb0d5002faf4f83e08290661b7af, type: 3}

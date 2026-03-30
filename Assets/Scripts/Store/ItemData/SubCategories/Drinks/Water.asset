@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   itemName: Water
-  basePrice: 0.95
+  basePrice: 1.05
+  foodRestore: 0
+  thirstRestore: 20
   category: 2
   subCategory: 1024
   prefab: {fileID: 6550974380201587083, guid: a7a13c41c53ad3a4dbf307c95e523887, type: 3}

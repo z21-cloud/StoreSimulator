@@ -22,6 +22,8 @@ namespace StoreSimulator.BuildingSystem
 
         // store order = delivery order
         // order shelf = orderItem
+
+        private IBuildable boughtBuildable;
         public void Open()
         {
             buildingUI.SetActive(true);

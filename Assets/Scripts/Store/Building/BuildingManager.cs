@@ -17,7 +17,7 @@ namespace StoreSimulator.BuildingSystem
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Debug.Log(_activeMenu);
+                Debug.Log($"[BuildingManager] BuildingMenu is active: {_activeMenu}");
                 _activeMenu = !_activeMenu;
                 buyMenu.Open();
             }

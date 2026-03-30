@@ -31,6 +31,8 @@ namespace StoreSimulator.InteractableObjects
 
         public void ToggleBuildingMode()
         {
+            if(buildingHandler.Buildable != null) return;
+
             _currentMode = _currentMode == PlayerMode.Default
                         ? PlayerMode.Building
                         : PlayerMode.Default;

@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 97538003}
   - component: {fileID: 97537996}
   - component: {fileID: 97538002}
+  - component: {fileID: 97538004}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
@@ -314,7 +315,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
   waitTime: 1
+  pickDelay: 0.5
+  buyPool: 5
   states: {fileID: 97538002}
+  needs: {fileID: 97538004}
   movement: {fileID: 97538003}
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}
@@ -443,6 +447,23 @@ MonoBehaviour:
   mover: {fileID: 97537996}
   pathfinding: {fileID: 406524155}
   reachTargetDistance: 0.2
+--- !u!114 &97538004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
+  hungerThreshold: 80
+  thirstsThreshold: 80
+  thirstDecrease: 1
+  hungerDecrease: 1
+  decreaseTimer: 1
 --- !u!1 &115613136
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,25 +2065,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2016355844}
     m_Modifications:
-    - target: {fileID: 1401376998884075470, guid: 2ec014425464e9648983822e292435f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2075843382112059756, guid: 2ec014425464e9648983822e292435f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2352333468628700552, guid: 2ec014425464e9648983822e292435f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2447004201934094834, guid: 2ec014425464e9648983822e292435f2, type: 3}
       propertyPath: m_Name
       value: Active Shelf Model (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2447004201934094834, guid: 2ec014425464e9648983822e292435f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7383548778969785923, guid: 2ec014425464e9648983822e292435f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3935,7 +3940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97df107868d25c046a25eb025b6e8a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grid
-  gridSize: {x: 20, y: 10}
+  gridSize: {x: 10, y: 10}
   slotSize: {x: 1, y: 1}
   invisiblePlane: {fileID: 528424756}
   gridCellImage: {fileID: 4004083279809228702, guid: d498b64c8f7cb4a428ab0465ffaba825, type: 3}
@@ -12707,7 +12712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2099813724
 Transform:
   m_ObjectHideFlags: 0
@@ -13119,7 +13124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1533082005775121252, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6804501
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 1533082005775121252, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13168,6 +13173,10 @@ PrefabInstance:
     - target: {fileID: 6854684750043444892, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
       propertyPath: m_Name
       value: CashBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458861253974368388, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
+      propertyPath: auto
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4303485516001338043, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}

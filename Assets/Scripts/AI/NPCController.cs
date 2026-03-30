@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
+using StoreSimulator.StoreableItems;
 using UnityEngine;
 
 namespace StoreSimulator.ArtificialIntelligence
@@ -9,9 +9,12 @@ namespace StoreSimulator.ArtificialIntelligence
     {
         [Header("Parameters")]
         [SerializeField] private float waitTime = 5f;
+        [SerializeField] private float pickDelay = 0.5f;
+        [SerializeField] private int buyPool = 5;
 
         [Header("NPC states")]
         [SerializeField] private NPCStates states;
+        [SerializeField] private NPCNeeds needs;
 
         [Header("Movement logic")]
         [SerializeField] private NPCMovement movement;
@@ -23,13 +26,17 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private IStorage shelf;
         private ICashStorage cashStorage;
-        private IStoreable boughtItem;
-        private float waitBeforeShop;
-
+        private List<IStoreable> boughtItems;
+        private List<IStorage> shelves;
+        private float waitBeforeShop = 0f;
+        private float pickTimer = 0f;
+        private int itemsToBuy = 0;
 
         void Start()
         {
             waitBeforeShop = waitTime;
+            shelves = new List<IStorage>();
+            boughtItems = new List<IStoreable>(buyPool);
             ChangeState(states.CurrentState);
         }
 
@@ -63,7 +70,6 @@ namespace StoreSimulator.ArtificialIntelligence
             }
             if (newState == NPCState.Leaving)
             {
-                Debug.Log($"[AI] Catch bug there. Can't find path - 2!");
                 movement.SetDestination(storeLeavePoint.position);
             }
 
@@ -75,17 +81,30 @@ namespace StoreSimulator.ArtificialIntelligence
             Debug.Log($"[AI]: Idle state");
             if (movement.HasReached)
             {
-                shelf = GetStorage();
+                ItemCategory npcNeeds = needs.GetPriorityNeed();
+                
+                Debug.Log($"[AI]: Current needs are: {npcNeeds}");
+
+                if (npcNeeds == ItemCategory.None)
+                {
+                    HandleWaiting();
+                    return;
+                }
+
+                shelves = StorageRegistry.Instance.GetStorageByNeeds(npcNeeds);
 
                 Debug.Log($"[AI]: Try get shelf");
 
-                if (shelf != null)
+                if (shelves.Count != 0)
                 {
+                    shelf = shelves[0];
+                    itemsToBuy = Random.Range(1, buyPool + 1);
+                    boughtItems.Clear();
                     ChangeState(NPCState.MovingToStorage);
                 }
                 else
                 {
-                    ChangeState(NPCState.Leaving);
+                    HandleWaiting();
                 }
                 return;
             }
@@ -106,10 +125,30 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             Debug.Log($"[AI]: Taking from shelf");
 
-            if (!TryTakingFromShelf())
+            if (shelf.CanTakeItem() && boughtItems.Count < itemsToBuy)
             {
-                Debug.Log($"[AI] Catch bug there. Can't find path! - 1");
+                pickTimer -= Time.deltaTime;
+                if (pickTimer <= 0f)
+                {
+                    TryTakingFromShelf();
+                    pickTimer = pickDelay;
+                }
+                return;
+            }
+
+            if (boughtItems.Count == 0)
+            {
+                Debug.Log($"[AI]: Shelf is empty");
                 ChangeState(NPCState.Leaving);
+                return;
+            }
+
+            shelves.RemoveAt(0);
+
+            if(shelves.Count > 0)
+            {
+                Debug.Log($"[AI]: Shelves is not empty, moving to next storage...");
+                ChangeState(NPCState.MovingToStorage);
                 return;
             }
 
@@ -120,12 +159,12 @@ namespace StoreSimulator.ArtificialIntelligence
             if (cashStorage != null)
             {
                 ChangeState(NPCState.Buying);
+                return;
             }
             else
             {
                 Debug.Log($"[AI]: Cash Storage is null, waiting...");
                 HandleWaiting();
-                return;
             }
         }
 
@@ -137,19 +176,25 @@ namespace StoreSimulator.ArtificialIntelligence
             {
                 Debug.Log($"[AI]: Try to buy item");
 
-                if (cashStorage.IsAvailable)
+                while (cashStorage.IsAvailable && boughtItems.Count != 0)
                 {
                     Debug.Log($"[AI]: Item bought succesfully");
-                    cashStorage.BuyItem(boughtItem);
-                    boughtItem = null;
-                    ChangeState(NPCState.Leaving);
+                    cashStorage.BuyItem(boughtItems[0]);
+                    needs.IncreaseHunger(boughtItems[0].Data.FoodRestore);
+                    needs.IncreaseThirst(boughtItems[0].Data.ThirstRestore);
+                    boughtItems.RemoveAt(0);
                 }
-                else
+                if (boughtItems.Count != 0)
                 {
                     Debug.Log($"[AI]: Waiting player to buy item");
                     HandleWaiting();
+                    return;
                 }
-                return;
+                else
+                {
+                    ChangeState(NPCState.Leaving);
+                    return;
+                }
             }
 
         }
@@ -159,6 +204,8 @@ namespace StoreSimulator.ArtificialIntelligence
             Debug.Log($"[AI]: Leaving store");
 
             shelf = null;
+            cashStorage = null;
+            boughtItems.Clear();
 
             if (movement.HasReached)
             {
@@ -179,12 +226,6 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private bool TryTakingFromShelf()
         {
-            if (boughtItem != null)
-            {
-                Debug.Log("[AI]: Can't take item, don't have enough slots");
-                return false;
-            }
-
             transform.LookAt(shelf.InteractionPoint);
 
             if (shelf.CanTakeItem())
@@ -192,13 +233,13 @@ namespace StoreSimulator.ArtificialIntelligence
                 GameObject go = shelf.TakeItem(transform.position);
                 if (go.TryGetComponent<IStoreable>(out var storeable))
                 {
-                    boughtItem = storeable;
+                    boughtItems.Add(storeable);
 
                     GameObject boughtGO = storeable.OnPickedFromStore();
                     boughtGO.transform.position = storageForItems.position;
                     boughtGO.transform.parent = storageForItems;
 
-                    Debug.Log($"[AI]: take storeable");
+                    Debug.Log($"[AI]: take storeable - {boughtGO.name}");
                     return true;
                 }
 
