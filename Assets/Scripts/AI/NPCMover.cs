@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class NPCMover : MonoBehaviour
+namespace StoreSimulator.ArtificialIntelligence
 {
-    [SerializeField] private float speed = 5f;
-
-    private bool isMoving = true;
-    public bool IsMoving => isMoving;
-    public void MoveTo(Vector3 target, float distanceReached)
+    public class NPCMover : MonoBehaviour
     {
-        if(Vector3.Distance(transform.position, target) < distanceReached)
+        [SerializeField] private float speed = 5f;
+
+        private bool isMoving = true;
+        public bool IsMoving => isMoving;
+        public void MoveTo(Vector3 target, float distanceReached)
         {
-            isMoving = false;
-            return;
+            if (Vector3.Distance(transform.position, target) < distanceReached)
+            {
+                isMoving = false;
+                return;
+            }
+
+            isMoving = true;
+
+            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         }
-
-        isMoving = true;
-
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
     }
 }

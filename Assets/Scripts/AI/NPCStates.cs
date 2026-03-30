@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public enum NPCState
+namespace StoreSimulator.ArtificialIntelligence
 {
-    Idle,
-    MovingToStorage,
-    TakingFromShelf,
-    Buying,
-    Leaving,
-    Waiting
-}
-public class NPCStates : MonoBehaviour
-{
-    public NPCState CurrentState { get; private set; } = NPCState.Idle;
-
-    public void SetState(NPCState newState)
+    public enum NPCState
     {
-        CurrentState = newState;
+        Idle,
+        MovingToStorage,
+        TakingFromShelf,
+        Buying,
+        Leaving,
+        Waiting
+    }
+    public class NPCStates : MonoBehaviour
+    {
+        public NPCState CurrentState { get; private set; } = NPCState.Idle;
+
+        public void SetState(NPCState newState)
+        {
+            CurrentState = newState;
+        }
     }
 }

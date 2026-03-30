@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using StoreSimulator.InteractableObjects;
-using Unity.Burst.Intrinsics;
+using StoreSimulator.Pathfinding;
 using UnityEngine;
 
 namespace StoreSimulator.BuildingSystem
