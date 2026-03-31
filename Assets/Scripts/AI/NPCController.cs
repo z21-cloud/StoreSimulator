@@ -94,6 +94,13 @@ namespace StoreSimulator.ArtificialIntelligence
                 foreach(var category in npcNeeds)
                 {
                     var foundShelves = StorageRegistry.Instance.GetStorageByNeeds(category);
+                    
+                    if(foundShelves == null)
+                    {
+                        HandleWaiting();
+                        return;
+                    }
+
                     if(foundShelves.Count > 0)
                     {
                         shelves.Add(foundShelves[0]);

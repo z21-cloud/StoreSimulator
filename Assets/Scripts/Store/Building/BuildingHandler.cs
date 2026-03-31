@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace StoreSimulator.BuildingSystem
@@ -6,8 +7,8 @@ namespace StoreSimulator.BuildingSystem
     {
         [SerializeField] private BuildingManager buildingManager;
         [SerializeField] private LayerMask gridMask;
-        [SerializeField] private int placeDistance = 5;
         [SerializeField] private BuildingGrid grid;
+        [SerializeField] private int placeDistance = 5;
 
         private IBuildable _heldBuildable;
         private GameObject _heldPrefab;
@@ -44,21 +45,22 @@ namespace StoreSimulator.BuildingSystem
                 return;
             }
 
-            if (_heldPrefab == null)
-                _heldPrefab = Instantiate(_heldBuildable.GhostPrefab);
+            if (_heldPrefab == null) _heldPrefab = Instantiate(_heldBuildable.GhostPrefab);
 
-            Vector2 size = _heldBuildable.Size;
-
-            Vector3 visualCenter = CalculateVisualPositions(_targetCell, size, grid.SlotSize);
+            Vector2Int size = PlacementSystem.GetRotatedSize(_heldBuildable, _currentRotationY);
+            Vector3 visualCenter = PlacementSystem.CalculateVisualPositions(_targetCell, size, grid.SlotSize);
             Vector3 wallOffset = GetWallOffset(_currentRotationY, _heldBuildable.WallOffset);
 
             _heldPrefab.transform.position = visualCenter + wallOffset;
             _heldPrefab.transform.rotation = Quaternion.Euler(0, _currentRotationY, 0);
             _heldPrefab.SetActive(true);
 
+
             bool canPlace = buildingManager.CanPlace(baseCoords, size);
             _heldPrefab.GetComponentInChildren<Renderer>().material.color = canPlace ? Color.green : Color.red;
         }
+
+        
 
         public void DoInteract(GameObject currentInteractable)
         {
@@ -83,28 +85,20 @@ namespace StoreSimulator.BuildingSystem
             }
         }
 
-        public Vector3 CalculateVisualPositions(BuildingGridCell baseCell, Vector2 size, Vector2 slotSize)
-        {
-            Vector3 offset = new Vector3
-            (
-                (size.x - 1) * slotSize.x / 2f,
-                0,
-                (size.y - 1) * slotSize.y / 2f
-            );
-
-            return baseCell.worldPosittion + offset;
-        }
+        
 
         public void DoPlace()
         {
             if (_heldBuildable == null || _targetCell == null) return;
 
-            Vector2 size = _heldBuildable.Size;
+            Vector2Int size = PlacementSystem.GetRotatedSize(_heldBuildable, _currentRotationY);
+
             if (!buildingManager.CanPlace(_targetCell.gridPosition, size)) return;
 
             GameObject original = ((MonoBehaviour)_heldBuildable).gameObject;
 
-            Vector3 finalPos = CalculateVisualPositions(_targetCell, size, grid.SlotSize) + GetWallOffset(_currentRotationY, _heldBuildable.WallOffset) + Vector3.up * _heldBuildable.YOffset;
+            Vector3 visualCenter = PlacementSystem.CalculateVisualPositions(_targetCell, size, grid.SlotSize);
+            Vector3 finalPos = visualCenter + GetWallOffset(_currentRotationY, _heldBuildable.WallOffset) + Vector3.up * _heldBuildable.YOffset;
 
             original.transform.position = finalPos;
             original.transform.rotation = Quaternion.Euler(0, _currentRotationY, 0);
@@ -124,7 +118,6 @@ namespace StoreSimulator.BuildingSystem
             _heldPrefab = null;
             _heldBuildable = null;
             _targetCell = null;
-            _currentRotationY = 0f;
         }
 
         public bool HasHeldBuildable() => _heldBuildable != null;

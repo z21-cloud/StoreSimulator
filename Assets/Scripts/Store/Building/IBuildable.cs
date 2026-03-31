@@ -4,7 +4,7 @@ namespace StoreSimulator.BuildingSystem
 {
     public interface IBuildable
     {
-        public Vector2 Size { get; }
+        public Vector2Int Size { get; }
         public GameObject GhostPrefab { get; }
         public Vector3 BuildPosition { get; }
         public float BuildRotationY { get; }

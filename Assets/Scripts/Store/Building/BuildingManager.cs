@@ -23,14 +23,14 @@ namespace StoreSimulator.BuildingSystem
             }
         }
 
-        public bool CanPlace(Vector2Int baseCoords, Vector2 size)
+        public bool CanPlace(Vector2Int baseCoords, Vector2Int size)
         {
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)
                 {
-                    Vector2Int checkCoords = baseCoords + new Vector2Int(x, y);
-                    if (!grid.TryGetCell(checkCoords, out BuildingGridCell cell) || cell.IsOccupied)
+                    Vector2Int coord = baseCoords + new Vector2Int(x, y);
+                    if (!grid.TryGetCell(coord, out BuildingGridCell cell) || cell.IsOccupied)
                     {
                         return false;
                     }
@@ -48,7 +48,7 @@ namespace StoreSimulator.BuildingSystem
             return true;
         }
 
-        public void PlaceBuildable(Vector2Int baseCoord, IBuildable buildable, Vector2 size)
+        public void PlaceBuildable(Vector2Int baseCoord, IBuildable buildable, Vector2Int size)
         {
             List<Vector2Int> coords = new List<Vector2Int>();
             for (int x = 0; x < size.x; x++)

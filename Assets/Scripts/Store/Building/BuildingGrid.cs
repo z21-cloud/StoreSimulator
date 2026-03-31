@@ -50,7 +50,8 @@ namespace StoreSimulator.BuildingSystem
 
                 // Debug.Log($"[BuildingGrid]: Place buildable: {buildable}");
 
-                buildingManager.PlaceBuildable(coords, buildable, buildable.Size);
+                Vector2Int size = PlacementSystem.GetRotatedSize(buildable, buildable.BuildRotationY);
+                buildingManager.PlaceBuildable(coords, buildable, size);
             }
         }
 

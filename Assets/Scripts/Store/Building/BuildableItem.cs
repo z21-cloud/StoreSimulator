@@ -5,12 +5,12 @@ namespace StoreSimulator.BuildingSystem
 {
     public class BuildableItem : MonoBehaviour, IBuildable, IInteractable
     {
-        [SerializeField] private Vector2 itemSize;
+        [SerializeField] private Vector2Int itemSize;
         [SerializeField] private GameObject ghostPrefab;
         [SerializeField] private float wallOffset = 0f;
         [SerializeField] private float yOffset = .5f;
 
-        public Vector2 Size => itemSize;
+        public Vector2Int Size => itemSize;
         public GameObject GhostPrefab => ghostPrefab;
         public float WallOffset => wallOffset;
         public float YOffset => yOffset;
