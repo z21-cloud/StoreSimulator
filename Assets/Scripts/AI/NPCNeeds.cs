@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using StoreSimulator.StoreableItems;
 using UnityEngine;
 
@@ -35,16 +35,18 @@ public class NPCNeeds : MonoBehaviour
             thirst = Mathf.Max(thirst, 0f);
 
             timer = 0f;
-            Debug.Log($"[AI] Current Hunger is: {hunger} ; Current Thirst is: {thirst}");
+            // Debug.Log($"[AI] Current Hunger is: {hunger} ; Current Thirst is: {thirst}");
         }
     }
 
-    public ItemCategory GetPriorityNeed()
+    public List<ItemCategory> GetPriorityNeed()
     {
-        if (hunger <= hungerThreshold && thirst <= thirstsThreshold) return ItemCategory.Food | ItemCategory.Drink;
-        else if (hunger <= hungerThreshold) return ItemCategory.Food;
-        else if (thirst <= thirstsThreshold) return ItemCategory.Drink;
-        else return ItemCategory.None;
+        List<ItemCategory> activeNeeds = new List<ItemCategory>();
+
+        if (hunger <= hungerThreshold) activeNeeds.Add(ItemCategory.Food);
+        if (thirst <= thirstsThreshold) activeNeeds.Add(ItemCategory.Drink);
+    
+        return activeNeeds;
     }
 
     public void IncreaseHunger(float amount)

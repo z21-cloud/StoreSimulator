@@ -81,21 +81,28 @@ namespace StoreSimulator.ArtificialIntelligence
             Debug.Log($"[AI]: Idle state");
             if (movement.HasReached)
             {
-                ItemCategory npcNeeds = needs.GetPriorityNeed();
+                List<ItemCategory> npcNeeds = needs.GetPriorityNeed();
                 
-                Debug.Log($"[AI]: Current needs are: {npcNeeds}");
-
-                if (npcNeeds == ItemCategory.None)
+                if (npcNeeds.Count == 0)
                 {
                     HandleWaiting();
                     return;
                 }
 
-                shelves = StorageRegistry.Instance.GetStorageByNeeds(npcNeeds);
+                shelves.Clear();
+
+                foreach(var category in npcNeeds)
+                {
+                    var foundShelves = StorageRegistry.Instance.GetStorageByNeeds(category);
+                    if(foundShelves.Count > 0)
+                    {
+                        shelves.Add(foundShelves[0]);
+                    }
+                }
 
                 Debug.Log($"[AI]: Try get shelf");
 
-                if (shelves.Count != 0)
+                if (shelves.Count > 0)
                 {
                     shelf = shelves[0];
                     itemsToBuy = Random.Range(1, buyPool + 1);
@@ -147,6 +154,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
             if(shelves.Count > 0)
             {
+                shelf = shelves[0];
                 Debug.Log($"[AI]: Shelves is not empty, moving to next storage...");
                 ChangeState(NPCState.MovingToStorage);
                 return;
@@ -212,11 +220,6 @@ namespace StoreSimulator.ArtificialIntelligence
                 ChangeState(NPCState.Idle);
                 return;
             }
-        }
-
-        private IStorage GetStorage()
-        {
-            return StorageRegistry.Instance.GetRandomStorage();
         }
 
         private ICashStorage GetCashStorage()
