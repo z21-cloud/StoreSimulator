@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,12 +13,6 @@ namespace StoreSimulator.StoreUtility
         public bool IsOpen => _currentState == StoreState.Open;
         public bool IsAuto => isAuto;
 
-        void Update()
-        {
-            //if(isOpen) TryOpen();
-            //else TryClose();
-        }
-
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -29,6 +24,10 @@ namespace StoreSimulator.StoreUtility
             Instance = this;
         }
 
+        private void OnEnable()
+        {
+            TimeManager.Instance.OnPhaseChanged += HandlePhaseChange;
+        }
 
         public void TryOpen()
         {
@@ -39,6 +38,19 @@ namespace StoreSimulator.StoreUtility
         {
             _currentState = StoreState.Closed;
             Debug.Log($"[Store Manager]: Current store state is {_currentState}; IsOpen - {IsOpen}");
+        }
+
+        private void HandlePhaseChange(DayPhase phase)
+        {
+            if (!isAuto) return;
+
+            if (phase == DayPhase.Morning) TryOpen();
+            else if (phase == DayPhase.Night) TryClose();
+        }
+
+        private void OnDisable()
+        {
+            TimeManager.Instance.OnPhaseChanged -= HandlePhaseChange;
         }
     }
 }

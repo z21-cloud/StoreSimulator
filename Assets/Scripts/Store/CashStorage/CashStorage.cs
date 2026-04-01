@@ -1,5 +1,7 @@
 using System;
 using StoreSimulator.InteractableObjects;
+using StoreSimulator.MoneySystem;
+using StoreSimulator.StoreManager;
 using UnityEngine;
 
 public class CashStorage : MonoBehaviour, ICashStorage
@@ -14,11 +16,12 @@ public class CashStorage : MonoBehaviour, ICashStorage
     public bool IsAvailable { get; private set; }
     public Vector3 InteractionPoint => transform.position;
 
-    public void BuyItem(IStoreable storeable)
+    public void BuyItem(IStoreable storeable, IWallet wallet)
     {
         if (storeable == null) return;
 
         BuyManager.Instance.IncreasePlayerWallet(storeable);
+        wallet.Spend(PricesManager.Instance.GetPriceForItem(storeable.Data));
         Destroy(((MonoBehaviour)storeable).gameObject);
     }
 
