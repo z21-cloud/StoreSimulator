@@ -79,6 +79,9 @@ namespace StoreSimulator.ArtificialIntelligence
         private void HandleIdle()
         {
             Debug.Log($"[AI]: Idle state");
+
+            if(!CheckStoreState()) ChangeState(NPCState.Leaving);
+
             if (movement.HasReached)
             {
                 List<ItemCategory> npcNeeds = needs.GetPriorityNeed();
@@ -272,5 +275,7 @@ namespace StoreSimulator.ArtificialIntelligence
                 waitBeforeShop = waitTime;
             }
         }
+
+        private bool CheckStoreState() => StoreUtility.StoreManager.Instance.IsOpen;
     }
 }

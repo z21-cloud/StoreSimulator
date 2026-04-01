@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using StoreSimulator.BuildingSystem;
 using UnityEngine;
+
 namespace StoreSimulator.BuildingSystem
 {
     public static class PlacementSystem
