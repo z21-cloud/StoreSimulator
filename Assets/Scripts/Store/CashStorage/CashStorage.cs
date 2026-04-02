@@ -21,7 +21,7 @@ public class CashStorage : MonoBehaviour, ICashStorage
         if (storeable == null) return;
 
         BuyManager.Instance.IncreasePlayerWallet(storeable);
-        wallet.Spend(PricesManager.Instance.GetPriceForItem(storeable.Data));
+        wallet.Spend(PricesManager.Instance.GetPlayerPriceForItem(storeable.Data));
         Destroy(((MonoBehaviour)storeable).gameObject);
     }
 

@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 97538005}
   - component: {fileID: 97538006}
   - component: {fileID: 97538004}
+  - component: {fileID: 97538007}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
@@ -392,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  stateThreshold: 25
   thirstDecrease: 1
   hungerDecrease: 1
   decreaseTimer: 1
@@ -422,18 +422,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 97538004}
-  fouthtStateThreshold: 25
-  thirdStateThreshold: 50
-  secondStateThreshold: 75
-  firstStateThreshold: 100
-  goToStoreProbabillity1: 25
-  goToStoreProbabillity2: 50
-  goToStoreProbabillity3: 75
-  goToStoreProbabillity4: 100
-  buyItem1: 25
-  buyItem2: 50
-  buyItem3: 75
-  buyItem4: 100
+  loyalty: {fileID: 97538007}
+  favouriteItems: 08000000
+  storeProbFull: 25
+  storeProbLight: 25
+  storeProbNormal: 65
+  storeProbCritical: 100
+  needsChanceLight: 25
+  needsChanceNormal: 50
+--- !u!114 &97538007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2bbf2c34afb4e44aa4a543d95d4629d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
+  loyalty: 50
 --- !u!1 &115613136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1121,7 @@ GameObject:
   - component: {fileID: 218310748}
   - component: {fileID: 218310740}
   - component: {fileID: 218310749}
+  - component: {fileID: 218310750}
   m_Layer: 9
   m_Name: NPC (1)
   m_TagString: Untagged
@@ -1148,7 +1158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  stateThreshold: 25
   thirstDecrease: 1
   hungerDecrease: 1
   decreaseTimer: 1
@@ -1320,18 +1329,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 218310740}
-  fouthtStateThreshold: 25
-  thirdStateThreshold: 50
-  secondStateThreshold: 75
-  firstStateThreshold: 100
-  goToStoreProbabillity1: 25
-  goToStoreProbabillity2: 50
-  goToStoreProbabillity3: 75
-  goToStoreProbabillity4: 100
-  buyItem1: 25
-  buyItem2: 50
-  buyItem3: 75
-  buyItem4: 100
+  loyalty: {fileID: 218310750}
+  favouriteItems: ffffffff
+  storeProbFull: 25
+  storeProbLight: 25
+  storeProbNormal: 65
+  storeProbCritical: 100
+  needsChanceLight: 25
+  needsChanceNormal: 50
+--- !u!114 &218310750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218310738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2bbf2c34afb4e44aa4a543d95d4629d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
+  loyalty: 31
 --- !u!1 &268317742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,6 +2141,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Active Shelf Model (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 3252278564284511464, guid: 2ec014425464e9648983822e292435f2, type: 3}
+      propertyPath: priceUI
+      value: 
+      objectReference: {fileID: 1879796018}
+    - target: {fileID: 4500749427850424813, guid: 2ec014425464e9648983822e292435f2, type: 3}
+      propertyPath: priceUI
+      value: 
+      objectReference: {fileID: 1879796018}
+    - target: {fileID: 7372672127305069890, guid: 2ec014425464e9648983822e292435f2, type: 3}
+      propertyPath: priceUI
+      value: 
+      objectReference: {fileID: 1879796018}
     - target: {fileID: 7383548778969785923, guid: 2ec014425464e9648983822e292435f2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.031
@@ -2163,6 +2193,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7867341323435101909, guid: 2ec014425464e9648983822e292435f2, type: 3}
+      propertyPath: priceUI
+      value: 
+      objectReference: {fileID: 1879796018}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7056,40 +7090,6 @@ Transform:
   - {fileID: 476227728}
   m_Father: {fileID: 2099813724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1278615085
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1278615086}
-  m_Layer: 0
-  m_Name: StoreScripts
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1278615086
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278615085}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1343269364}
-  - {fileID: 1344451345}
-  - {fileID: 2123207933}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1295415451
 GameObject:
   m_ObjectHideFlags: 0
@@ -7441,7 +7441,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1278615086}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1343269365
 MonoBehaviour:
@@ -7496,7 +7496,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1278615086}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1347450917
 GameObject:
@@ -11285,6 +11285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985c4e8007d57834d87efad2b96635bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputController: {fileID: 187363438}
+  playerLook: {fileID: 330585548}
   inputField: {fileID: 1063436147}
   currentPrice: {fileID: 1373264962}
   basePrice: {fileID: 1578396263}
@@ -12334,7 +12336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1278615086}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2123207934
 MonoBehaviour:
@@ -12348,6 +12350,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb724b3b4e5f024f9b2612d2e644acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 786ef0323280ca64fabea114ea55976f, type: 2}
+  - {fileID: 11400000, guid: a1a95ef2254eb21488bcc23c043be2c7, type: 2}
+  - {fileID: 11400000, guid: 69df478c0505c7145af5fda777661990, type: 2}
+  - {fileID: 11400000, guid: a48a6ae5d9fed4748909591f4632f9f8, type: 2}
+  - {fileID: 11400000, guid: 98ce22de63421024c86e5dd7bbecd501, type: 2}
+  - {fileID: 11400000, guid: 9124b37efa787b34987b404f4730f0b1, type: 2}
+  - {fileID: 11400000, guid: fec095ab94f039043aee5f8d0dd746e1, type: 2}
+  - {fileID: 11400000, guid: b1474f9cc0b4bde41bdeaa57cc2d5d21, type: 2}
+  - {fileID: 11400000, guid: e881995a8ce02d94e86160afd81ca02a, type: 2}
+  - {fileID: 11400000, guid: 2647af4701e631e48b989141328c278f, type: 2}
+  - {fileID: 11400000, guid: 6db2d8440f0927a409be0d64c8a7a5e9, type: 2}
+  - {fileID: 11400000, guid: c13071689f975fe48888555d58f23fad, type: 2}
+  - {fileID: 11400000, guid: 3d96528f63d2b7b4c8e8a59650fd8935, type: 2}
+  - {fileID: 11400000, guid: 1d660a719b525894aaedb0cb324ef162, type: 2}
+  - {fileID: 11400000, guid: 07fae98fe3c22bb418065ffcd76f663d, type: 2}
+  - {fileID: 11400000, guid: 77d93379a06fe9b4abd5ce383de8c96b, type: 2}
+  - {fileID: 11400000, guid: cc5987ced8571a34aa17e9c66e7e1a93, type: 2}
 --- !u!1 &2131258456
 GameObject:
   m_ObjectHideFlags: 0
@@ -12595,7 +12615,9 @@ SceneRoots:
   - {fileID: 1155920339}
   - {fileID: 1768968738}
   - {fileID: 786269376}
-  - {fileID: 1278615086}
+  - {fileID: 2123207933}
+  - {fileID: 1344451345}
+  - {fileID: 1343269364}
   - {fileID: 3025061788622117600}
   - {fileID: 408174640}
   - {fileID: 356476993}

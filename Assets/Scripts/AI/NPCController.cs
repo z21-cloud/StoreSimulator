@@ -34,6 +34,9 @@ namespace StoreSimulator.ArtificialIntelligence
         private float pickTimer = 0f;
         private int itemsToBuy = 0;
 
+        private bool _priceEvaluatedForCurrentShelf = false;
+        private bool _currentShelfDealAccepted = false;
+
         void Start()
         {
             waitBeforeShop = waitTime;
@@ -60,12 +63,12 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             if (newState == NPCState.Idle)
             {
-                Debug.Log($"[AI]: Idle state");
+                Debug.Log($"[AI - {gameObject.name}]: Idle state");
                 movement.SetDestination(storeEnterPoint.position);
             }
             if (newState == NPCState.MovingToStorage)
             {
-                Debug.Log($"[AI]: Moving to shelf");
+                Debug.Log($"[AI - {gameObject.name}]: Moving to shelf");
                 movement.SetDestination(shelf.InteractionPoint);
             }
             if (newState == NPCState.Buying)
@@ -82,7 +85,6 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private void HandleIdle()
         {
-
             if (!CheckStoreState()) ChangeState(NPCState.Leaving);
 
             if (!psycho.WantBuyProducts) ChangeState(NPCState.Leaving);
@@ -93,7 +95,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
                 if (npcNeeds.Count == 0)
                 {
-                    HandleWaiting();
+                    ChangeState(NPCState.Leaving);
                     return;
                 }
 
@@ -106,7 +108,8 @@ namespace StoreSimulator.ArtificialIntelligence
 
                     if (foundShelves == null)
                     {
-                        Debug.Log($"[AI] Can't find needed shelf. Leaving...");
+                        Debug.Log($"[AI - {gameObject.name}] Can't find needed shelf. Leaving...");
+                        psycho.StoreHasNoItems();
                         ChangeState(NPCState.Leaving);
                         return;
                     }
@@ -117,7 +120,7 @@ namespace StoreSimulator.ArtificialIntelligence
                     }
                 }
 
-                Debug.Log($"[AI]: Try get shelf");
+                Debug.Log($"[AI - {gameObject.name}]: Try get shelf");
 
                 if (shelves.Count > 0)
                 {
@@ -130,6 +133,7 @@ namespace StoreSimulator.ArtificialIntelligence
                 }
                 else
                 {
+                    psycho.StoreHasNoItems();
                     HandleWaiting();
                 }
                 return;
@@ -147,7 +151,22 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private void HandleTakingFromShelf()
         {
-            Debug.Log($"[AI]: Taking from shelf");
+            Debug.Log($"[AI - {gameObject.name}]: Taking from shelf");
+
+            if (!_priceEvaluatedForCurrentShelf && shelf.CanTakeItem())
+            {
+                var sample = shelf.PeekItem().GetComponent<IStoreable>();
+                float playerPrice = PricesManager.Instance.GetPlayerPriceForItem(sample.Data);
+                float marketPrice = PricesManager.Instance.GetMarketPriceForItem(sample.Data);
+                _currentShelfDealAccepted = psycho.BuyItemOrNot(playerPrice, marketPrice);
+                _priceEvaluatedForCurrentShelf = true;
+            }
+
+            if(!_currentShelfDealAccepted)
+            {
+                ChangeState(NPCState.Leaving);
+                return;
+            }
 
             if (TryTakingFromShelf() && boughtItems.Count < itemsToBuy)
             {
@@ -161,25 +180,25 @@ namespace StoreSimulator.ArtificialIntelligence
 
             if (boughtItems.Count == 0)
             {
-                Debug.Log($"[AI]: Shelf is empty");
+                Debug.Log($"[AI - {gameObject.name}]: Shelf is empty");
                 ChangeState(NPCState.Leaving);
                 return;
             }
 
-            if (shelves.Count == 0) Debug.LogWarning($"[AI] I have no shelves!");
-            shelves.RemoveAt(0);
+            if (shelves.Count == 0) Debug.LogWarning($"[AI - {gameObject.name}] I have no shelves!");
+            else shelves.RemoveAt(0);
 
             if (shelves.Count > 0)
             {
                 shelf = shelves[0];
-                Debug.Log($"[AI]: Shelves is not empty, moving to next storage...");
+                Debug.Log($"[AI - {gameObject.name}]: Shelves is not empty, moving to next storage...");
                 ChangeState(NPCState.MovingToStorage);
                 return;
             }
 
             cashStorage = GetCashStorage();
 
-            Debug.Log($"[AI]: Try to find cash storage");
+            Debug.Log($"[AI - {gameObject.name}]: Try to find cash storage");
 
             if (cashStorage != null)
             {
@@ -188,36 +207,36 @@ namespace StoreSimulator.ArtificialIntelligence
             }
             else
             {
-                Debug.Log($"[AI]: Cash Storage is null, waiting...");
+                Debug.Log($"[AI - {gameObject.name}]: Cash Storage is null, waiting...");
                 HandleWaiting();
             }
         }
 
         private void HandleBuying()
         {
-            Debug.Log($"[AI]: Moving to cash storage");
+            Debug.Log($"[AI - {gameObject.name}]: Moving to cash storage");
 
             if (movement.HasReached)
             {
-                Debug.Log($"[AI]: Try to buy item");
+                Debug.Log($"[AI - {gameObject.name}]: Try to buy item");
 
                 while (cashStorage.IsAvailable && boughtItems.Count != 0)
                 {
-                    if (!wallet.CanAfford(PricesManager.Instance.GetPriceForItem(boughtItems[0].Data)))
+                    if (!wallet.CanAfford(PricesManager.Instance.GetPlayerPriceForItem(boughtItems[0].Data)))
                     {
-                        Debug.LogWarning($"[AI]: Unexpected drop at cashier - {boughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
+                        Debug.LogWarning($"[AI - {gameObject.name}]: Unexpected drop at cashier - {boughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
                         HandleDropItem(boughtItems[0]);
                         continue;
                     }
 
-                    Debug.Log($"[AI]: Item bought succesfully");
+                    Debug.Log($"[AI - {gameObject.name}]: Item bought succesfully");
                     cashStorage.BuyItem(boughtItems[0], wallet);
                     psycho.IncreaseParameters(boughtItems[0].Data.FoodRestore, boughtItems[0].Data.ThirstRestore);
                     boughtItems.RemoveAt(0);
                 }
                 if (boughtItems.Count != 0)
                 {
-                    Debug.Log($"[AI]: Waiting player to buy item");
+                    Debug.Log($"[AI - {gameObject.name}]: Waiting player to buy item");
                     HandleWaiting();
                     return;
                 }
@@ -232,7 +251,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private void HandleLeaving()
         {
-            Debug.Log($"[AI]: Leaving store");
+            Debug.Log($"[AI - {gameObject.name}]: Leaving store");
 
             shelf = null;
             cashStorage = null;
@@ -266,24 +285,25 @@ namespace StoreSimulator.ArtificialIntelligence
                     boughtGO.transform.position = storageForItems.position;
                     boughtGO.transform.parent = storageForItems;
 
-                    Debug.Log($"[AI]: take storeable - {boughtGO.name}");
+                    Debug.Log($"[AI - {gameObject.name}]: take storeable - {boughtGO.name}");
                     return true;
                 }
 
-                if (!HaveEnoughMoney(storeable)) Debug.Log($"[AI] Have not enough money!");
-                // else if(storeable.Category != wantedProducts) Debug.Log($"[AI] Different categories! \n Wanter category: {wantedProducts.ToString()}. Item Category: {storeable.Category}");
-                else Debug.LogWarning($"[AI]: Item has no storeable component!");
+                if (!HaveEnoughMoney(storeable)) Debug.Log($"[AI - {gameObject.name}] Have not enough money!");
+                // else if(storeable.Category != wantedProducts) Debug.Log($"[AI - {gameObject.name}] Different categories! \n Wanter category: {wantedProducts.ToString()}. Item Category: {storeable.Category}");
+                else Debug.LogWarning($"[AI - {gameObject.name}]: Item has no storeable component!");
                 return false;
             }
 
-            Debug.Log($"[AI]: Can't take item. Shelf is empty");
+            Debug.Log($"[AI - {gameObject.name}]: Can't take item. Shelf is empty");
             return false;
         }
 
         private bool HaveEnoughMoney(IStoreable storeable)
         {
-            float newItemPrice = PricesManager.Instance.GetPriceForItem(storeable.Data);
+            float newItemPrice = PricesManager.Instance.GetPlayerPriceForItem(storeable.Data);
             float alreadyReserved = GetTotalCost(boughtItems);
+
             return wallet.CanAfford(newItemPrice + alreadyReserved);
         }
 
@@ -291,13 +311,13 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             float total = 0f;
             foreach (var item in items)
-                total += PricesManager.Instance.GetPriceForItem(item.Data);
+                total += PricesManager.Instance.GetPlayerPriceForItem(item.Data);
             return total;
         }
 
         private void HandleWaiting()
         {
-            Debug.Log($"[AI]: Waiting state...");
+            Debug.Log($"[AI - {gameObject.name}]: Waiting state...");
 
             waitBeforeShop -= Time.deltaTime;
             if (waitBeforeShop <= 0f)

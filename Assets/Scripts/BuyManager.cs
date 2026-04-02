@@ -22,7 +22,7 @@ public class BuyManager : MonoBehaviour
     public void IncreasePlayerWallet(IStoreable bought)
     {
         if(bought == null) return;
-        float price = PricesManager.Instance.GetPriceForItem(bought.Data);
+        float price = PricesManager.Instance.GetPlayerPriceForItem(bought.Data);
         playerWallet.Add(price);
     }
 }

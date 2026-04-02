@@ -159,7 +159,7 @@ namespace StoreSimulator.InteractableObjects
         {
             if (_currentItemData == null) return 0f;
 
-            float currentPrice = priceManager.GetPriceForItem(_currentItemData);
+            float currentPrice = priceManager.GetPlayerPriceForItem(_currentItemData);
             return currentPrice;
         }
 
@@ -188,7 +188,7 @@ namespace StoreSimulator.InteractableObjects
         {
             if (_currentSubCategory == ItemSubCategory.None) return;
 
-            float price = priceManager.GetPriceForItem(_currentItemData);
+            float price = priceManager.GetPlayerPriceForItem(_currentItemData);
             priceText.text = $"{price:F2}$";
         }
 

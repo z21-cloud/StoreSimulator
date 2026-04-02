@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCPsycho : MonoBehaviour
 {
     [SerializeField] private NPCNeeds needs;
+    [SerializeField] private NPCLoyalty loyalty;
 
     [Header("Любимые товары NPC")]
     // Заполняешь прямо в Inspector: тащишь нужные категории в список
@@ -76,6 +77,12 @@ public class NPCPsycho : MonoBehaviour
 
     private void RecalculateProbabilities()
     {
+        if(loyalty.Loyalty <= 20f)
+        {
+            _wantBuyProducts = false;
+            return;
+        }
+
         // Берём наихудший из двух параметров — он определяет срочность
         int worstLevel = Mathf.Max(GetCriticalityLevel(_hungerState),
                                    GetCriticalityLevel(_thirstState));
@@ -185,5 +192,49 @@ public class NPCPsycho : MonoBehaviour
     public void IncreaseParameters(float amountHunger, float amountThirst)
     {
         needs.IncreaseParameters(amountHunger, amountThirst);
+    }
+
+    public void StoreHasNoItems()
+    {
+        HandleDecreaseLoyaltyLight();
+    }
+
+    public bool BuyItemOrNot(float playerPrice, float marketPrice)
+    {
+        float ratio = loyalty.GreedRatio(playerPrice, marketPrice);
+        
+        bool result = ratio switch
+        {
+            > 2 => HandleDecreaseLoyalyCritical(),
+            > 1.5f => HandleDecreaseLoyaltyLight(),
+            > 1 => HandleIncreaseLoyaltyLight(),
+            _ => HandleIncreaseLoyaltyNormal()
+        };
+
+        return result;
+    }
+
+    private bool HandleDecreaseLoyalyCritical()
+    {
+        loyalty.DecreaseLoyalty(5f);
+        return false;
+    }
+
+    private bool HandleDecreaseLoyaltyLight()
+    {
+        loyalty.DecreaseLoyalty(2.5f);
+        return true;
+    }
+
+    private bool HandleIncreaseLoyaltyLight()
+    {
+        loyalty.IncreaseLoyalty(3f);
+        return true;
+    }
+
+    private bool HandleIncreaseLoyaltyNormal()
+    {
+        loyalty.IncreaseLoyalty(6f);
+        return true;
     }
 }
