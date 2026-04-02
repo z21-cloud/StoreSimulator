@@ -66,7 +66,7 @@ namespace StoreSimulator.BuildingSystem
             }
             _occupiedCells[buildable] = coords;
 
-            Debug.Log($"[BuildingManager]: Placed - {((MonoBehaviour)buildable).gameObject.name}");
+            // Debug.Log($"[BuildingManager]: Placed - {((MonoBehaviour)buildable).gameObject.name}");
 
             if (pathfindingGrid != null) pathfindingGrid.UpdateGrid();
             else Debug.LogWarning($"[BuildingManager]: Pathfinding grid is null! Can't update");

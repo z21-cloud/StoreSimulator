@@ -15,7 +15,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
         [Header("NPC states")]
         [SerializeField] private NPCStates states;
-        [SerializeField] private NPCNeeds needs;
+        [SerializeField] private NPCPsycho psycho;
         [SerializeField] private NPCWallet wallet;
 
         [Header("Movement logic")]
@@ -60,10 +60,12 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             if (newState == NPCState.Idle)
             {
+                Debug.Log($"[AI]: Idle state");
                 movement.SetDestination(storeEnterPoint.position);
             }
             if (newState == NPCState.MovingToStorage)
             {
+                Debug.Log($"[AI]: Moving to shelf");
                 movement.SetDestination(shelf.InteractionPoint);
             }
             if (newState == NPCState.Buying)
@@ -80,13 +82,14 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private void HandleIdle()
         {
-            Debug.Log($"[AI]: Idle state");
 
             if (!CheckStoreState()) ChangeState(NPCState.Leaving);
 
+            if (!psycho.WantBuyProducts) ChangeState(NPCState.Leaving);
+
             if (movement.HasReached)
             {
-                List<ItemCategory> npcNeeds = needs.GetPriorityNeed();
+                List<ItemCategory> npcNeeds = psycho.GetPriorityNeeds();
 
                 if (npcNeeds.Count == 0)
                 {
@@ -99,10 +102,12 @@ namespace StoreSimulator.ArtificialIntelligence
                 foreach (var category in npcNeeds)
                 {
                     var foundShelves = StorageRegistry.Instance.GetStorageByNeeds(category);
+                    Debug.Log($"[AI: {gameObject.name}] I want to buy...{category.ToString()}!");
 
                     if (foundShelves == null)
                     {
-                        HandleWaiting();
+                        Debug.Log($"[AI] Can't find needed shelf. Leaving...");
+                        ChangeState(NPCState.Leaving);
                         return;
                     }
 
@@ -117,6 +122,8 @@ namespace StoreSimulator.ArtificialIntelligence
                 if (shelves.Count > 0)
                 {
                     shelf = shelves[0];
+                    var peekedStoreable = shelf.PeekItem().GetComponent<IStoreable>();
+                    Debug.Log($"[AI - {gameObject.name}] Moving to {peekedStoreable.Category}");
                     itemsToBuy = Random.Range(1, buyPool + 1);
                     boughtItems.Clear();
                     ChangeState(NPCState.MovingToStorage);
@@ -131,8 +138,6 @@ namespace StoreSimulator.ArtificialIntelligence
 
         private void HandleMoving()
         {
-            Debug.Log($"[AI]: Moving to shelf");
-
             if (movement.HasReached)
             {
                 ChangeState(NPCState.TakingFromShelf);
@@ -161,6 +166,7 @@ namespace StoreSimulator.ArtificialIntelligence
                 return;
             }
 
+            if (shelves.Count == 0) Debug.LogWarning($"[AI] I have no shelves!");
             shelves.RemoveAt(0);
 
             if (shelves.Count > 0)
@@ -206,8 +212,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
                     Debug.Log($"[AI]: Item bought succesfully");
                     cashStorage.BuyItem(boughtItems[0], wallet);
-                    needs.IncreaseHunger(boughtItems[0].Data.FoodRestore);
-                    needs.IncreaseThirst(boughtItems[0].Data.ThirstRestore);
+                    psycho.IncreaseParameters(boughtItems[0].Data.FoodRestore, boughtItems[0].Data.ThirstRestore);
                     boughtItems.RemoveAt(0);
                 }
                 if (boughtItems.Count != 0)
@@ -265,7 +270,9 @@ namespace StoreSimulator.ArtificialIntelligence
                     return true;
                 }
 
-                Debug.Log($"[AI]: Taken item is not StoreableItem or have no money!");
+                if (!HaveEnoughMoney(storeable)) Debug.Log($"[AI] Have not enough money!");
+                // else if(storeable.Category != wantedProducts) Debug.Log($"[AI] Different categories! \n Wanter category: {wantedProducts.ToString()}. Item Category: {storeable.Category}");
+                else Debug.LogWarning($"[AI]: Item has no storeable component!");
                 return false;
             }
 

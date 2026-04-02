@@ -24,7 +24,7 @@ namespace StoreSimulator.StoreUtility
             Instance = this;
         }
 
-        private void OnEnable()
+        private void Start()
         {
             TimeManager.Instance.OnPhaseChanged += HandlePhaseChange;
         }

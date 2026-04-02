@@ -97,7 +97,7 @@ namespace StoreSimulator.Delivery
                 }
             }
 
-            Debug.Log($"[DeliveryPanel]: spended {price}$");
+            // Debug.Log($"[DeliveryPanel]: spended {price}$");
             _wallet.Spend(price);
 
             UpdateTotal();

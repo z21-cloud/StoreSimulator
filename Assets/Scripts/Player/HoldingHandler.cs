@@ -25,7 +25,7 @@ namespace StoreSimulator.InteractableObjects
                 // interaction with pickable object, not in hands
                 if (currentInteractable.TryGetComponent<IPickable>(out var pickable))
                 {
-                    Debug.Log($"Pick up");
+                    // Debug.Log($"Pick up");
                     pickable.Pick();
                 }
 
@@ -33,7 +33,7 @@ namespace StoreSimulator.InteractableObjects
                 else if (currentInteractable.TryGetComponent<IHoldable>(out var holdable))
                 {
                     // cache holdable object for releasing
-                    Debug.Log("Taking from ground");
+                    // Debug.Log("Taking from ground");
 
                     HeldObject = ((MonoBehaviour)holdable).gameObject;
                     holdable.Hold(holdPoint);
@@ -64,7 +64,7 @@ namespace StoreSimulator.InteractableObjects
             {
                 if (directStoreable.CurrentShelf != null)
                 {
-                    Debug.Log("Taking from storage - object collider");
+                    // Debug.Log("Taking from storage - object collider");
 
                     targetStoreable = directStoreable;
                 }
@@ -76,7 +76,7 @@ namespace StoreSimulator.InteractableObjects
 
                 GameObject itemObj = storage.TakeItem(holdPoint.position);
 
-                Debug.Log("Taking from storage - storage collider");
+                // Debug.Log("Taking from storage - storage collider");
 
                 if (itemObj != null)
                 {
@@ -91,7 +91,7 @@ namespace StoreSimulator.InteractableObjects
 
                 if (objToHold != null && objToHold.TryGetComponent<IHoldable>(out var holdable))
                 {
-                    Debug.Log("Taking from storage - Move to hold");
+                    // Debug.Log("Taking from storage - Move to hold");
 
                     HeldObject = objToHold;
                     holdable.Hold(holdPoint);
@@ -123,7 +123,7 @@ namespace StoreSimulator.InteractableObjects
                 if (!boxStorage.CanTakeItem() || !shelfStorage.HasFreeSlot()) return;
 
                 // Peek item to check it's category and shelf's category
-                Debug.Log("Peek item from box");
+                // Debug.Log("Peek item from box");
                 GameObject peekedItem = boxStorage.PeekItem();
                 if (peekedItem == null) return;
 
@@ -131,7 +131,7 @@ namespace StoreSimulator.InteractableObjects
                 if (!shelfStorage.CanPlaceItem(peekedStoreable)) return;
 
                 // Take item from box's slot and give it to shelf's slot
-                Debug.Log("Place item from box");
+                // Debug.Log("Place item from box");
                 GameObject item = boxStorage.TakeItem(holdPoint.position); // gives game object from slot
                 if (item == null) return;
 

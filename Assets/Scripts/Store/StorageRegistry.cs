@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using StoreSimulator.StoreableItems;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class StorageRegistry : MonoBehaviour

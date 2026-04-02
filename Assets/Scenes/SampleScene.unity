@@ -211,8 +211,9 @@ GameObject:
   - component: {fileID: 97538003}
   - component: {fileID: 97537996}
   - component: {fileID: 97538002}
-  - component: {fileID: 97538004}
   - component: {fileID: 97538005}
+  - component: {fileID: 97538006}
+  - component: {fileID: 97538004}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
@@ -249,7 +250,7 @@ MonoBehaviour:
   pickDelay: 0.5
   buyPool: 5
   states: {fileID: 97538002}
-  needs: {fileID: 97538004}
+  psycho: {fileID: 97538006}
   wallet: {fileID: 97538005}
   movement: {fileID: 97538003}
   storeEnterPoint: {fileID: 1237966187}
@@ -391,8 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  hungerThreshold: 80
-  thirstsThreshold: 80
+  stateThreshold: 25
   thirstDecrease: 1
   hungerDecrease: 1
   decreaseTimer: 1
@@ -408,7 +408,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9eae4c4b33ed4446855a4ff97eabe26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCWallet
-  startBalance: 2
+  startBalance: 25
+--- !u!114 &97538006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95e951411198b94a9204e82d0c6b42b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
+  needs: {fileID: 97538004}
+  fouthtStateThreshold: 25
+  thirdStateThreshold: 50
+  secondStateThreshold: 75
+  firstStateThreshold: 100
+  goToStoreProbabillity1: 25
+  goToStoreProbabillity2: 50
+  goToStoreProbabillity3: 75
+  goToStoreProbabillity4: 100
+  buyItem1: 25
+  buyItem2: 50
+  buyItem3: 75
+  buyItem4: 100
 --- !u!1 &115613136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,8 +1109,9 @@ GameObject:
   - component: {fileID: 218310743}
   - component: {fileID: 218310742}
   - component: {fileID: 218310741}
-  - component: {fileID: 218310740}
   - component: {fileID: 218310748}
+  - component: {fileID: 218310740}
+  - component: {fileID: 218310749}
   m_Layer: 9
   m_Name: NPC (1)
   m_TagString: Untagged
@@ -1122,8 +1148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  hungerThreshold: 80
-  thirstsThreshold: 80
+  stateThreshold: 25
   thirstDecrease: 1
   hungerDecrease: 1
   decreaseTimer: 1
@@ -1183,7 +1208,7 @@ MonoBehaviour:
   pickDelay: 0.5
   buyPool: 5
   states: {fileID: 218310741}
-  needs: {fileID: 218310740}
+  psycho: {fileID: 218310749}
   wallet: {fileID: 218310748}
   movement: {fileID: 218310743}
   storeEnterPoint: {fileID: 1237966187}
@@ -1281,7 +1306,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9eae4c4b33ed4446855a4ff97eabe26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCWallet
-  startBalance: 10
+  startBalance: 25
+--- !u!114 &218310749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218310738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95e951411198b94a9204e82d0c6b42b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
+  needs: {fileID: 218310740}
+  fouthtStateThreshold: 25
+  thirdStateThreshold: 50
+  secondStateThreshold: 75
+  firstStateThreshold: 100
+  goToStoreProbabillity1: 25
+  goToStoreProbabillity2: 50
+  goToStoreProbabillity3: 75
+  goToStoreProbabillity4: 100
+  buyItem1: 25
+  buyItem2: 50
+  buyItem3: 75
+  buyItem4: 100
 --- !u!1 &268317742
 GameObject:
   m_ObjectHideFlags: 0
@@ -12509,7 +12559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8458861253974368388, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
       propertyPath: auto
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518402504425911519, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
       propertyPath: m_Layer
