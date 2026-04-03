@@ -212,8 +212,8 @@ GameObject:
   - component: {fileID: 97537996}
   - component: {fileID: 97538002}
   - component: {fileID: 97538005}
-  - component: {fileID: 97538006}
   - component: {fileID: 97538004}
+  - component: {fileID: 97538006}
   - component: {fileID: 97538007}
   m_Layer: 9
   m_Name: NPC
@@ -393,9 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  thirstDecrease: 1
-  hungerDecrease: 1
-  decreaseTimer: 1
+  config: {fileID: 11400000, guid: bef59a4ed5d034848b613fe36ed48771, type: 2}
 --- !u!114 &97538005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,13 +421,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 97538004}
   loyalty: {fileID: 97538007}
+  priceReactionConfig: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
+  psychoConfig: {fileID: 11400000, guid: aa669558b4235ea4b8ebcc6b4b636c1f, type: 2}
+  checkStoreTimer: 20
   favouriteItems: 08000000
-  storeProbFull: 25
-  storeProbLight: 25
-  storeProbNormal: 65
-  storeProbCritical: 100
-  needsChanceLight: 25
-  needsChanceNormal: 50
 --- !u!114 &97538007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1158,9 +1153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  thirstDecrease: 1
-  hungerDecrease: 1
-  decreaseTimer: 1
+  config: {fileID: 11400000, guid: bef59a4ed5d034848b613fe36ed48771, type: 2}
 --- !u!114 &218310741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,13 +1323,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 218310740}
   loyalty: {fileID: 218310750}
+  priceReactionConfig: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
+  psychoConfig: {fileID: 11400000, guid: aa669558b4235ea4b8ebcc6b4b636c1f, type: 2}
+  checkStoreTimer: 20
   favouriteItems: ffffffff
-  storeProbFull: 25
-  storeProbLight: 25
-  storeProbNormal: 65
-  storeProbCritical: 100
-  needsChanceLight: 25
-  needsChanceNormal: 50
 --- !u!114 &218310750
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public enum NPCHungerState
 {
-    Hungry,
-    NormalHungry,
+    Full,
     LightHungry,
-    Full
+    NormalHungry,
+    Hungry
 }

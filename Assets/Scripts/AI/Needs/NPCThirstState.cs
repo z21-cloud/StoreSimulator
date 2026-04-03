@@ -2,8 +2,8 @@ using UnityEngine;
 
 public enum NPCThirstState
 {
-    Thirst,
-    NormalThirst,
+    Full,
     LightThirst,
-    Full
+    NormalThirst,
+    Thirst
 }

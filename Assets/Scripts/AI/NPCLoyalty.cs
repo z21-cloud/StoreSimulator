@@ -17,15 +17,17 @@ public class NPCLoyalty : MonoBehaviour
         return ratio;
     }
 
-    public void IncreaseLoyalty(float amount)
+    public void HandleChangeLoyalty(float amount)
     {
-        loyalty += amount;
-        loyalty = Mathf.Min(loyalty, 100f);
-    }
-
-    public void DecreaseLoyalty(float amount)
-    {
-        loyalty -= amount;
-        loyalty = Mathf.Max(loyalty, 0f);
+        if (amount >= 0)
+        {
+            loyalty += amount;
+            loyalty = Mathf.Min(loyalty, 100f);
+        }
+        else
+        {
+            loyalty -= amount;
+            loyalty = Mathf.Max(loyalty, 0f);
+        }
     }
 }
