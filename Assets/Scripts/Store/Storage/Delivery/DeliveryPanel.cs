@@ -12,7 +12,7 @@ namespace StoreSimulator.Delivery
     {
         [Header("Orders")]
         [Tooltip("List of all orders player can buy")]
-        [SerializeField] private List<DeliveryOrder> availableOrders;
+        [SerializeField] private DeliveryPriceManager deliveryPriceManager;
         [Tooltip("Prefab of order in panel")]
         [SerializeField] private OrderItem orderItemPrefab;
         [Tooltip("Spawn point for orderItem prefab")]
@@ -50,10 +50,11 @@ namespace StoreSimulator.Delivery
             }
 
             // first time player opens panel
-            foreach (var order in availableOrders)
+            foreach (var order in deliveryPriceManager.Orders)
             {
                 OrderItem item = Instantiate(orderItemPrefab, orderList);
-                item.Init(order);
+                float currentPrice = deliveryPriceManager.GetDeliveryOrderPrice(order);
+                item.Init(order, currentPrice);
                 item.OnChanged += UpdateTotal;
                 _orderItems.Add(item);
             }
@@ -113,7 +114,7 @@ namespace StoreSimulator.Delivery
         {
             float total = 0;
             foreach (var item in _orderItems)
-                total += item.Order.BoxCost * item.Quantity;
+                total += deliveryPriceManager.GetDeliveryOrderPrice(item.Order) * item.Quantity;
 
             return total;
         }

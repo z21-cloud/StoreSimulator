@@ -1,11 +1,6 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using StoreSimulator.StoreableItems;
-using StoreSimulator.InteractableObjects;
-using System;
-using StoreSimulator.Boxes;
-using Unity.VisualScripting;
 
 namespace StoreSimulator.StoreManager
 {

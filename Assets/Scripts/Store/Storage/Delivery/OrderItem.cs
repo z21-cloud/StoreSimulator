@@ -15,20 +15,22 @@ namespace StoreSimulator.Delivery
         [SerializeField] private Image itemImage;
 
         private DeliveryOrder _order;
-        private int _quantity;
-
+        private int _quantity = 0;
+        private float _price = 0f;
+        
+        public event Action OnChanged;
+        
         public int Quantity => _quantity;
         public DeliveryOrder Order => _order;
 
-        public event Action OnChanged;
-
-        public void Init(DeliveryOrder order)
+        public void Init(DeliveryOrder order, float currentPrice)
         {
             _order = order;
             _quantity = 0;
             itemImage.sprite = order.ItemData.Icon;
             itemNameText.text = order.ItemData.ItemName;
-            priceText.text = $"{order.BoxCost:F2}$";
+            _price = currentPrice;
+            priceText.text = $"{_price:F2}$";
             UpdateUI();
             Reset();
         }
@@ -56,7 +58,7 @@ namespace StoreSimulator.Delivery
         public void Reset()
         {
             _quantity = 0;
-            priceText.text = $"{_order.BoxCost:F2}$";
+            priceText.text = $"{_price:F2}$";
             quantityText.text = $"{_quantity}";
         }
 
@@ -64,7 +66,7 @@ namespace StoreSimulator.Delivery
         {
             if (_quantity == 0) return;
 
-            float total = _order.BoxCost * _quantity;
+            float total = _price * _quantity;
             priceText.text = $"{total:F2}$";
         }
     }

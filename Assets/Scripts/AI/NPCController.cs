@@ -13,7 +13,7 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private float pickDelay = 0.5f;
         [SerializeField] private int buyPool = 5;
 
-        [Header("NPC states")]
+        [Header("NPC componentsZ")]
         [SerializeField] private NPCStates states;
         [SerializeField] private NPCPsycho psycho;
         [SerializeField] private NPCWallet wallet;

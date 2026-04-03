@@ -10123,24 +10123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4512b53aa1f7ef14fac7da479c43f0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryPanel
-  availableOrders:
-  - {fileID: 11400000, guid: a4a026bc23034bc41806d3309cdb6e1c, type: 2}
-  - {fileID: 11400000, guid: 9a31df97ddbdc6b46b3563eb5398b45a, type: 2}
-  - {fileID: 11400000, guid: b7c33d135b58b8e4ab20eaaebf1c13b8, type: 2}
-  - {fileID: 11400000, guid: 2518e51081b13b7488448d50fb5025d8, type: 2}
-  - {fileID: 11400000, guid: 4b133fd37fbd12d4f8e6298579733558, type: 2}
-  - {fileID: 11400000, guid: 5dece3137a96c54479e1e6a542e10183, type: 2}
-  - {fileID: 11400000, guid: a5e74dc0637bbe245b12e730425cdadb, type: 2}
-  - {fileID: 11400000, guid: a4b88910a0b867248bcf2cd733c9f464, type: 2}
-  - {fileID: 11400000, guid: cdb0b26847623844ebabd4ec47634d6d, type: 2}
-  - {fileID: 11400000, guid: d73106c28beecd04e922d946c6e5c04c, type: 2}
-  - {fileID: 11400000, guid: 0350bcc3c88acc146829c53f405c50ce, type: 2}
-  - {fileID: 11400000, guid: 3e9226752e5acd7499ef04fe5e523046, type: 2}
-  - {fileID: 11400000, guid: 1eb1fb519a2cc314397abcbfd731c487, type: 2}
-  - {fileID: 11400000, guid: 995054bf33c57ee4d9bd2afc45a8063d, type: 2}
-  - {fileID: 11400000, guid: 93709f3b26f146f47991ce98dd887abb, type: 2}
-  - {fileID: 11400000, guid: 85417066599feb6418c3ae07bcfcdc5b, type: 2}
-  - {fileID: 11400000, guid: 6a471deab0823d34cab119ccdb8dda05, type: 2}
+  deliveryPriceManager: {fileID: 1768968741}
   orderItemPrefab: {fileID: 4499125476342420490, guid: 7cf01563defd59743a1457f7185e95c3, type: 3}
   orderList: {fileID: 1163427822}
   deliveryZone: {fileID: 1983194008}
@@ -10640,6 +10623,7 @@ GameObject:
   - component: {fileID: 1768968738}
   - component: {fileID: 1768968739}
   - component: {fileID: 1768968740}
+  - component: {fileID: 1768968741}
   m_Layer: 0
   m_Name: StoreManager
   m_TagString: Untagged
@@ -10674,6 +10658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7faf35e8a0dc1c48af3b8b4a2fd8bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreSimulator.StoreUtility.StoreManager
+  deliveryPriceManager: {fileID: 1768968741}
   isOpen: 0
   isAuto: 1
 --- !u!114 &1768968740
@@ -10690,6 +10675,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
   phaseDuration: 10
   sunLight: {fileID: 410087040}
+--- !u!114 &1768968741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768968737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a3ddf0bec95f6a46bf161b649b52420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeliveryPriceManager
+  orders:
+  - {fileID: 11400000, guid: a4a026bc23034bc41806d3309cdb6e1c, type: 2}
+  - {fileID: 11400000, guid: 9a31df97ddbdc6b46b3563eb5398b45a, type: 2}
+  - {fileID: 11400000, guid: b7c33d135b58b8e4ab20eaaebf1c13b8, type: 2}
+  - {fileID: 11400000, guid: 2518e51081b13b7488448d50fb5025d8, type: 2}
+  - {fileID: 11400000, guid: 4b133fd37fbd12d4f8e6298579733558, type: 2}
+  - {fileID: 11400000, guid: 5dece3137a96c54479e1e6a542e10183, type: 2}
+  - {fileID: 11400000, guid: a5e74dc0637bbe245b12e730425cdadb, type: 2}
+  - {fileID: 11400000, guid: a4b88910a0b867248bcf2cd733c9f464, type: 2}
+  - {fileID: 11400000, guid: cdb0b26847623844ebabd4ec47634d6d, type: 2}
+  - {fileID: 11400000, guid: d73106c28beecd04e922d946c6e5c04c, type: 2}
+  - {fileID: 11400000, guid: 0350bcc3c88acc146829c53f405c50ce, type: 2}
+  - {fileID: 11400000, guid: 3e9226752e5acd7499ef04fe5e523046, type: 2}
+  - {fileID: 11400000, guid: 1eb1fb519a2cc314397abcbfd731c487, type: 2}
+  - {fileID: 11400000, guid: 995054bf33c57ee4d9bd2afc45a8063d, type: 2}
+  - {fileID: 11400000, guid: 93709f3b26f146f47991ce98dd887abb, type: 2}
+  - {fileID: 11400000, guid: 85417066599feb6418c3ae07bcfcdc5b, type: 2}
+  - {fileID: 11400000, guid: 6a471deab0823d34cab119ccdb8dda05, type: 2}
 --- !u!1 &1785631999
 GameObject:
   m_ObjectHideFlags: 0

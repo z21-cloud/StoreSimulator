@@ -6,6 +6,7 @@ namespace StoreSimulator.StoreUtility
 {
     public class StoreManager : MonoBehaviour
     {
+        [SerializeField] private DeliveryPriceManager deliveryPriceManager;
         [SerializeField] private bool isOpen;
         [SerializeField] private bool isAuto;
         private StoreState _currentState;
@@ -33,6 +34,9 @@ namespace StoreSimulator.StoreUtility
         {
             _currentState = StoreState.Open;
             Debug.Log($"[Store Manager]: Current store state is {_currentState}; IsOpen - {IsOpen}");
+
+            deliveryPriceManager.SetNewDeliveryOrderPrice();
+            Debug.Log($"[Store Manager]: Delivery Prices update");
         }
         public void TryClose()
         {
