@@ -257,6 +257,7 @@ MonoBehaviour:
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}
   storageForItems: {fileID: 703781860}
+  npcId: 
 --- !u!136 &97537998
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -437,7 +438,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bbf2c34afb4e44aa4a543d95d4629d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
-  loyalty: 50
+  memory: {fileID: 11400000, guid: 20a41b129822bb84eae359837d4ce29b, type: 2}
+  loyaltyIncrease: 5
+  loyaltyDecrease: 8
 --- !u!1 &115613136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,6 +1219,7 @@ MonoBehaviour:
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}
   storageForItems: {fileID: 571471687}
+  npcId: 
 --- !u!136 &218310745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1339,7 +1343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bbf2c34afb4e44aa4a543d95d4629d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
-  loyalty: 31
+  memory: {fileID: 11400000, guid: 50687dad9b6fd644387a2c7cce854a74, type: 2}
+  loyaltyIncrease: 5
+  loyaltyDecrease: 8
 --- !u!1 &268317742
 GameObject:
   m_ObjectHideFlags: 0
@@ -8376,6 +8382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1456993794}
   - component: {fileID: 1456993793}
+  - component: {fileID: 1456993795}
   m_Layer: 0
   m_Name: BuyManager
   m_TagString: Untagged
@@ -8411,6 +8418,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1456993795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456993792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfd7f49bab381f43bfff7fb69509bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCMemoryManager
 --- !u!1 &1496466368
 GameObject:
   m_ObjectHideFlags: 0

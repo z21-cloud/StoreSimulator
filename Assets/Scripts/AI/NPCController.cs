@@ -25,6 +25,7 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private Transform storeEnterPoint;
         [SerializeField] private Transform storeLeavePoint;
         [SerializeField] private Transform storageForItems;
+        [SerializeField] private string npcId;
 
         private IStorage shelf;
         private ICashStorage cashStorage;
@@ -33,9 +34,9 @@ namespace StoreSimulator.ArtificialIntelligence
         private float waitBeforeShop = 0f;
         private float pickTimer = 0f;
         private int itemsToBuy = 0;
-
         private bool _priceEvaluatedForCurrentShelf = false;
         private bool _currentShelfDealAccepted = false;
+        public string NpcId => npcId;
 
         void Start()
         {
@@ -95,6 +96,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
                 if (npcNeeds.Count == 0)
                 {
+                    RecordVisit();
                     ChangeState(NPCState.Leaving);
                     return;
                 }
@@ -109,7 +111,8 @@ namespace StoreSimulator.ArtificialIntelligence
                     if (foundShelves == null)
                     {
                         Debug.Log($"[AI - {gameObject.name}] Can't find needed shelf. Leaving...");
-                        psycho.StoreHasNoItems();
+
+                        RecordVisit();
                         ChangeState(NPCState.Leaving);
                         return;
                     }
@@ -130,11 +133,6 @@ namespace StoreSimulator.ArtificialIntelligence
                     itemsToBuy = Random.Range(1, buyPool + 1);
                     boughtItems.Clear();
                     ChangeState(NPCState.MovingToStorage);
-                }
-                else
-                {
-                    psycho.StoreHasNoItems();
-                    HandleWaiting();
                 }
                 return;
             }
@@ -162,8 +160,9 @@ namespace StoreSimulator.ArtificialIntelligence
                 _priceEvaluatedForCurrentShelf = true;
             }
 
-            if(!_currentShelfDealAccepted)
+            if (!_currentShelfDealAccepted)
             {
+                RecordVisit();
                 ChangeState(NPCState.Leaving);
                 return;
             }
@@ -181,6 +180,8 @@ namespace StoreSimulator.ArtificialIntelligence
             if (boughtItems.Count == 0)
             {
                 Debug.Log($"[AI - {gameObject.name}]: Shelf is empty");
+                RecordVisit();
+
                 ChangeState(NPCState.Leaving);
                 return;
             }
@@ -242,6 +243,7 @@ namespace StoreSimulator.ArtificialIntelligence
                 }
                 else
                 {
+                    RecordVisit();
                     ChangeState(NPCState.Leaving);
                     return;
                 }
@@ -262,6 +264,22 @@ namespace StoreSimulator.ArtificialIntelligence
                 ChangeState(NPCState.Idle);
                 return;
             }
+        }
+
+        private void RecordVisit()
+        {
+            VisitRecord visit = new VisitRecord();
+            //visit.dayIndex = 
+
+            // visit.totalSpent = GetTotalCost(boughtItems);
+
+            visit.reactionType = psycho.GetLastReaction();
+
+            // visit.foundAllItems = boughtItems.Count > 0;
+
+            NPCMemoryManager.Instance.RecordVisit(npcId, visit);
+
+            Debug.Log($"[AI - {gameObject.name}] New visit recorded: Total Spent: {visit.totalSpent} \n, Reaction type: {visit.reactionType} \n, All Items Found: {visit.foundAllItems}");
         }
 
         private ICashStorage GetCashStorage()

@@ -23,6 +23,7 @@ public class NPCPsycho : MonoBehaviour
     private float timer = 0f;
 
     private bool _wantBuyProducts = false;
+    private PriceReactionType _lastReaction;
 
     // Это свойство читает NPCController — "хочет ли NPC в магазин?"
     public bool WantBuyProducts => _wantBuyProducts;
@@ -100,20 +101,16 @@ public class NPCPsycho : MonoBehaviour
 
     private void RecalculateProbabilities()
     {
-        if (loyalty.Loyalty <= psychoConfig.minLoyaltyToVisit)
-        {
-            _wantBuyProducts = false;
-            return;
-        }
-
         // Берём наихудший из двух параметров — он определяет срочность
         int worstLevel = Mathf.Max(GetCriticalityLevel(_hungerState),
                                    GetCriticalityLevel(_thirstState));
 
         var entry = psychoConfig.hungerThreshold.Find(e => e.criticalityLevel == worstLevel);
         float storeProb = entry.storeProbability;
+        float loyaltyMod = loyalty.GetVisitModifier();
+        float finalProb = storeProb * loyaltyMod;
 
-        _wantBuyProducts = Random.Range(0f, 100f) < storeProb;
+        _wantBuyProducts = Random.Range(0f, 100f) < finalProb;
 
         Debug.Log($"[AI Psycho] Состояние изменилось. " +
                   $"Голод: {_hungerState}, Жажда: {_thirstState}. " +
@@ -204,23 +201,19 @@ public class NPCPsycho : MonoBehaviour
         needs.IncreaseParameters(amountHunger, amountThirst);
     }
 
-    public void StoreHasNoItems()
-    {
-        // temp value to decrease customer's loyalty, when store has no items NPC wants to buy
-        float value = 2f;
-        HandleChangeLoyalty(value);
-    }
-
     public bool BuyItemOrNot(float playerPrice, float marketPrice)
     {
         float ratio = loyalty.GreedRatio(playerPrice, marketPrice);
+        float bonus = loyalty.GetPriceThresholdBonus();
 
         foreach (var reaction in priceReactionConfig.priceReactions)
         {
-            if (ratio >= reaction.ratioThreshold)
+            float adjustedThreshold = reaction.ratioThreshold + bonus;
+
+            if (ratio >= adjustedThreshold)
             {
-                float loyaltyChange = reaction.loyaltyChange;
-                HandleChangeLoyalty(loyaltyChange);
+                _lastReaction = reaction.reactionType;
+                Debug.Log($"[AI - {gameObject.name}] Psycho: reaction is {reaction.reactionType}");
                 return reaction.willBuy;
             }
         }
@@ -229,8 +222,8 @@ public class NPCPsycho : MonoBehaviour
         return false;
     }
 
-    private void HandleChangeLoyalty(float value)
+    public PriceReactionType GetLastReaction()
     {
-        loyalty.HandleChangeLoyalty(value);
+        return _lastReaction;
     }
 }

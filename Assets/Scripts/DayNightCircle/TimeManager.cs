@@ -11,10 +11,11 @@ public class TimeManager : MonoBehaviour
     private DayPhase _currentDayPhase;
     private float _timer = 0f;
     private int _phaseCount = 0;
-
+    private int _currentDay = 0;
+    public static TimeManager Instance { get; private set; }
+    public int CurrentDay => _currentDay;
     public DayPhase CurrentDayPhase => _currentDayPhase;
     public Action<DayPhase> OnPhaseChanged;
-    public static TimeManager Instance { get; private set; }
 
     void Awake()
     {
@@ -41,6 +42,8 @@ public class TimeManager : MonoBehaviour
         _currentDayPhase = (DayPhase)(((int)_currentDayPhase + 1) % _phaseCount);
         Debug.Log($"[Day Phase]: {_currentDayPhase}");
         OnPhaseChanged?.Invoke(_currentDayPhase);
+
+        if(_currentDayPhase == DayPhase.Morning) _currentDayPhase++;
     }
 
     void Update()
