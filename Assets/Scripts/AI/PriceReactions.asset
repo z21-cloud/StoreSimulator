@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCPriceReactionSO
   priceReactions:
   - ratioThreshold: 2
-    loyaltyChange: 5
+    loyaltyChange: -5
     willBuy: 0
+    reactionType: 3
   - ratioThreshold: 1.5
-    loyaltyChange: 3.5
+    loyaltyChange: -3.5
     willBuy: 1
+    reactionType: 2
   - ratioThreshold: 1
     loyaltyChange: 1.5
     willBuy: 1
+    reactionType: 1
   - ratioThreshold: 0
     loyaltyChange: 3
     willBuy: 1
+    reactionType: 0

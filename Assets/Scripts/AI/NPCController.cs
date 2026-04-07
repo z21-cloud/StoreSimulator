@@ -96,7 +96,6 @@ namespace StoreSimulator.ArtificialIntelligence
 
                 if (npcNeeds.Count == 0)
                 {
-                    RecordVisit();
                     ChangeState(NPCState.Leaving);
                     return;
                 }
@@ -112,7 +111,10 @@ namespace StoreSimulator.ArtificialIntelligence
                     {
                         Debug.Log($"[AI - {gameObject.name}] Can't find needed shelf. Leaving...");
 
-                        RecordVisit();
+                        psycho.ResetReaction();
+
+                        float totalSpent = 0f;
+                        RecordVisit(totalSpent);
                         ChangeState(NPCState.Leaving);
                         return;
                     }
@@ -162,7 +164,10 @@ namespace StoreSimulator.ArtificialIntelligence
 
             if (!_currentShelfDealAccepted)
             {
-                RecordVisit();
+                psycho.ResetReaction();
+
+                float totalSpent = 0f;
+                RecordVisit(totalSpent);
                 ChangeState(NPCState.Leaving);
                 return;
             }
@@ -180,7 +185,6 @@ namespace StoreSimulator.ArtificialIntelligence
             if (boughtItems.Count == 0)
             {
                 Debug.Log($"[AI - {gameObject.name}]: Shelf is empty");
-                RecordVisit();
 
                 ChangeState(NPCState.Leaving);
                 return;
@@ -221,6 +225,8 @@ namespace StoreSimulator.ArtificialIntelligence
             {
                 Debug.Log($"[AI - {gameObject.name}]: Try to buy item");
 
+                float totalSpent = GetTotalCost(boughtItems);
+
                 while (cashStorage.IsAvailable && boughtItems.Count != 0)
                 {
                     if (!wallet.CanAfford(PricesManager.Instance.GetPlayerPriceForItem(boughtItems[0].Data)))
@@ -241,12 +247,10 @@ namespace StoreSimulator.ArtificialIntelligence
                     HandleWaiting();
                     return;
                 }
-                else
-                {
-                    RecordVisit();
-                    ChangeState(NPCState.Leaving);
-                    return;
-                }
+
+                RecordVisit(totalSpent);
+                ChangeState(NPCState.Leaving);
+                return;
             }
 
         }
@@ -266,12 +270,12 @@ namespace StoreSimulator.ArtificialIntelligence
             }
         }
 
-        private void RecordVisit()
+        private void RecordVisit(float totalSpent = 0f)
         {
             VisitRecord visit = new VisitRecord();
             //visit.dayIndex = 
 
-            // visit.totalSpent = GetTotalCost(boughtItems);
+            visit.totalSpent = totalSpent;
 
             visit.reactionType = psycho.GetLastReaction();
 

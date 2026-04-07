@@ -3,7 +3,7 @@ using UnityEngine;
 public class NPCLoyalty : MonoBehaviour
 {
     [SerializeField] private NPCMemoryData memory;
-    [SerializeField] private PriceReaction priceReaction;
+    [SerializeField] private NPCPriceReactionSO priceReaction;
     private float ratio = 0f;
 
     private const float MIN_VISIT_MODIFIER = 0.2f;
@@ -28,20 +28,11 @@ public class NPCLoyalty : MonoBehaviour
             // int daysAgo = TimeManager.Instance.CurrentDay - visit.dayIndex;
             // float recency = .1f; // Mathf.Exp(-daysAgo * 0.1f); // const number | more visit -> less buff
 
-            switch(visit.reactionType)
+            foreach(var reaction in priceReaction.priceReactions)
             {
-                case PriceReactionType.GreatDeal:
-                    loyalty += priceReaction.loyaltyChange; // * recency;
-                    break;
-                case PriceReactionType.Fair:
-                    loyalty += priceReaction.loyaltyChange; // * recency;
-                    break;
-                case PriceReactionType.Expensive:
-                    loyalty -= priceReaction.loyaltyChange;
-                    break;
-                case PriceReactionType.Scam:
-                    loyalty -= priceReaction.loyaltyChange;
-                    break;
+                if(reaction.reactionType != visit.reactionType) continue;
+                
+                loyalty += reaction.loyaltyChange;
             }
         }
 

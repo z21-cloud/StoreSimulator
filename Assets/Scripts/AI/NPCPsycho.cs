@@ -117,10 +117,7 @@ public class NPCPsycho : MonoBehaviour
                   $"Идёт в магазин: {_wantBuyProducts}");
     }
 
-    // ─────────────────────────────────────────────────────────────────
-    // GetPriorityNeeds: вызывается из NPCController когда NPC
-    // уже в магазине и хочет понять что именно купить.
-    // ─────────────────────────────────────────────────────────────────
+    public void ResetReaction() => _lastReaction = PriceReactionType.Fair;
 
     public List<ItemCategory> GetPriorityNeeds()
     {
