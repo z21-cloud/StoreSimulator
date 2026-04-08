@@ -257,7 +257,7 @@ MonoBehaviour:
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}
   storageForItems: {fileID: 703781860}
-  npcId: 
+  npcId: NPCZero
 --- !u!136 &97537998
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -439,8 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
   memory: {fileID: 11400000, guid: 20a41b129822bb84eae359837d4ce29b, type: 2}
-  loyaltyIncrease: 5
-  loyaltyDecrease: 8
+  priceReaction: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
 --- !u!1 &115613136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1218,7 @@ MonoBehaviour:
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}
   storageForItems: {fileID: 571471687}
-  npcId: 
+  npcId: NPCFirst
 --- !u!136 &218310745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1344,8 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
   memory: {fileID: 11400000, guid: 50687dad9b6fd644387a2c7cce854a74, type: 2}
-  loyaltyIncrease: 5
-  loyaltyDecrease: 8
+  priceReaction: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
 --- !u!1 &268317742
 GameObject:
   m_ObjectHideFlags: 0

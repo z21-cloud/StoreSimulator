@@ -16,23 +16,23 @@ public class NPCLoyalty : MonoBehaviour
     public float GreedRatio(float playerPrice, float marketPrice)
     {
         ratio = playerPrice / marketPrice;
-        Debug.Log($"[AI - {gameObject.name}] Loyalty - {playerPrice}, {marketPrice}, ratio {ratio}");
+        Debug.Log($"[AI - {gameObject.name}] Prices - {playerPrice}, {marketPrice}, ratio {ratio}");
         return ratio;
     }
 
     private float CalculateLoyalty()
     {
         float loyalty = 50f;
-        foreach(var visit in memory.history)
+        
+        foreach(var memory in memory.history)
         {
-            // int daysAgo = TimeManager.Instance.CurrentDay - visit.dayIndex;
-            // float recency = .1f; // Mathf.Exp(-daysAgo * 0.1f); // const number | more visit -> less buff
-
             foreach(var reaction in priceReaction.priceReactions)
             {
-                if(reaction.reactionType != visit.reactionType) continue;
-                
-                loyalty += reaction.loyaltyChange;
+                if(memory.reactionType == reaction.reactionType)
+                {
+                    loyalty += reaction.loyaltyChange;
+                    break;
+                }
             }
         }
 
@@ -43,11 +43,15 @@ public class NPCLoyalty : MonoBehaviour
 
     public float GetVisitModifier()
     {
-        return Mathf.Lerp(MIN_VISIT_MODIFIER, MAX_VISIT_MODIFIER, Loyalty / 100f);
+        float result = Mathf.Lerp(MIN_VISIT_MODIFIER, MAX_VISIT_MODIFIER, Loyalty / 100f);
+        Debug.Log($"[AI - {gameObject.name}] GetVisitModifier: {result}");
+        return result;
     }
 
     public float GetPriceThresholdBonus()
     {
-        return Mathf.Lerp(MIN_PRICE_BONUS, MAX_PRICE_BONUS, Loyalty / 100f);
+        float result = Mathf.Lerp(MIN_PRICE_BONUS, MAX_PRICE_BONUS, Loyalty / 100f);
+        Debug.Log($"[AI - {gameObject.name}] GetPriceThresholdBonus: {result}");
+        return result;
     }
 }

@@ -40,9 +40,14 @@ namespace StoreSimulator.ArtificialIntelligence
 
         void Start()
         {
+            VisitRecord startVisit = new();
+            NPCMemoryManager.Instance.RecordVisit(NpcId, startVisit);
+
             waitBeforeShop = waitTime;
+
             shelves = new List<IStorage>();
             boughtItems = new List<IStoreable>(buyPool);
+            
             ChangeState(states.CurrentState);
         }
 
@@ -111,8 +116,6 @@ namespace StoreSimulator.ArtificialIntelligence
                     {
                         Debug.Log($"[AI - {gameObject.name}] Can't find needed shelf. Leaving...");
 
-                        psycho.ResetReaction();
-
                         float totalSpent = 0f;
                         RecordVisit(totalSpent);
                         ChangeState(NPCState.Leaving);
@@ -164,10 +167,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
             if (!_currentShelfDealAccepted)
             {
-                psycho.ResetReaction();
-
-                float totalSpent = 0f;
-                RecordVisit(totalSpent);
+                RecordVisit(0f);
                 ChangeState(NPCState.Leaving);
                 return;
             }
@@ -258,6 +258,8 @@ namespace StoreSimulator.ArtificialIntelligence
         private void HandleLeaving()
         {
             Debug.Log($"[AI - {gameObject.name}]: Leaving store");
+
+            psycho.ResetReaction();
 
             shelf = null;
             cashStorage = null;
