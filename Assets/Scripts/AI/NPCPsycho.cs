@@ -23,7 +23,7 @@ public class NPCPsycho : MonoBehaviour
     private float timer = 0f;
 
     private bool _wantBuyProducts = false;
-    private PriceReactionType _lastReaction;
+    private List<PriceReactionType> _visitReactions = new();
 
     // Это свойство читает NPCController — "хочет ли NPC в магазин?"
     public bool WantBuyProducts => _wantBuyProducts;
@@ -117,8 +117,6 @@ public class NPCPsycho : MonoBehaviour
                   $"Идёт в магазин: {_wantBuyProducts}");
     }
 
-    public void ResetReaction() => _lastReaction = PriceReactionType.Fair;
-
     public List<ItemCategory> GetPriorityNeeds()
     {
         int worstLevel = Mathf.Max(GetCriticalityLevel(_hungerState),
@@ -209,7 +207,7 @@ public class NPCPsycho : MonoBehaviour
 
             if (ratio >= adjustedThreshold)
             {
-                _lastReaction = reaction.reactionType;
+                _visitReactions.Add(reaction.reactionType);
                 Debug.Log($"[AI - {gameObject.name}] Psycho: reaction is {reaction.reactionType}");
                 return reaction.willBuy;
             }
@@ -221,6 +219,16 @@ public class NPCPsycho : MonoBehaviour
 
     public PriceReactionType GetLastReaction()
     {
-        return _lastReaction;
+        if(_visitReactions.Count == 0) return PriceReactionType.Fair;
+
+        PriceReactionType worst = PriceReactionType.GreatDeal;
+        foreach(var reaction in _visitReactions)
+        {
+            if((int)reaction > (int)worst) worst = reaction;
+        }
+
+        return worst;
     }
+
+    public void ResetReaction() => _visitReactions.Clear();
 }

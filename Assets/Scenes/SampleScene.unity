@@ -253,6 +253,7 @@ MonoBehaviour:
   states: {fileID: 97538002}
   psycho: {fileID: 97538006}
   wallet: {fileID: 97538005}
+  memoryData: {fileID: 11400000, guid: 20a41b129822bb84eae359837d4ce29b, type: 2}
   movement: {fileID: 97538003}
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}
@@ -1214,6 +1215,7 @@ MonoBehaviour:
   states: {fileID: 218310741}
   psycho: {fileID: 218310749}
   wallet: {fileID: 218310748}
+  memoryData: {fileID: 11400000, guid: 50687dad9b6fd644387a2c7cce854a74, type: 2}
   movement: {fileID: 218310743}
   storeEnterPoint: {fileID: 1237966187}
   storeLeavePoint: {fileID: 2104323775}

@@ -13,10 +13,11 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private float pickDelay = 0.5f;
         [SerializeField] private int buyPool = 5;
 
-        [Header("NPC componentsZ")]
+        [Header("NPC components")]
         [SerializeField] private NPCStates states;
         [SerializeField] private NPCPsycho psycho;
         [SerializeField] private NPCWallet wallet;
+        [SerializeField] private NPCMemoryData memoryData;
 
         [Header("Movement logic")]
         [SerializeField] private NPCMovement movement;
@@ -40,8 +41,8 @@ namespace StoreSimulator.ArtificialIntelligence
 
         void Start()
         {
-            VisitRecord startVisit = new();
-            NPCMemoryManager.Instance.RecordVisit(NpcId, startVisit);
+            NPCMemoryManager.Instance.Register(NpcId, memoryData);
+            NPCMemoryManager.Instance.RecordVisit(NpcId, new VisitRecord());
 
             waitBeforeShop = waitTime;
 
