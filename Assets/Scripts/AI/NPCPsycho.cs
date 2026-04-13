@@ -7,6 +7,7 @@ public class NPCPsycho : MonoBehaviour
 {
     [SerializeField] private NPCNeeds needs;
     [SerializeField] private NPCLoyalty loyalty;
+    [SerializeField] private StealingThoughts stealingThoughts;
 
     [Header("Configs")]
     [SerializeField] private NPCPriceReactionSO priceReactionConfig;
@@ -75,7 +76,7 @@ public class NPCPsycho : MonoBehaviour
             }
         }
 
-        Debug.LogError($"[AI - {gameObject.name}] hungerThreshold is empty");
+        Debug.LogError($"[AI - {gameObject.name} - Psycho] hungerThreshold is empty");
         return NPCHungerState.Hungry;
     }
 
@@ -89,7 +90,7 @@ public class NPCPsycho : MonoBehaviour
             }
         }
 
-        Debug.LogError($"[AI - {gameObject.name}] thirstThreshold is empty");
+        Debug.LogError($"[AI - {gameObject.name} - Psycho] thirstThreshold is empty");
         return NPCThirstState.Thirst;
     }
 
@@ -112,8 +113,8 @@ public class NPCPsycho : MonoBehaviour
 
         _wantBuyProducts = Random.Range(0f, 100f) < finalProb;
 
-        Debug.Log($"[AI Psycho] Состояние изменилось. " +
-                  $"Голод: {_hungerState}, Жажда: {_thirstState}. " +
+        Debug.Log($"[AI - {gameObject.name} - Psycho] Состояние изменилось. \n" +
+                  $"Голод: {_hungerState}, Жажда: {_thirstState}. \n" +
                   $"Идёт в магазин: {_wantBuyProducts}");
     }
 
@@ -157,7 +158,7 @@ public class NPCPsycho : MonoBehaviour
         }
 
         string log = string.Join(", ", result);
-        Debug.Log($"[AI Psycho] Хочу купить: {log}");
+        Debug.Log($"[AI - {gameObject.name} - Psycho] Хочу купить: {log}");
 
         _wantBuyProducts = false; // Сбрасываем — NPCController уже прочитал
         return result;
@@ -208,12 +209,12 @@ public class NPCPsycho : MonoBehaviour
             if (ratio >= adjustedThreshold)
             {
                 _visitReactions.Add(reaction.reactionType);
-                Debug.Log($"[AI - {gameObject.name}] Psycho: reaction is {reaction.reactionType}");
+                Debug.Log($"[AI - {gameObject.name} - Psycho]: reaction is {reaction.reactionType}");
                 return reaction.willBuy;
             }
         }
 
-        Debug.LogError($"[AI - {gameObject.name}] Can't find reaction");
+        Debug.LogError($"[AI - {gameObject.name} - Psycho] Can't find reaction");
         return false;
     }
 
@@ -228,6 +229,16 @@ public class NPCPsycho : MonoBehaviour
         }
 
         return worst;
+    }
+
+    public bool StealItemOrNot()
+    {
+        return stealingThoughts.StealItemOrNot();
+    }
+
+    public bool LoudStealOrQuiete()
+    {
+        return stealingThoughts.LoudStealOrQuiete();
     }
 
     public void ResetReaction() => _visitReactions.Clear();

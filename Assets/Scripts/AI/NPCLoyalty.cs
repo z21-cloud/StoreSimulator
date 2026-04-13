@@ -15,7 +15,7 @@ public class NPCLoyalty : MonoBehaviour
     public float GreedRatio(float playerPrice, float marketPrice)
     {
         float ratio = playerPrice / marketPrice;
-        Debug.Log($"[AI - {gameObject.name}] Prices - {playerPrice}, {marketPrice}, ratio {ratio}");
+        Debug.Log($"[AI - {gameObject.name} - LOYALTY] Prices - {playerPrice}, {marketPrice}, ratio {ratio}");
         return ratio;
     }
 
@@ -38,7 +38,7 @@ public class NPCLoyalty : MonoBehaviour
             }
         }
 
-        Debug.Log($"[AI - {gameObject.name}] Loyalty changes - {Mathf.Clamp(loyalty, 0f, 100f)}");
+        Debug.Log($"[AI - {gameObject.name} - LOYALTY] Loyalty changes - {Mathf.Clamp(loyalty, 0f, 100f)}");
 
         return Mathf.Clamp(loyalty, 0f, 100f);
     }
@@ -46,14 +46,14 @@ public class NPCLoyalty : MonoBehaviour
     public float GetVisitModifier()
     {
         float result = Mathf.Lerp(MIN_VISIT_MODIFIER, MAX_VISIT_MODIFIER, Loyalty / 100f);
-        Debug.Log($"[AI - {gameObject.name}] GetVisitModifier: {result}");
+        Debug.Log($"[AI - {gameObject.name} - LOYALTY] Visit Modifier: {result}");
         return result;
     }
 
     public float GetPriceThresholdBonus()
     {
         float result = Mathf.Lerp(MIN_PRICE_BONUS, MAX_PRICE_BONUS, Loyalty / 100f);
-        Debug.Log($"[AI - {gameObject.name}] GetPriceThresholdBonus: {result}");
+        Debug.Log($"[AI - {gameObject.name} - LOYALTY] Price Threshold Bonus: {result}");
         return result;
     }
 }

@@ -9,7 +9,7 @@ public class LeavingState : INPCState
 
     public void Enter()
     {
-        Debug.Log($"[AI - {_ctx.gameObject.name}]: Leaving store");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - LeavingState]: Leaving store");
 
         _ctx.Psycho.ResetReaction();
 

@@ -14,7 +14,7 @@ public class BuyingState : INPCState
 
         if (_ctx.CurrentCashStorage == null)
         {
-            Debug.Log($"[AI - {_ctx.gameObject.name}]: Cash Storage is null, waiting...");
+            Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Cash Storage is null, waiting...");
             _ctx.WaitingState.SetReturn(_ctx.BuyingState);
             _ctx.StateMachine.SetState(_ctx.WaitingState);
             // _ctx.StateMachine.SetState(_ctx.LeavingState);
@@ -32,11 +32,11 @@ public class BuyingState : INPCState
 
     public void Tick()
     {
-        Debug.Log($"[AI - {_ctx.gameObject.name}]: Moving to cash storage");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Moving to cash storage");
 
         if (!_ctx.Movement.HasReached) return;
 
-        Debug.Log($"[AI - {_ctx.gameObject.name}]: Try to buy item");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Try to buy item");
 
         float totalSpent = _ctx.GetTotalCost(_ctx.BoughtItems);
 
@@ -44,19 +44,19 @@ public class BuyingState : INPCState
         {
             if (!_ctx.Wallet.CanAfford(PricesManager.Instance.GetPlayerPriceForItem(_ctx.BoughtItems[0].Data)))
             {
-                Debug.LogWarning($"[AI - {_ctx.gameObject.name}]: Unexpected drop at cashier - {_ctx.BoughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
+                Debug.LogWarning($"[AI - {_ctx.gameObject.name} - BuyingState]: Unexpected drop at cashier - {_ctx.BoughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
                 _ctx.HandleDropItem(_ctx.BoughtItems[0]);
                 continue;
             }
 
-            Debug.Log($"[AI - {_ctx.gameObject.name}]: Item bought succesfully");
+            Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Item bought succesfully");
             _ctx.CurrentCashStorage.BuyItem(_ctx.BoughtItems[0], _ctx.Wallet);
             _ctx.Psycho.IncreaseParameters(_ctx.BoughtItems[0].Data.FoodRestore, _ctx.BoughtItems[0].Data.ThirstRestore);
             _ctx.BoughtItems.RemoveAt(0);
         }
         if (_ctx.BoughtItems.Count != 0)
         {
-            Debug.Log($"[AI - {_ctx.gameObject.name}]: Waiting player to buy item");
+            Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Waiting player to buy item");
             _ctx.WaitingState.SetReturn(_ctx.BuyingState);
             _ctx.StateMachine.SetState(_ctx.WaitingState);
             return;

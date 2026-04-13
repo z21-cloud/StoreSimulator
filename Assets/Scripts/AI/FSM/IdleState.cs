@@ -35,11 +35,11 @@ public class IdleState : INPCState
         foreach (var category in npcNeeds)
         {
             var found = StorageRegistry.Instance.GetStorageByNeeds(category);
-            Debug.Log($"[AI: {_ctx.gameObject.name}] I want to buy...{category.ToString()}!");
+            Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{category.ToString()}!");
 
             if (found == null || found.Count == 0)
             {
-                Debug.Log($"[AI - {_ctx.gameObject.name}] Can't find needed shelf. Leaving...");
+                Debug.Log($"[AI - {_ctx.gameObject.name} - IdleState] Can't find needed shelf. Leaving...");
 
                 float totalSpent = 0f;
                 _ctx.RecordVisit(totalSpent);

@@ -36,7 +36,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public List<IStorage> Shelves { get; set; }
 
         public int ItemsToBuy { get; set; }
-        
+
         public string NpcId => npcId;
 
         public Transform StoreEnterPoint => storeEnterPoint;
@@ -58,6 +58,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public BuyingState BuyingState { get; private set; }
         public LeavingState LeavingState { get; private set; }
         public WaitingState WaitingState { get; private set; }
+        public StealingState StealingState { get; private set; }
 
         void Start()
         {
@@ -73,6 +74,7 @@ namespace StoreSimulator.ArtificialIntelligence
             MovingState = new MovingState(this);
             TakingState = new TakingState(this);
             BuyingState = new BuyingState(this);
+            StealingState = new StealingState(this);
             LeavingState = new LeavingState(this);
             WaitingState = new WaitingState(this);
 

@@ -14,7 +14,7 @@ public class MovingState : INPCState
 
     public void Tick()
     {
-        Debug.Log($"[AI - {_ctx.gameObject.name}] Moving to {((MonoBehaviour)_ctx.CurrentShelf).gameObject.name}");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - MovingState] Moving to {((MonoBehaviour)_ctx.CurrentShelf).gameObject.name}");
 
         if(_ctx.Movement.HasReached)
             _ctx.StateMachine.SetState(_ctx.TakingState);

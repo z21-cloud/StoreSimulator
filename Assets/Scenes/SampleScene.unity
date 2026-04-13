@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 97538004}
   - component: {fileID: 97538006}
   - component: {fileID: 97538007}
+  - component: {fileID: 97538008}
   m_Layer: 9
   m_Name: NPC
   m_TagString: Untagged
@@ -423,6 +424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 97538004}
   loyalty: {fileID: 97538007}
+  stealingThoughts: {fileID: 97538008}
   priceReactionConfig: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
   psychoConfig: {fileID: 11400000, guid: aa669558b4235ea4b8ebcc6b4b636c1f, type: 2}
   checkStoreTimer: 20
@@ -441,6 +443,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
   memory: {fileID: 11400000, guid: 20a41b129822bb84eae359837d4ce29b, type: 2}
   priceReaction: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
+--- !u!114 &97538008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdfb3a0f10c7d249b334966f2443e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StealingThoughts
 --- !u!1 &115613136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1134,7 @@ GameObject:
   - component: {fileID: 218310740}
   - component: {fileID: 218310749}
   - component: {fileID: 218310750}
+  - component: {fileID: 218310751}
   m_Layer: 9
   m_Name: NPC (1)
   m_TagString: Untagged
@@ -1156,7 +1171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8ae3d18bc2ead44bc0d9566edcd3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNeeds
-  config: {fileID: 11400000, guid: bef59a4ed5d034848b613fe36ed48771, type: 2}
+  config: {fileID: 11400000, guid: e726c0f73f2735b4b834d0c28d8c1944, type: 2}
 --- !u!114 &218310741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1313,7 +1328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9eae4c4b33ed4446855a4ff97eabe26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCWallet
-  startBalance: 25
+  startBalance: 0
 --- !u!114 &218310749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,6 +1343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 218310740}
   loyalty: {fileID: 218310750}
+  stealingThoughts: {fileID: 218310751}
   priceReactionConfig: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
   psychoConfig: {fileID: 11400000, guid: aa669558b4235ea4b8ebcc6b4b636c1f, type: 2}
   checkStoreTimer: 20
@@ -1346,6 +1362,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
   memory: {fileID: 11400000, guid: 50687dad9b6fd644387a2c7cce854a74, type: 2}
   priceReaction: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
+--- !u!114 &218310751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218310738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdfb3a0f10c7d249b334966f2443e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StealingThoughts
 --- !u!1 &268317742
 GameObject:
   m_ObjectHideFlags: 0
