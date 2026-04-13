@@ -16,7 +16,6 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private int buyPool = 5;
 
         [Header("NPC components")]
-        [SerializeField] private NPCStates states;
         [SerializeField] private NPCPsycho psycho;
         [SerializeField] private NPCWallet wallet;
         [SerializeField] private NPCMemoryData memoryData;
@@ -92,14 +91,15 @@ namespace StoreSimulator.ArtificialIntelligence
         }
 
 
-        public void RecordVisit(float totalSpent = 0f)
+        public void RecordVisit(float totalSpent = 0f, PriceReactionType priceReactionType = PriceReactionType.Fair)
         {
             VisitRecord visit = new VisitRecord();
             //visit.dayIndex = 
 
             visit.totalSpent = totalSpent;
 
-            visit.reactionType = psycho.GetLastReaction();
+            if(priceReactionType == PriceReactionType.Fair) visit.reactionType = psycho.GetLastReaction();
+            else visit.reactionType = priceReactionType;
 
             // visit.foundAllItems = boughtItems.Count > 0;
 

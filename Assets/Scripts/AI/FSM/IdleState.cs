@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using StoreSimulator.ArtificialIntelligence;
-using StoreSimulator.InteractableObjects;
 using StoreSimulator.StoreableItems;
 using UnityEngine;
 
@@ -42,7 +41,8 @@ public class IdleState : INPCState
                 Debug.Log($"[AI - {_ctx.gameObject.name} - IdleState] Can't find needed shelf. Leaving...");
 
                 float totalSpent = 0f;
-                _ctx.RecordVisit(totalSpent);
+                PriceReactionType reaction = PriceReactionType.Scam;
+                _ctx.RecordVisit(totalSpent, reaction);
                 Leaving();
                 return;
             }

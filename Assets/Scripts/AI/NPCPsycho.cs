@@ -233,6 +233,12 @@ public class NPCPsycho : MonoBehaviour
 
     public bool StealItemOrNot()
     {
+        if(loyalty.Loyalty >= 90f)
+        {
+            Debug.Log($"[AI - {gameObject.name} - Psycho] I Love this store and don't wan't to steal");
+            return false;
+        }
+
         return stealingThoughts.StealItemOrNot();
     }
 
