@@ -17,8 +17,8 @@ public class IdleState : INPCState
 
     public void Tick()
     {
-        if (!_ctx.CheckStoreState()) { _ctx.StateMachine.SetState(_ctx.LeavingState); return; }
-        if (!_ctx.Psycho.WantBuyProducts) { _ctx.StateMachine.SetState(_ctx.LeavingState); return; }
+        if (!_ctx.CheckStoreState()) { Leaving(); return; }
+        if (!_ctx.Psycho.WantBuyProducts) { Leaving(); return; }
 
         if (!_ctx.Movement.HasReached) return;
 
@@ -26,7 +26,7 @@ public class IdleState : INPCState
 
         if (npcNeeds.Count == 0)
         {
-            _ctx.StateMachine.SetState(_ctx.LeavingState);
+            Leaving();
             return;
         }
 
@@ -43,7 +43,7 @@ public class IdleState : INPCState
 
                 float totalSpent = 0f;
                 _ctx.RecordVisit(totalSpent);
-                _ctx.StateMachine.SetState(_ctx.LeavingState);
+                Leaving();
                 return;
             }
 
@@ -57,8 +57,14 @@ public class IdleState : INPCState
         _ctx.StateMachine.SetState(_ctx.MovingState);
     }
 
+    private void Leaving()
+    {
+        _ctx.Movement.SetDestination(_ctx.StoreLeavaPoint.position);
+        _ctx.StateMachine.SetState(_ctx.LeavingState);
+    }
+
     public void Exit()
     {
-        
+
     }
 }

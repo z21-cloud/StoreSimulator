@@ -10,16 +10,18 @@ public class BuyingState : INPCState
 
     public void Enter()
     {
-        _ctx.CurrentCashStorage = CashStorageRegistry.Instance.GetRandomCashStorage();
-
         Debug.Log($"[AI - {_ctx.gameObject.name}]: Try to find cash storage");
 
         if (_ctx.CurrentCashStorage == null)
         {
             Debug.Log($"[AI - {_ctx.gameObject.name}]: Cash Storage is null, waiting...");
-            _ctx.WaitingState.SetReturn(_ctx.TakingState);
+            _ctx.WaitingState.SetReturn(_ctx.BuyingState);
             _ctx.StateMachine.SetState(_ctx.WaitingState);
             // _ctx.StateMachine.SetState(_ctx.LeavingState);
+        }
+        else
+        {
+            _ctx.Movement.SetDestination(_ctx.CurrentCashStorage.InteractionPoint);
         }
     }
 

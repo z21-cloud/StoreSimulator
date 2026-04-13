@@ -98,6 +98,7 @@ public class TakingState : INPCState
 
     public void Exit()
     {
+        _ctx.CurrentCashStorage = CashStorageRegistry.Instance.GetRandomCashStorage();
         _acceptDeal = false;
     }
 }
