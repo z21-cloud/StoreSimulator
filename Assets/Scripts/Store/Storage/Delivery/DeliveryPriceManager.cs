@@ -6,14 +6,24 @@ using UnityEngine;
 public class DeliveryPriceManager : MonoBehaviour
 {
     [SerializeField] private List<DeliveryOrder> orders = new List<DeliveryOrder>();
-    //public static DeliveryPriceManager Instance { get; private set; }
+    
+    public static DeliveryPriceManager Instance { get; private set; }
 
     private Dictionary<DeliveryOrder, float> deliveryOrders = new Dictionary<DeliveryOrder, float>();
 
     public List<DeliveryOrder> Orders => orders;
+    public Dictionary<DeliveryOrder, float> DeliveryOrders => deliveryOrders;
 
     private void Awake()
     {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         foreach (var order in orders)
         {
             deliveryOrders[order] = order.BoxCost;

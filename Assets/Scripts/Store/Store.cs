@@ -4,29 +4,29 @@ using UnityEngine;
 
 namespace StoreSimulator.StoreUtility
 {
-    public class StoreManager : MonoBehaviour
+    public class Store : MonoBehaviour
     {
         [SerializeField] private DeliveryPriceManager deliveryPriceManager;
         [SerializeField] private bool isOpen;
         [SerializeField] private bool isAuto;
+        [SerializeField] private Transform storeEnterPoint;
+        [SerializeField] private Transform storeLeavePoint;
+        [SerializeField] private Transform orderItems;
+        [SerializeField] private StorageRegistry storageRegistry;
+        
         private StoreState _currentState;
-        public static StoreManager Instance { get; private set; }
+        
+        public StorageRegistry StorageRegistry => storageRegistry;
+        public Transform StoreEnterPoint => storeEnterPoint;
+        public Transform StoreLeavePoint => storeLeavePoint;
+        public Transform OrderItems => orderItems;
+        public Transform DeliveryZone => orderItems;
         public bool IsOpen => _currentState == StoreState.Open;
         public bool IsAuto => isAuto;
 
-        void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-        }
-
         private void Start()
         {
+            StoreRegistry.Instance.RegisterStore(this);
             TimeManager.Instance.OnPhaseChanged += HandlePhaseChange;
         }
 

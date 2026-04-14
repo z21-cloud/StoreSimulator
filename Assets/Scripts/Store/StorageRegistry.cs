@@ -7,7 +7,7 @@ public class StorageRegistry : MonoBehaviour
 {
     private List<IStorage> storages = new List<IStorage>();
 
-    public static StorageRegistry Instance { get; private set; }
+    /*public static StorageRegistry Instance { get; private set; }
 
     void Awake()
     {
@@ -18,7 +18,7 @@ public class StorageRegistry : MonoBehaviour
         }
 
         Instance = this;
-    }
+    }*/
 
     public void RegisterStorage(IStorage storage)
     {
@@ -51,6 +51,20 @@ public class StorageRegistry : MonoBehaviour
             {
                 if((storeable.Category & category) != 0) result.Add(storage);
             }
+        }
+
+        return result;
+    }
+
+    public List<IStorage> GetAllStorages()
+    {
+        if(storages.Count == 0) return null;
+
+        var result = new List<IStorage>();
+
+        foreach(var storage in storages)
+        {
+            result.Add(storage);
         }
 
         return result;

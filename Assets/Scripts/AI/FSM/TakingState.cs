@@ -88,8 +88,8 @@ public class TakingState : INPCState
                     _ctx.BoughtItems.Add(storeable);
 
                     GameObject boughtGO = storeable.OnPickedFromStore();
-                    boughtGO.transform.position = _ctx.StorageForItems.position;
-                    boughtGO.transform.parent = _ctx.StorageForItems;
+                    boughtGO.transform.position = _ctx.PickUpPoint.position;
+                    boughtGO.transform.parent = _ctx.PickUpPoint;
 
                     Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: take storeable - {boughtGO.name}");
                     return true;

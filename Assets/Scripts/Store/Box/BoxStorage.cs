@@ -238,5 +238,10 @@ namespace StoreSimulator.StoreableItems
         {
             return null;
         }
+
+        public ItemCategory GetStorageCategory()
+        {
+            return _allowedCategory;
+        }
     }
 }

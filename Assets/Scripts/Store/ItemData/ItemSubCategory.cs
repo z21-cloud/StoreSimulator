@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace StoreSimulator.StoreableItems
 {
-    [System.Flags]
     public enum ItemSubCategory 
     {
         None = 0,
@@ -22,9 +21,9 @@ namespace StoreSimulator.StoreableItems
         Box_Granola= 1 << 11,       // 2048
         Box_Rings = 1 << 12,        // 4096
         Chips_bbq = 1 << 13,        // 8192
-        Chips_chedar = 1 << 14,     // 16 384
-        Chips_classic = 1 << 15,    // 32 768
-        Chips_onion = 1 << 16,      // 65 536
+        Chips_chedar = 1 << 14,     // 16ï¿½384
+        Chips_classic = 1 << 15,    // 32ï¿½768
+        Chips_onion = 1 << 16,      // 65ï¿½536
 
         // 32 sub categories can be added
     }

@@ -53,6 +53,8 @@ namespace StoreSimulator.Pathfinding
                         goalNode = goalNeighbour;
                         break;
                     }
+
+                    Debug.LogWarning($"[Pathfinding] Goal Node is Unwalkable! Can't find neighbours. Error expected");
                 }
             }
 

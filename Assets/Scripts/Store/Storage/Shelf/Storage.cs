@@ -4,6 +4,7 @@ using System;
 using StoreSimulator.StoreableItems;
 using TMPro;
 using StoreSimulator.StoreManager;
+using StoreSimulator.StoreUtility;
 
 namespace StoreSimulator.InteractableObjects
 {
@@ -29,18 +30,21 @@ namespace StoreSimulator.InteractableObjects
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
         private ItemData _currentItemData;
+        private Store _storeOwner;
 
         public Vector3 InteractionPoint => interactionPosition.position;
 
         void Awake()
         {
             ResetPrice();
+            _storeOwner = GetComponentInParent<Store>();
         }
 
         void OnEnable()
         {
             // Debug.Log($"Register storage");
-            StorageRegistry.Instance.RegisterStorage(this);
+            _storeOwner.StorageRegistry.RegisterStorage(this);
+            // StorageRegistry.Instance.RegisterStorage(this);
             priceManager = PricesManager.Instance;
         }
 
@@ -229,7 +233,13 @@ namespace StoreSimulator.InteractableObjects
 
         public void OnDisable()
         {
-            StorageRegistry.Instance.UnregisterStorage(this);
+            _storeOwner.StorageRegistry.UnregisterStorage(this);
+            // StorageRegistry.Instance.UnregisterStorage(this);
+        }
+
+        public ItemCategory GetStorageCategory()
+        {
+            return allowedCategory;
         }
     }
 }

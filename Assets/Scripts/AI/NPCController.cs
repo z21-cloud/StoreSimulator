@@ -24,9 +24,7 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private NPCMovement movement;
 
         [Header("Position of each path for NPC")]
-        [SerializeField] private Transform storeEnterPoint;
-        [SerializeField] private Transform storeLeavePoint;
-        [SerializeField] private Transform storageForItems;
+        [SerializeField] private Transform pickUpPoint;
         [SerializeField] private string npcId;
 
         public IStorage CurrentShelf { get; set; }
@@ -38,9 +36,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
         public string NpcId => npcId;
 
-        public Transform StoreEnterPoint => storeEnterPoint;
-        public Transform StorageForItems => storageForItems;
-        public Transform StoreLeavaPoint => storeLeavePoint;
+        public Transform PickUpPoint => pickUpPoint;
 
         public NPCMovement Movement => movement;
         public NPCPsycho Psycho => psycho;
@@ -132,7 +128,5 @@ namespace StoreSimulator.ArtificialIntelligence
                 holdable.Release(Vector3.zero);
             }
         }
-
-        public bool CheckStoreState() => StoreUtility.StoreManager.Instance.IsOpen;
     }
 }
