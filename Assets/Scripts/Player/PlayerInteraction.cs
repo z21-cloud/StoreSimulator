@@ -4,7 +4,7 @@ using StoreSimulator.BuildingSystem;
 namespace StoreSimulator.InteractableObjects
 {
     public enum PlayerMode { Default, Building }
-    public class PlayerInteraction : MonoBehaviour
+    public class PlayerInteraction : MonoBehaviour, ICanSell
     {
         [Header("Interaction detector")]
         [SerializeField] private InteractionDetector interactionDetector;

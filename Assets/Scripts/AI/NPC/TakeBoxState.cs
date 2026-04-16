@@ -9,20 +9,23 @@ public class TakeBoxState : INPCState
 
     public void Enter()
     {
-        _ctx.Movement.SetDestination(_ctx.Store.DeliveryZone.position);
+        _ctx.Movement.SetDestination(_ctx.Store.DeliveryPoint.position);
     }
 
     public void Exit()
     {
-        
+
     }
 
     public void Tick()
     {
-        if(_ctx.Movement.HasReached)
+        if (_ctx.Movement.HasReached)
         {
             _ctx.BoxStorage.Hold(_ctx.PickUpPoint);
-            _ctx.StateMachine.SetState(_ctx.PlaceItemState);
+
+            // // Delay between actions
+            _ctx.WaitingOwnerState.SetReturn(_ctx.PlaceItemState);
+            _ctx.StateMachine.SetState(_ctx.WaitingOwnerState);
         }
     }
 }

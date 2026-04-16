@@ -1,6 +1,6 @@
 using StoreSimulator.ArtificialIntelligence;
 using StoreSimulator.InteractableObjects;
-using StoreSimulator.StoreableItems;
+using UnityEngine;
 
 public class StoragesState : INPCState
 {
@@ -9,7 +9,6 @@ public class StoragesState : INPCState
     public StoragesState(NPCOwner ctx) => _ctx = ctx;
 
     private IStorage _currentStorage;
-    private StoreableItem _currentStoreable;
     private int _currentStorageIndex = 0;
 
     public void Enter()
@@ -29,16 +28,31 @@ public class StoragesState : INPCState
         {
             if (!_currentStorage.CanTakeItem())
             {
-                do _currentStoreable = _ctx.GetRandomStoreable();
+                StoreableItem found = null;
 
-                while (!_currentStorage.CanPlaceItem(_currentStoreable));
+                foreach (var item in _ctx.StoreableItems)
+                {
+                    if (_currentStorage.CanPlaceItem(item))
+                    {
+                        found = item;
+                        break;
+                    }
+                }
 
-                _ctx.Storeable = _currentStoreable;
+                if (found == null)
+                {
+                    _ctx.StateMachine.SetState(_ctx.StorageState);
+                    return;
+                }
+
+                _ctx.Storeable = found;
                 _ctx.StateMachine.SetState(_ctx.OrderItemsState);
                 return;
             }
             else
             {
+                _ctx.StateMachine.SetState(_ctx.CheckCashBoxState);
+
                 // _currentStorageIndex = (_currentStorageIndex + 1) % _ctx.Shelves.Count;
                 // _currentStorage = _ctx.Shelves[_currentStorageIndex];
 

@@ -11,20 +11,21 @@ namespace StoreSimulator.StoreUtility
         [SerializeField] private bool isAuto;
         [SerializeField] private Transform storeEnterPoint;
         [SerializeField] private Transform storeLeavePoint;
-        [SerializeField] private Transform orderItems;
+        [SerializeField] private Transform deliveryPoint;
         [SerializeField] private StorageRegistry storageRegistry;
+        [SerializeField] private CashStorageRegistry cashStorageRegistry;
         
         private StoreState _currentState;
         
+        public CashStorageRegistry CashStorageRegistry => cashStorageRegistry;
         public StorageRegistry StorageRegistry => storageRegistry;
         public Transform StoreEnterPoint => storeEnterPoint;
         public Transform StoreLeavePoint => storeLeavePoint;
-        public Transform OrderItems => orderItems;
-        public Transform DeliveryZone => orderItems;
+        public Transform DeliveryPoint => deliveryPoint;
         public bool IsOpen => _currentState == StoreState.Open;
         public bool IsAuto => isAuto;
 
-        private void Start()
+        private void Awake()
         {
             StoreRegistry.Instance.RegisterStore(this);
             TimeManager.Instance.OnPhaseChanged += HandlePhaseChange;

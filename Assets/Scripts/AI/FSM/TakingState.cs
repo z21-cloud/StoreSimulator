@@ -113,7 +113,7 @@ public class TakingState : INPCState
 
     public void Exit()
     {
-        if (!_steal) _ctx.CurrentCashStorage = CashStorageRegistry.Instance.GetRandomCashStorage();
+        if (!_steal) _ctx.CurrentCashStorage = _ctx.CurrentStore.CashStorageRegistry.GetRandomCashStorage();
         _acceptDeal = false;
         _steal = false;
     }

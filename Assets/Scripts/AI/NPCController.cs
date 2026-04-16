@@ -3,6 +3,7 @@ using StoreSimulator.InteractableObjects;
 using StoreSimulator.MoneySystem;
 using StoreSimulator.StoreableItems;
 using StoreSimulator.StoreManager;
+using StoreSimulator.StoreUtility;
 using UnityEngine;
 
 namespace StoreSimulator.ArtificialIntelligence
@@ -27,6 +28,7 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private Transform pickUpPoint;
         [SerializeField] private string npcId;
 
+        public Store CurrentStore { get; set; }
         public IStorage CurrentShelf { get; set; }
         public ICashStorage CurrentCashStorage { get; set; }
         public List<IStoreable> BoughtItems { get; set; }
@@ -94,7 +96,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
             visit.totalSpent = totalSpent;
 
-            if(priceReactionType == PriceReactionType.Fair) visit.reactionType = psycho.GetLastReaction();
+            if (priceReactionType == PriceReactionType.Fair) visit.reactionType = psycho.GetLastReaction();
             else visit.reactionType = priceReactionType;
 
             // visit.foundAllItems = boughtItems.Count > 0;

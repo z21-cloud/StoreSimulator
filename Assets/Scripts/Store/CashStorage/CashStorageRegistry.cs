@@ -3,19 +3,20 @@ using System.Collections.Generic;
 
 public class CashStorageRegistry : MonoBehaviour
 {
-    public static CashStorageRegistry Instance { get; private set; }
     private List<ICashStorage> cashStorages = new List<ICashStorage>();
+    
+    // public static CashStorageRegistry Instance { get; private set; }
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+    // void Awake()
+    // {
+    //     if (Instance != null && Instance != this)
+    //     {
+    //         Destroy(gameObject);
+    //         return;
+    //     }
 
-        Instance = this;
-    }
+    //     Instance = this;
+    // }
 
     public void RegisterCashStorage(ICashStorage cashStorage)
     {

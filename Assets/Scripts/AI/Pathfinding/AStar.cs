@@ -12,15 +12,15 @@ namespace StoreSimulator.Pathfinding
         // directions
         private Vector2Int[] directions =
         {
-        new Vector2Int(1, 0),
-        new Vector2Int(0, -1),
-        new Vector2Int(-1, 0),
-        new Vector2Int(0, 1),
-        new Vector2Int(1, 1),
-        new Vector2Int(1, -1),
-        new Vector2Int(-1, -1),
-        new Vector2Int(-1, 1),
-    };
+            new Vector2Int(1, 0),
+            new Vector2Int(0, -1),
+            new Vector2Int(-1, 0),
+            new Vector2Int(0, 1),
+            new Vector2Int(1, 1),
+            new Vector2Int(1, -1),
+            new Vector2Int(-1, -1),
+            new Vector2Int(-1, 1),
+        };
 
         // A*
         public List<Vector3> FindPath(Vector3 startPosition, Vector3 goalPosition)
@@ -45,18 +45,32 @@ namespace StoreSimulator.Pathfinding
 
             if (!goalNode.isWalkable)
             {
-                List<PathNode> goalNeighbours = FindNeighbours(goalNode);
+                PathNode originalGoal = goalNode;
+                bool replacementFound = false;
+
+                List<PathNode> goalNeighbours = FindNeighbours(originalGoal);
                 foreach (var goalNeighbour in goalNeighbours)
                 {
                     if (goalNeighbour.isWalkable)
                     {
                         goalNode = goalNeighbour;
+                        replacementFound = true;
                         break;
                     }
+                }
 
-                    Debug.LogWarning($"[Pathfinding] Goal Node is Unwalkable! Can't find neighbours. Error expected");
+                if (replacementFound)
+                {
+                    Debug.DrawLine(originalGoal.worldPosition, goalNode.worldPosition, Color.yellow, 2f);
+                }
+                else
+                {
+                    Debug.LogError($"[Pathfinding] Goal Node {goalNode.worldPosition} is Unwalkable! Can't find neighbours. Error expected");
+                    return null;
                 }
             }
+
+            Debug.DrawLine(startNode.worldPosition, goalNode.worldPosition, Color.red, 5f);
 
             startNode.gCost = 0f;
             startNode.hCost = grid.GetHeuristics(startNode, goalNode);

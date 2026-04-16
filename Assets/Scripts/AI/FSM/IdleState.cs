@@ -10,17 +10,16 @@ public class IdleState : INPCState
 
     public IdleState(NPCController ctx) => _ctx = ctx;
 
-    private Store _currentStore;
 
     public void Enter()
     {
-        _currentStore = StoreRegistry.Instance.GetRandomStore();
-        _ctx.Movement.SetDestination(_currentStore.StoreEnterPoint.position);
+        _ctx.CurrentStore = StoreRegistry.Instance.GetRandomStore();
+        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreEnterPoint.position);
     }
 
     public void Tick()
     {
-        if (!_currentStore.IsOpen) { Leaving(); return; }
+        if (!_ctx.CurrentStore.IsOpen) { Leaving(); return; }
         if (!_ctx.Psycho.WantBuyProducts) { Leaving(); return; }
 
         if (!_ctx.Movement.HasReached) return;
@@ -37,7 +36,7 @@ public class IdleState : INPCState
 
         foreach (var category in npcNeeds)
         {
-            var found = _currentStore.StorageRegistry.GetStorageByNeeds(category);
+            var found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(category);
             Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{category.ToString()}!");
 
             if (found == null || found.Count == 0)
@@ -63,12 +62,9 @@ public class IdleState : INPCState
 
     private void Leaving()
     {
-        _ctx.Movement.SetDestination(_currentStore.StoreLeavePoint.position);
+        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
         _ctx.StateMachine.SetState(_ctx.LeavingState);
     }
 
-    public void Exit()
-    {
-        _currentStore = null;
-    }
+    public void Exit() { }
 }

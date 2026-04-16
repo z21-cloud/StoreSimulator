@@ -28,6 +28,15 @@ public class StoreRegistry : MonoBehaviour
 
     public Store GetRandomStore()
     {
-        return _stores[Random.Range(0, _stores.Count)];
+        if(_stores.Count > 0) 
+        {
+            var num = Random.Range(0, _stores.Count);
+            return _stores[num];
+        }
+        else
+        {
+            Debug.LogError($"No Stores registered! return null!");
+            return null;
+        }
     }
 }

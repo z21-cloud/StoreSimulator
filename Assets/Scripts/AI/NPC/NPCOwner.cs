@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace StoreSimulator.ArtificialIntelligence
 {
-    public class NPCOwner : MonoBehaviour
+    public class NPCOwner : MonoBehaviour, ICanSell
     {
 
         [Header("Parameters")]
-        [SerializeField] private float waitTime = 5f;
+        [SerializeField] private float delay = 1f;
         [SerializeField] private float pickDelay = 0.5f;
 
         [Header("NPC components")]
@@ -27,7 +27,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
         [Header("Store owner Logic")]
         [SerializeField] private Store store;
-        [SerializeField] private ICashStorage cashStorage;
+        [SerializeField] private CashStorage cashStorage;
         [SerializeField] private List<StoreableItem> items;
         [SerializeField] private BoxPooling boxPooling;
 
@@ -49,8 +49,8 @@ namespace StoreSimulator.ArtificialIntelligence
         public NPCMovement Movement => movement;
         public IWallet Wallet => wallet;
 
-        public float WaitTime { get; private set; }
-        public float PickDelay { get; private set; }
+        public float Delay => delay;
+        public float PickDelay => pickDelay;
         public List<StoreableItem> StoreableItems => items;
 
         public NPCStateMachine StateMachine { get; private set; }
@@ -58,13 +58,12 @@ namespace StoreSimulator.ArtificialIntelligence
         public OrderItemsState OrderItemsState { get; private set; }
         public TakeBoxState TakeBoxState { get; private set; }
         public PlaceItemState PlaceItemState { get; private set; }
+        public WaitingOwnerState WaitingOwnerState { get; private set; }
+        public CheckCashBoxState CheckCashBoxState { get; private set; }
 
         void Start()
         {
             Shelves = store.StorageRegistry.GetAllStorages();
-
-            WaitTime = waitTime;
-            PickDelay = pickDelay;
 
             StateMachine = new NPCStateMachine();
 
@@ -72,6 +71,8 @@ namespace StoreSimulator.ArtificialIntelligence
             OrderItemsState = new OrderItemsState(this);
             TakeBoxState = new TakeBoxState(this);
             PlaceItemState = new PlaceItemState(this);
+            WaitingOwnerState = new WaitingOwnerState(this);
+            CheckCashBoxState = new CheckCashBoxState(this);
 
             StateMachine.SetState(StorageState);
         }
@@ -80,6 +81,9 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             movement.Tick();
             StateMachine.Tick();
+
+            // temp
+            if(Wallet.Balance <= 100f) Wallet.Add(1000f);
         }
 
         private void CreateTempStoreable()
@@ -116,10 +120,10 @@ namespace StoreSimulator.ArtificialIntelligence
         public StoreableItem GetRandomStoreable()
         {
             if (_temp == null || _temp.Count == 0) CreateTempStoreable();
-            
+
             int randomIndex = Random.Range(0, _temp.Count);
             var storeable = _temp[randomIndex];
-            Debug.LogWarning($"{storeable.Data.name}");            
+            Debug.LogWarning($"{storeable.Data.name}");
             _temp.Remove(storeable);
             return storeable;
         }

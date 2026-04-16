@@ -2,32 +2,38 @@ using System;
 using StoreSimulator.InteractableObjects;
 using StoreSimulator.MoneySystem;
 using StoreSimulator.StoreManager;
+using StoreSimulator.StoreUtility;
 using UnityEngine;
 
 public class CashStorage : MonoBehaviour, ICashStorage
 {
-    [SerializeField] private TryFindPlayer findPlayer;
+    [SerializeField] private TryFindCashier findCashier;
     [SerializeField] private Transform raycastPosition;
     [SerializeField] private float raycastDistance;
     [SerializeField] private LayerMask interactableMask;
+    [SerializeField] private Transform cashierPoint;
+    [SerializeField] private Transform interactionPoint;
     [SerializeField] private bool auto;
+
+    private Store _storeOwner;
 
     public bool IsOccupied { get; private set; }
     public bool IsAvailable { get; private set; }
-    public Vector3 InteractionPoint => transform.position;
+    public Vector3 InteractionPoint => interactionPoint.position;
+    public Vector3 CashierPoint => cashierPoint.position;
 
     public void BuyItem(IStoreable storeable, IWallet wallet)
     {
         if (storeable == null) return;
 
-        BuyManager.Instance.IncreasePlayerWallet(storeable);
+        findCashier.CashierWallet.Add(PricesManager.Instance.GetPlayerPriceForItem(storeable.Data));
         wallet.Spend(PricesManager.Instance.GetPlayerPriceForItem(storeable.Data));
         Destroy(((MonoBehaviour)storeable).gameObject);
     }
 
     void Update()
     {
-        if(!auto) IsAvailable = findPlayer.FindPlayer;
+        if(!auto) IsAvailable = findCashier.FindCashier;
         else IsAvailable = true;
 
         TryFindNPC();
@@ -50,13 +56,18 @@ public class CashStorage : MonoBehaviour, ICashStorage
         Debug.DrawRay(origin, direction, Color.red);
     }
 
-    private void Start()
+    private void Awake()
     {
-        CashStorageRegistry.Instance.RegisterCashStorage(this);
+        _storeOwner = GetComponentInParent<Store>();
+    }
+
+    void OnEnable()
+    {
+        _storeOwner.CashStorageRegistry.RegisterCashStorage(this);
     }
 
     private void OnDisable()
     {
-        CashStorageRegistry.Instance.UnregisterCashStorage(this);
+        _storeOwner.CashStorageRegistry.UnregisterCashStorage(this);
     }
 }
