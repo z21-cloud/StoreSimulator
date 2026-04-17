@@ -2,14 +2,19 @@ using UnityEngine;
 
 public class NPCLoyalty : MonoBehaviour
 {
-    [SerializeField] private NPCMemoryData memory;
     [SerializeField] private NPCPriceReactionSO priceReaction;
     private const float MIN_VISIT_MODIFIER = 0.2f;
     private const float MAX_VISIT_MODIFIER = 1.5f;
     private const float MIN_PRICE_BONUS = 0f;
     private const float MAX_PRICE_BONUS = 0.3f;
+    private NPCMemoryData _memory;
 
     public float Loyalty => CalculateLoyalty();
+
+    public void Initialize(NPCMemoryData activeMemory)
+    {
+        _memory = activeMemory;
+    }
 
     public float GreedRatio(float playerPrice, float marketPrice)
     {
@@ -18,16 +23,15 @@ public class NPCLoyalty : MonoBehaviour
         return ratio;
     }
 
-
     private float CalculateLoyalty()
     {
         float loyalty = 50f;
 
-        foreach(var memory in memory.history)
+        foreach(var record in _memory.history)
         {
             foreach(var reaction in priceReaction.priceReactions)
             {
-                if(memory.reactionType == reaction.reactionType)
+                if(record.reactionType == reaction.reactionType)
                 {
                     loyalty += reaction.loyaltyChange;
                     break;

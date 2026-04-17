@@ -9,7 +9,6 @@ public class TryFindCashier : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-
         if (other.TryGetComponent<ICanSell>(out _))
         {
             FindCashier = true;

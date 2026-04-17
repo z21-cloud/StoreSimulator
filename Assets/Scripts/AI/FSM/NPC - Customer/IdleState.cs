@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using StoreSimulator.ArtificialIntelligence;
 using StoreSimulator.StoreableItems;
-using StoreSimulator.StoreUtility;
 using UnityEngine;
 
 public class IdleState : INPCState
@@ -15,6 +14,9 @@ public class IdleState : INPCState
     {
         _ctx.CurrentStore = StoreRegistry.Instance.GetRandomStore();
         _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreEnterPoint.position);
+
+        var memory = NPCMemoryManager.Instance.GetOrCreateMemoryData(_ctx.NpcId, _ctx.CurrentStore.StoreID);
+        _ctx.Psycho.GetComponent<NPCLoyalty>().Initialize(memory);
     }
 
     public void Tick()

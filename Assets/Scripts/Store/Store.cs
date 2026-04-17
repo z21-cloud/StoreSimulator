@@ -14,6 +14,7 @@ namespace StoreSimulator.StoreUtility
         [SerializeField] private Transform deliveryPoint;
         [SerializeField] private StorageRegistry storageRegistry;
         [SerializeField] private CashStorageRegistry cashStorageRegistry;
+        [SerializeField] private string storeId;
         
         private StoreState _currentState;
         
@@ -24,6 +25,7 @@ namespace StoreSimulator.StoreUtility
         public Transform DeliveryPoint => deliveryPoint;
         public bool IsOpen => _currentState == StoreState.Open;
         public bool IsAuto => isAuto;
+        public string StoreID => storeId;
 
         private void Awake()
         {

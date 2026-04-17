@@ -10,7 +10,6 @@ namespace StoreSimulator.ArtificialIntelligence
 {
     public class NPCController : MonoBehaviour
     {
-
         [Header("Parameters")]
         [SerializeField] private float waitTime = 5f;
         [SerializeField] private float pickDelay = 0.5f;
@@ -59,10 +58,6 @@ namespace StoreSimulator.ArtificialIntelligence
 
         void Start()
         {
-            VisitRecord startRecord = new VisitRecord();
-            NPCMemoryManager.Instance.Register(NpcId, memoryData);
-            NPCMemoryManager.Instance.RecordVisit(NpcId, startRecord);
-
             BoughtItems = new List<IStoreable>(buyPool);
             Shelves = new List<IStorage>();
 
@@ -101,7 +96,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
             // visit.foundAllItems = boughtItems.Count > 0;
 
-            NPCMemoryManager.Instance.RecordVisit(npcId, visit);
+            NPCMemoryManager.Instance.RecordVisit(npcId, CurrentStore.StoreID, visit);
 
             Debug.Log($"[AI - {gameObject.name}] New visit recorded: Total Spent: {visit.totalSpent} \n, Reaction type: {visit.reactionType} \n, All Items Found: {visit.foundAllItems}");
         }

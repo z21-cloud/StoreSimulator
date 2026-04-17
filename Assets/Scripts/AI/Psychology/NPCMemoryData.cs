@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Unity.Properties;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "NPC Memory", menuName = "AI / NPC Memory")]
 public class NPCMemoryData : ScriptableObject
