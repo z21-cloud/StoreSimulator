@@ -20,9 +20,10 @@ public class TakingState : INPCState
         if (_ctx.CurrentShelf.CanTakeItem())
         {
             var sample = _ctx.CurrentShelf.PeekItem().GetComponent<IStoreable>();
-            float playerPrice = PricesManager.Instance.GetPlayerPriceForItem(sample.Data);
+            // Был доступ к цене игрока, не учитывалась цена NPC
+            float itemPrice = _ctx.CurrentStore.PriceProvider.GetPrice(sample.Data);
             float marketPrice = PricesManager.Instance.GetMarketPriceForItem(sample.Data);
-            _acceptDeal = _ctx.Psycho.BuyItemOrNot(playerPrice, marketPrice);
+            _acceptDeal = _ctx.Psycho.BuyItemOrNot(itemPrice, marketPrice);
         }
     }
 
