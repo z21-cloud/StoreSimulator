@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883614bafb4940546b410368201dd91c, type: 3}
   m_Name: ThirstHungry
   m_EditorClassIdentifier: Assembly-CSharp::NeedsSO
-  startHunger: 0
-  startThirst: 0
+  startHunger: 20
+  startThirst: 20
   thirstDecreaseRate: 1
   hungerDecreaseRate: 1
-  decreaseTickRate: 1
+  decreaseTickRate: 3

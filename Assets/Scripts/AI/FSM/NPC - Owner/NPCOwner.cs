@@ -30,11 +30,11 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private CashStorage cashStorage;
         [SerializeField] private List<StoreableItem> items;
         [SerializeField] private BoxPooling boxPooling;
+        [SerializeField] private SmokingArea smokingArea;
 
         private List<StoreableItem> _temp;
 
         public IStorage CurrentShelf { get; set; }
-        public List<IStorage> Shelves { get; set; }
         public IStoreable Storeable { get; set; }
         public BoxStorage BoxStorage { get; set; }
 
@@ -44,14 +44,17 @@ namespace StoreSimulator.ArtificialIntelligence
         public string NpcId => npcId;
 
         public Store Store => store;
-        public BoxPooling BoxPooling => boxPooling;
         public Transform PickUpPoint => pickUpPoint;
         public NPCMovement Movement => movement;
         public IWallet Wallet => wallet;
+        public BoxPooling BoxPooling => boxPooling;
+        public SmokingArea SmokingArea => smokingArea;
 
         public float Delay => delay;
         public float PickDelay => pickDelay;
         public List<StoreableItem> StoreableItems => items;
+        
+        public List<IStorage> Shelves { get; private set; }
 
         public NPCStateMachine StateMachine { get; private set; }
         public StoragesState StorageState { get; private set; }
@@ -60,6 +63,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public PlaceItemState PlaceItemState { get; private set; }
         public WaitingOwnerState WaitingOwnerState { get; private set; }
         public CheckCashBoxState CheckCashBoxState { get; private set; }
+        public BreakState BreakState { get; private set; }
 
         void Start()
         {
@@ -73,8 +77,9 @@ namespace StoreSimulator.ArtificialIntelligence
             PlaceItemState = new PlaceItemState(this);
             WaitingOwnerState = new WaitingOwnerState(this);
             CheckCashBoxState = new CheckCashBoxState(this);
+            BreakState = new BreakState(this);
 
-            StateMachine.SetState(StorageState);
+            StateMachine.SetState(BreakState);
         }
 
         void Update()
@@ -83,7 +88,7 @@ namespace StoreSimulator.ArtificialIntelligence
             StateMachine.Tick();
 
             // temp
-            if(Wallet.Balance <= 100f) Wallet.Add(1000f);
+            if (Wallet.Balance <= 100f) Wallet.Add(1000f);
         }
 
         private void CreateTempStoreable()

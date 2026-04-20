@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using StoreSimulator.ArtificialIntelligence;
-using StoreSimulator.StoreableItems;
 using UnityEngine;
 
 public class IdleState : INPCState
@@ -8,7 +6,6 @@ public class IdleState : INPCState
     private readonly NPCController _ctx;
 
     public IdleState(NPCController ctx) => _ctx = ctx;
-
 
     public void Enter()
     {
@@ -22,21 +19,12 @@ public class IdleState : INPCState
     public void Tick()
     {
         if (!_ctx.CurrentStore.IsOpen) { Leaving(); return; }
-        if (!_ctx.Psycho.WantBuyProducts) { Leaving(); return; }
 
         if (!_ctx.Movement.HasReached) return;
 
-        List<ItemCategory> npcNeeds = _ctx.Psycho.GetPriorityNeeds();
-
-        if (npcNeeds.Count == 0)
-        {
-            Leaving();
-            return;
-        }
-
         _ctx.Shelves.Clear();
 
-        foreach (var category in npcNeeds)
+        foreach (var category in _ctx.NPCNeeds)
         {
             var found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(category);
             Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{category.ToString()}!");

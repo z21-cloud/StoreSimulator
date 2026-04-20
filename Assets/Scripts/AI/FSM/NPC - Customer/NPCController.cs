@@ -23,9 +23,12 @@ namespace StoreSimulator.ArtificialIntelligence
         [Header("Movement logic")]
         [SerializeField] private NPCMovement movement;
 
-        [Header("Position of each path for NPC")]
+        [Header("NPC's pick-up point")]
         [SerializeField] private Transform pickUpPoint;
+        [Header("NPC's id")]
         [SerializeField] private string npcId;
+        [Header("Smoking area")]
+        [SerializeField] private SmokingArea smokingArea;
 
         public Store CurrentStore { get; set; }
         public IStorage CurrentShelf { get; set; }
@@ -38,6 +41,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public string NpcId => npcId;
 
         public Transform PickUpPoint => pickUpPoint;
+        public SmokingArea SmokingArea => smokingArea;
 
         public NPCMovement Movement => movement;
         public NPCPsycho Psycho => psycho;
@@ -47,6 +51,8 @@ namespace StoreSimulator.ArtificialIntelligence
         public float WaitTime { get; private set; }
         public float PickDelay { get; private set; }
 
+        public List<ItemCategory> NPCNeeds => Psycho.GetPriorityNeeds();
+
         public NPCStateMachine StateMachine { get; private set; }
         public IdleState IdleState { get; private set; }
         public MovingState MovingState { get; private set; }
@@ -55,6 +61,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public LeavingState LeavingState { get; private set; }
         public WaitingState WaitingState { get; private set; }
         public StealingState StealingState { get; private set; }
+        public SmokingState SmokingState { get; private set; }
 
         void Start()
         {
@@ -69,6 +76,7 @@ namespace StoreSimulator.ArtificialIntelligence
             StealingState = new StealingState(this);
             LeavingState = new LeavingState(this);
             WaitingState = new WaitingState(this);
+            SmokingState = new SmokingState(this);
 
             BuyPool = buyPool;
             WaitTime = waitTime;
@@ -82,7 +90,6 @@ namespace StoreSimulator.ArtificialIntelligence
             movement.Tick();
             StateMachine.Tick();
         }
-
 
         public void RecordVisit(float totalSpent = 0f, PriceReactionType priceReactionType = PriceReactionType.Fair)
         {

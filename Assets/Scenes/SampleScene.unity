@@ -369,6 +369,7 @@ MonoBehaviour:
   movement: {fileID: 97538003}
   pickUpPoint: {fileID: 703781860}
   npcId: NPCZero
+  smokingArea: {fileID: 1052113726}
 --- !u!136 &97537998
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -506,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9eae4c4b33ed4446855a4ff97eabe26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCWallet
-  startBalance: 25
+  startBalance: 1000
 --- !u!114 &97538006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bbf2c34afb4e44aa4a543d95d4629d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
-  memory: {fileID: 11400000, guid: 20a41b129822bb84eae359837d4ce29b, type: 2}
   priceReaction: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
 --- !u!114 &97538008
 MonoBehaviour:
@@ -1338,13 +1338,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
   waitTime: 1
   pickDelay: 0.5
-  buyPool: 5
+  buyPool: 2
   psycho: {fileID: 218310749}
   wallet: {fileID: 218310748}
   memoryData: {fileID: 11400000, guid: 50687dad9b6fd644387a2c7cce854a74, type: 2}
   movement: {fileID: 218310743}
   pickUpPoint: {fileID: 571471687}
   npcId: NPCFirst
+  smokingArea: {fileID: 1052113726}
 --- !u!136 &218310745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1437,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9eae4c4b33ed4446855a4ff97eabe26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCWallet
-  startBalance: 25
+  startBalance: 0
 --- !u!114 &218310749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1469,7 +1470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2bbf2c34afb4e44aa4a543d95d4629d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCLoyalty
-  memory: {fileID: 11400000, guid: 50687dad9b6fd644387a2c7cce854a74, type: 2}
   priceReaction: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
 --- !u!114 &218310751
 MonoBehaviour:
@@ -2011,6 +2011,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1715016129}
     m_Modifications:
+    - target: {fileID: 2281730378049873289, guid: 2ec014425464e9648983822e292435f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2447004201934094834, guid: 2ec014425464e9648983822e292435f2, type: 3}
       propertyPath: m_Name
       value: Active Shelf Model (8)
@@ -2023,6 +2027,10 @@ PrefabInstance:
       propertyPath: priceUI
       value: 
       objectReference: {fileID: 1879796018}
+    - target: {fileID: 5328581804475757366, guid: 2ec014425464e9648983822e292435f2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7372672127305069890, guid: 2ec014425464e9648983822e292435f2, type: 3}
       propertyPath: priceUI
       value: 
@@ -2721,7 +2729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &370511036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2899,6 +2907,7 @@ MonoBehaviour:
   - {fileID: 5170323711343921026, guid: 1b94ae294544e464ca3f50c5dd3d1fdf, type: 3}
   - {fileID: 4869238781764809839, guid: 2c8da5ba7a227b941ac7986042bb6685, type: 3}
   boxPooling: {fileID: 1136664792}
+  smokingArea: {fileID: 1052113726}
 --- !u!54 &370511045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2962,6 +2971,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   nodeCost: 1
+  debug: 0
 --- !u!4 &406524154
 Transform:
   m_ObjectHideFlags: 0
@@ -3233,7 +3243,7 @@ Transform:
   m_GameObject: {fileID: 419127803}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.441, y: 0.615, z: -1.935}
+  m_LocalPosition: {x: -12.441, y: 0.615, z: -1.935}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3743,7 +3753,7 @@ Transform:
   m_GameObject: {fileID: 476227727}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.189, y: 1, z: 18.958}
+  m_LocalPosition: {x: 6.189, y: 1, z: 19.958}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4111,13 +4121,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StoreSimulator.StoreUtility.StoreManager
   deliveryPriceManager: {fileID: 748441063}
   isOpen: 0
-  isAuto: 1
+  isAuto: 0
   storeEnterPoint: {fileID: 476227728}
   storeLeavePoint: {fileID: 476227728}
   deliveryPoint: {fileID: 0}
+  storeId: Player's Store
   storageRegistry: {fileID: 533075834}
   cashStorageRegistry: {fileID: 533075835}
-  storeId: Player's Store
+  isPlayerStore: 1
+  pricesManager: {fileID: 2123207934}
 --- !u!114 &533075834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4324,7 +4336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -10.80957, y: -13.388428}
+  m_AnchoredPosition: {x: -10.80957, y: -13.38855}
   m_SizeDelta: {x: 103.52246, y: 128.05127}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &561468892
@@ -7548,6 +7560,53 @@ Transform:
   - {fileID: 994234541}
   m_Father: {fileID: 533075832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1052113724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052113725}
+  - component: {fileID: 1052113726}
+  m_Layer: 0
+  m_Name: SmokingArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1052113725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052113724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1052113726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052113724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a33fbee96de454b8af0139fc0dcf04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmokingArea
+  centerZone: {fileID: 1052113725}
+  width: 2
+  height: 2
 --- !u!1 &1055496060
 GameObject:
   m_ObjectHideFlags: 0
@@ -12236,9 +12295,11 @@ MonoBehaviour:
   storeEnterPoint: {fileID: 419127804}
   storeLeavePoint: {fileID: 419127804}
   deliveryPoint: {fileID: 604906289}
+  storeId: Competitor's store
   storageRegistry: {fileID: 1715016130}
   cashStorageRegistry: {fileID: 1715016133}
-  storeId: Competitor's store
+  isPlayerStore: 0
+  pricesManager: {fileID: 2123207934}
 --- !u!114 &1715016133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14403,3 +14464,4 @@ SceneRoots:
   - {fileID: 370511043}
   - {fileID: 748441064}
   - {fileID: 1496466372}
+  - {fileID: 1052113725}

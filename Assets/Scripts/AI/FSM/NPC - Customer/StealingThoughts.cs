@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StealingThoughts : MonoBehaviour
 {
-    private int STEAL_DECISION_THRESHOLD = 65;
+    private int STEAL_DECISION_THRESHOLD = 1;
     private int STEAL_WAY_DECISION_THRESHOLD = 50;
     public bool StealItemOrNot()
     {

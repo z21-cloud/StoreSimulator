@@ -75,14 +75,7 @@ public class StealingState : INPCState
     {
         notifyPlayer = false;
 
-        while (_ctx.BoughtItems.Count != 0)
-        {
-            _ctx.Psycho.IncreaseParameters(_ctx.BoughtItems[0].Data.FoodRestore, _ctx.BoughtItems[0].Data.ThirstRestore);
-            var storeable = _ctx.BoughtItems[0];
-            ((MonoBehaviour)storeable).gameObject.SetActive(false);
-            _ctx.BoughtItems.RemoveAt(0);
-        }
-
+        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
         // _ctx.RecordVisit(0f);
     }
 }

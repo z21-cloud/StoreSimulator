@@ -31,7 +31,7 @@ public class BuyingState : INPCState
 
     public void Exit()
     {
-
+        
     }
 
     public void Tick()
@@ -67,6 +67,8 @@ public class BuyingState : INPCState
         }
 
         _ctx.RecordVisit(totalSpent);
+        
+        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
         _ctx.StateMachine.SetState(_ctx.LeavingState);
     }
 }

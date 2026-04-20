@@ -21,9 +21,6 @@ namespace StoreSimulator.InteractableObjects
         [Header("Price visual")]
         [SerializeField] private TMP_Text priceText;
 
-        [Header("Price Manager")]
-        [SerializeField] private PricesManager priceManager;
-
         [Header("Pick Up point for NPC's")]
         [SerializeField] private Transform interactionPosition;
 
@@ -45,7 +42,6 @@ namespace StoreSimulator.InteractableObjects
             // Debug.Log($"Register storage");
             _storeOwner.StorageRegistry.RegisterStorage(this);
             // StorageRegistry.Instance.RegisterStorage(this);
-            priceManager = PricesManager.Instance;
         }
 
         // use events instead
@@ -151,29 +147,27 @@ namespace StoreSimulator.InteractableObjects
             return taken;
         }
 
+        private float GetPrice() => _storeOwner.PriceProvider.GetPrice(_currentItemData);
+        
         public void OnPriceInputChanged(float newPrice)
         {
             if (_currentSubCategory == ItemSubCategory.None) return;
 
-            priceManager.SetSubCategoryPrice(_currentSubCategory, newPrice);
+            _storeOwner.PriceProvider.SetPrice(_currentSubCategory, newPrice);
             UpdatePriceVisual();
         }
 
         public float GetCurrentPrice()
         {
-            if (_currentItemData == null) return 0f;
-
-            float currentPrice = priceManager.GetPlayerPriceForItem(_currentItemData);
-            return currentPrice;
+            return _currentItemData == null ? 0f : GetPrice();
         }
 
         public float GetBasePrice()
         {
-            if (_currentItemData == null) return 0f;
-
-            float basePrice = _currentItemData.BasePrice;
-            return basePrice;
+            return _currentItemData == null ? 0f : GetMarketPrice();
         }
+
+        private float GetMarketPrice() => _storeOwner.PriceProvider.GetMarketPrice(_currentItemData);
 
         private void UpdateCurrentCategory(GameObject item)
         {
@@ -191,9 +185,7 @@ namespace StoreSimulator.InteractableObjects
         private void UpdatePriceVisual()
         {
             if (_currentSubCategory == ItemSubCategory.None) return;
-
-            float price = priceManager.GetPlayerPriceForItem(_currentItemData);
-            priceText.text = $"{price:F2}$";
+            priceText.text = $"{GetPrice():F2}$";
         }
 
         private void ResetStates()

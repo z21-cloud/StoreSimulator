@@ -10,6 +10,17 @@ public class LeavingState : INPCState
     public void Enter()
     {
         Debug.Log($"[AI - {_ctx.gameObject.name} - LeavingState]: Leaving store");
+    }
+
+    public void Exit()
+    {
+        while (_ctx.BoughtItems.Count != 0)
+        {
+            _ctx.Psycho.IncreaseParameters(_ctx.BoughtItems[0].Data.FoodRestore, _ctx.BoughtItems[0].Data.ThirstRestore);
+            var storeable = _ctx.BoughtItems[0];
+            ((MonoBehaviour)storeable).gameObject.SetActive(false);
+            _ctx.BoughtItems.RemoveAt(0);
+        }
 
         _ctx.Psycho.ResetReaction();
 
@@ -18,16 +29,12 @@ public class LeavingState : INPCState
         _ctx.BoughtItems.Clear();
     }
 
-    public void Exit()
-    {
-        
-    }
-
     public void Tick()
     {
         if (_ctx.Movement.HasReached)
         {
-            _ctx.StateMachine.SetState(_ctx.IdleState);
+            Debug.Log($"[AI - {_ctx.gameObject.name} - LeavingState]: Gone from store. Wanna smoke");
+            _ctx.StateMachine.SetState(_ctx.SmokingState);
         }
     }
 }

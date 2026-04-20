@@ -1,4 +1,5 @@
 using System;
+using StoreSimulator.StoreManager;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,12 +13,18 @@ namespace StoreSimulator.StoreUtility
         [SerializeField] private Transform storeEnterPoint;
         [SerializeField] private Transform storeLeavePoint;
         [SerializeField] private Transform deliveryPoint;
+        [SerializeField] private string storeId;
         [SerializeField] private StorageRegistry storageRegistry;
         [SerializeField] private CashStorageRegistry cashStorageRegistry;
-        [SerializeField] private string storeId;
+        
+        [Header("Price Manager")]
+        [SerializeField] private bool isPlayerStore;
+        [SerializeField] private PricesManager pricesManager;
         
         private StoreState _currentState;
-        
+        private IPriceProvider _priceProvider;
+
+        public IPriceProvider PriceProvider => _priceProvider;
         public CashStorageRegistry CashStorageRegistry => cashStorageRegistry;
         public StorageRegistry StorageRegistry => storageRegistry;
         public Transform StoreEnterPoint => storeEnterPoint;
@@ -29,6 +36,10 @@ namespace StoreSimulator.StoreUtility
 
         private void Awake()
         {
+            _priceProvider = isPlayerStore
+                ? new PlayerPriceManager(pricesManager)
+                : new MarketPriceManager(pricesManager);
+    
             StoreRegistry.Instance.RegisterStore(this);
             TimeManager.Instance.OnPhaseChanged += HandlePhaseChange;
         }

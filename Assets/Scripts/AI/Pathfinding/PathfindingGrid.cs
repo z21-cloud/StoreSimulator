@@ -10,6 +10,7 @@ namespace StoreSimulator.Pathfinding
         [SerializeField] private Vector2 nodeSize = new Vector2(1, 1);
         [SerializeField] private LayerMask unwalkableMask;
         [SerializeField] private float nodeCost = 1f;
+        [SerializeField] private bool debug;
 
         // index : node
         private Dictionary<Vector2Int, PathNode> grid;
@@ -143,7 +144,7 @@ namespace StoreSimulator.Pathfinding
 
         private void OnDrawGizmos()
         {
-            if (grid == null) return;
+            if (grid == null || !debug) return;
 
             foreach (var node in grid.Values)
             {

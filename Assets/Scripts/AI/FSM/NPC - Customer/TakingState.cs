@@ -34,7 +34,7 @@ public class TakingState : INPCState
             _ctx.StateMachine.SetState(_ctx.LeavingState);
             return;
         }
-
+        
         if (TryTakingFromShelf() && _ctx.BoughtItems.Count < _ctx.ItemsToBuy)
         {
             _pickTimer -= Time.deltaTime;

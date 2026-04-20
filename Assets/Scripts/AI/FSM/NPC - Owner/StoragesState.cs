@@ -51,7 +51,7 @@ public class StoragesState : INPCState
             }
             else
             {
-                _ctx.StateMachine.SetState(_ctx.CheckCashBoxState);
+                _ctx.StateMachine.SetState(_ctx.BreakState);
 
                 // _currentStorageIndex = (_currentStorageIndex + 1) % _ctx.Shelves.Count;
                 // _currentStorage = _ctx.Shelves[_currentStorageIndex];
