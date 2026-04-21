@@ -5,20 +5,20 @@ using UnityEngine;
 
 namespace StoreSimulator.Delivery
 {
-    public class DeliveryZone : MonoBehaviour, IBoxStorage, IBoxOwner
+    public class DeliveryZone : MonoBehaviour, IDeliveryStorage, IBoxOwner
     {
         [SerializeField] private List<Transform> slots;
         [SerializeField] private DeliveryConfig config;
         [SerializeField] private BoxPooling boxPooling;
         [SerializeField] private Transform queuePosition;
 
-        private BoxStorage[] _placedBoxes;
-        private DeliveryQueue<BoxStorage> _waitingQueue;
+        private IDeliverable[] _placedBoxes;
+        private DeliveryQueue<IDeliverable> _waitingQueue;
 
         private void Awake()
         {
-            _placedBoxes = new BoxStorage[config.MaxCapacity];
-            _waitingQueue = new DeliveryQueue<BoxStorage>(config.MaxCapacity);
+            _placedBoxes = new IDeliverable[config.MaxCapacity];
+            _waitingQueue = new DeliveryQueue<IDeliverable>(config.MaxCapacity);
         }
 
         public bool HasFreeSlot() => !config.IsFull || !_waitingQueue.IsFull;
@@ -36,7 +36,7 @@ namespace StoreSimulator.Delivery
             return -1;    
         }
 
-        public void PlaceBox(BoxStorage box)
+        public void PlaceBox(IDeliverable box)
         {
             if (config.IsFull)
             {
@@ -54,7 +54,7 @@ namespace StoreSimulator.Delivery
             PlaceOnPallet(box);
         }
 
-        private void PlaceOnPallet(BoxStorage box)
+        private void PlaceOnPallet(IDeliverable box)
         {
             int index = FindFreeSlot();
             if(index == -1) return;
@@ -80,12 +80,12 @@ namespace StoreSimulator.Delivery
             );
         }
 
-        public BoxStorage TakeBox()
+        public IDeliverable TakeBox()
         {
             throw new System.NotImplementedException();
         }
 
-        public void OnBoxRemoved(BoxStorage box)
+        public void OnBoxRemoved(IDeliverable box)
         {
             for(int i = 0; i < _placedBoxes.Length; i++)
             {
@@ -100,7 +100,7 @@ namespace StoreSimulator.Delivery
 
             if(!_waitingQueue.IsEmpty)
             {
-                BoxStorage next = _waitingQueue.Dequeue();
+                IDeliverable next = _waitingQueue.Dequeue();
                 PlaceOnPallet(next);
 
                 Debug.Log($"[DelveryZone]: Spawned from queue. " + 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeliveryQueue<T> where T : MonoBehaviour
+public class DeliveryQueue<T> where T : class
 {
     private readonly int _capacity = 15;
     private T[] _buffer;

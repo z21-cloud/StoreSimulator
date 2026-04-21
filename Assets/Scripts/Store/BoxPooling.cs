@@ -14,9 +14,16 @@ public class BoxPooling : MonoBehaviour
         pool = new ObjectPooling<BoxStorage>(prefab, initialSize, parent);
     }
 
-    public BoxStorage GetBoxStorage() => pool.Get();
-    public void ReturnBoxStorage(BoxStorage box) 
+    public IDeliverable GetBoxStorage() => pool.Get();
+    public void ReturnBoxStorage(IDeliverable box) 
     { 
-        pool.Release(box);
+        if(box is BoxStorage concreteBox)
+        {
+            pool.Release(concreteBox);
+        }
+        else
+        {
+            Debug.LogError($"[BoxPooling]: Trying to return object that is not BoxStorage");
+        }
     } 
 }

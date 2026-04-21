@@ -16,7 +16,7 @@ public class OrderItemsState : INPCState
 
     public void Exit()
     {
-
+        if(_ctx.BoxDeliverable == null) Debug.LogError($"[AI - {_ctx.gameObject.name}] BoxDeliverable is null!");
     }
 
     public void Tick()
@@ -31,10 +31,10 @@ public class OrderItemsState : INPCState
                 if (order.ItemData == itemToBuy && _ctx.Wallet.CanAfford(orders[order]))
                 {
                     _ctx.Wallet.Spend(orders[order]);
-                    BoxStorage box = _ctx.BoxPooling.GetBoxStorage();
+                    IDeliverable box = _ctx.BoxPooling.GetBoxStorage();
                     box.Initialize(order);
                     box.transform.position = _ctx.Store.DeliveryPoint.position;
-                    _ctx.BoxStorage = box;
+                    _ctx.SetBox(box);
 
                     // // Delay between actions
                     _ctx.WaitingOwnerState.SetReturn(_ctx.TakeBoxState);

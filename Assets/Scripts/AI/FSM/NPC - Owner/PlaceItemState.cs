@@ -40,7 +40,13 @@ public class PlaceItemState : INPCState
         if (!_ctx.BoxStorage.CanTakeItem() || 
             !_ctx.CurrentShelf.CanPlaceItem(_ctx.BoxStorage.PeekItem()?.GetComponent<IStoreable>()))
         {
-            _ctx.BoxPooling.ReturnBoxStorage(_ctx.BoxStorage);
+            // Need to release box storage, because it enables
+            Vector3 impulseTemp = new Vector3(1f, 1f, 1f);
+            _ctx.BoxHoldable.Release(impulseTemp);
+
+            _ctx.BoxPooling.ReturnBoxStorage(_ctx.BoxDeliverable);
+            _ctx.ResetBox();
+
             _ctx.StateMachine.SetState(_ctx.CheckCashBoxState);
         }
     }

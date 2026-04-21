@@ -21,7 +21,7 @@ public class TakeBoxState : INPCState
     {
         if (_ctx.Movement.HasReached)
         {
-            _ctx.BoxStorage.Hold(_ctx.PickUpPoint);
+            _ctx.BoxHoldable.Hold(_ctx.PickUpPoint);
 
             // // Delay between actions
             _ctx.WaitingOwnerState.SetReturn(_ctx.PlaceItemState);

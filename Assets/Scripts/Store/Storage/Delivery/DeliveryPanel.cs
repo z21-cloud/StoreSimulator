@@ -92,7 +92,7 @@ namespace StoreSimulator.Delivery
                 // Instatiate order
                 for (int i = 0; i < item.Quantity; i++)
                 {
-                    BoxStorage box = boxPooling.GetBoxStorage();
+                    IDeliverable box = boxPooling.GetBoxStorage();
                     box.Initialize(item.Order);
                     deliveryZone.PlaceBox(box);
                 }

@@ -5,7 +5,7 @@ using StoreSimulator.Boxes;
 
 namespace StoreSimulator.StoreableItems
 {
-    public class BoxStorage : MonoBehaviour, IHoldable, IInteractable, IStorage
+    public class BoxStorage : MonoBehaviour, IHoldable, IInteractable, IStorage, IDeliverable
     {
         [SerializeField] private ThrowableSettings throwableSettings;
         [SerializeField] private List<SlotGroup> groups;

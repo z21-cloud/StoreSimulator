@@ -36,7 +36,10 @@ namespace StoreSimulator.ArtificialIntelligence
 
         public IStorage CurrentShelf { get; set; }
         public IStoreable Storeable { get; set; }
-        public BoxStorage BoxStorage { get; set; }
+
+        public IStorage BoxStorage { get; private set; }
+        public IHoldable BoxHoldable {get; private set;}
+        public IDeliverable BoxDeliverable {get; private set;}
 
         public int ItemsToBuy { get; set; }
 
@@ -80,6 +83,19 @@ namespace StoreSimulator.ArtificialIntelligence
             BreakState = new BreakState(this);
 
             StateMachine.SetState(BreakState);
+        }
+
+        public void SetBox(IDeliverable box)
+        {
+            BoxStorage = box as IStorage;
+            BoxHoldable = box as IHoldable;
+            BoxDeliverable = box;
+        }
+
+        public void ResetBox()
+        {
+            BoxStorage = null;
+            BoxHoldable = null;
         }
 
         void Update()
