@@ -30,7 +30,7 @@ namespace StoreSimulator.StoreManager
         {
             foreach(var item in items)
             {
-                _marketPrice[item.SubCategory] = item.BasePrice;
+                _marketPrice[item.SubCategory] = item.Price;
             }
         }
 
@@ -46,7 +46,7 @@ namespace StoreSimulator.StoreManager
             //     return data.BasePrice * multiplier;
             // }
 
-            return data.BasePrice;
+            return data.Price;
         }
 
         public float GetMarketPriceForItem(ItemData data)

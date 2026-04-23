@@ -40,13 +40,13 @@ public class BuyingState : INPCState
 
         if (!_ctx.Movement.HasReached) return;
 
-        Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Try to buy item");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Try to buy item at price: {_ctx.BoughtItems[0].LockedPrice}");
 
         float totalSpent = _ctx.GetTotalCost(_ctx.BoughtItems);
 
         while (_ctx.CurrentCashStorage.IsAvailable && _ctx.BoughtItems.Count != 0)
         {
-            if (!_ctx.Wallet.CanAfford(PricesManager.Instance.GetPlayerPriceForItem(_ctx.BoughtItems[0].Data)))
+            if (!_ctx.Wallet.CanAfford(_ctx.BoughtItems[0].LockedPrice))
             {
                 Debug.LogWarning($"[AI - {_ctx.gameObject.name} - BuyingState]: Unexpected drop at cashier - {_ctx.BoughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
                 _ctx.HandleDropItem(_ctx.BoughtItems[0]);

@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using StoreSimulator.ArtificialIntelligence;
+using StoreSimulator.InteractableObjects;
+using StoreSimulator.StoreableItems;
 using UnityEngine;
 
 public class IdleState : INPCState
@@ -24,9 +27,10 @@ public class IdleState : INPCState
 
         _ctx.Shelves.Clear();
 
-        foreach (var category in _ctx.NPCNeeds)
+        List<ItemCategory> needs = _ctx.NPCNeeds;
+        foreach (var category in needs)
         {
-            var found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(category);
+            List<IStorage> found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(category);
             Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{category.ToString()}!");
 
             if (found == null || found.Count == 0)

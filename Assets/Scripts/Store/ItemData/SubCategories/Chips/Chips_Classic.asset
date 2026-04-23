@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Chips_Classic
   m_EditorClassIdentifier: 
   itemName: Chips_Classic
-  basePrice: 0.55
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 32768
   prefab: {fileID: 7645354772166818999, guid: 605cf26b525288544850afb8fc70ebc4, type: 3}

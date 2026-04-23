@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Pineapple
   m_EditorClassIdentifier: 
   itemName: Pineapple
-  basePrice: 3.05
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 16
   prefab: {fileID: 8891966408702916379, guid: 76f3e2b100613e642a3739e87468599d, type: 3}

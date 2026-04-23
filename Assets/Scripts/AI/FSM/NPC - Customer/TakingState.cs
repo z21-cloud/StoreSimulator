@@ -16,26 +16,10 @@ public class TakingState : INPCState
     public void Enter()
     {
         Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Taking from shelf");
-
-        if (_ctx.CurrentShelf.CanTakeItem())
-        {
-            var sample = _ctx.CurrentShelf.PeekItem().GetComponent<IStoreable>();
-            // Был доступ к цене игрока, не учитывалась цена NPC
-            float itemPrice = _ctx.CurrentStore.PriceProvider.GetPrice(sample.Data);
-            float marketPrice = PricesManager.Instance.GetMarketPriceForItem(sample.Data);
-            _acceptDeal = _ctx.Psycho.BuyItemOrNot(itemPrice, marketPrice);
-        }
     }
 
     public void Tick()
     {
-        if (!_acceptDeal)
-        {
-            _ctx.RecordVisit(0f);
-            _ctx.StateMachine.SetState(_ctx.LeavingState);
-            return;
-        }
-        
         if (TryTakingFromShelf() && _ctx.BoughtItems.Count < _ctx.ItemsToBuy)
         {
             _pickTimer -= Time.deltaTime;
@@ -49,6 +33,13 @@ public class TakingState : INPCState
         if (_steal)
         {
             _ctx.StateMachine.SetState(_ctx.StealingState);
+            return;
+        }
+
+        if (!_acceptDeal)
+        {
+            _ctx.RecordVisit(0f);
+            _ctx.StateMachine.SetState(_ctx.LeavingState);
             return;
         }
 
@@ -80,32 +71,46 @@ public class TakingState : INPCState
 
         if (_ctx.CurrentShelf.CanTakeItem())
         {
-
             GameObject go = _ctx.CurrentShelf.PeekItem();
+
             if (go.TryGetComponent<IStoreable>(out var storeable))
             {
-                if (_ctx.HaveEnoughMoney(storeable))
+                GameObject boughtGO = storeable.OnPickedFromStore();
+                boughtGO.transform.position = _ctx.PickUpPoint.position;
+                boughtGO.transform.parent = _ctx.PickUpPoint;
+
+                float itemPrice = storeable.LockedPrice;
+                float marketPrice = PricesManager.Instance.GetMarketPriceForItem(storeable.Data);
+                _acceptDeal = _ctx.Psycho.BuyItemOrNot(itemPrice, marketPrice);
+
+                if (_ctx.HaveEnoughMoney(storeable) && _acceptDeal)
                 {
                     _ctx.BoughtItems.Add(storeable);
-
-                    GameObject boughtGO = storeable.OnPickedFromStore();
-                    boughtGO.transform.position = _ctx.PickUpPoint.position;
-                    boughtGO.transform.parent = _ctx.PickUpPoint;
 
                     Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: take storeable - {boughtGO.name}");
                     return true;
                 }
                 else
                 {
+                    if(_ctx.CurrentShelf.CanPlaceItem(storeable))
+                    {
+                        _ctx.CurrentShelf.PlaceItem(boughtGO);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[AI - TakingState - {_ctx.gameObject.name}]: Unexpected error. Can't place back taken storeable. Dropping item");
+                        _ctx.HandleDropItem(storeable);
+                    }
+
                     _steal = _ctx.Psycho.StealItemOrNot();
                     Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Do I wanna steal? Result - {_steal}");
+                    return false;
                 }
             }
-
-            if (!_ctx.HaveEnoughMoney(storeable)) Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState] Have not enough money!");
-            // else if(storeable.Category != wantedProducts) Debug.Log($"[AI - {gameObject.name}] Different categories! \n Wanter category: {wantedProducts.ToString()}. Item Category: {storeable.Category}");
-            else Debug.LogWarning($"[AI - {_ctx.gameObject.name} - TakingState]: Item has no storeable component!");
-            return false;
+            else
+            {
+                Debug.LogWarning($"[AI - TakingState - {_ctx.gameObject.name}]: Picked GO has no storeable component!");
+            }
         }
 
         Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Can't take item. Shelf is empty");

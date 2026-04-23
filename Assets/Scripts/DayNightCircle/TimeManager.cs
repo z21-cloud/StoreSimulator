@@ -33,14 +33,14 @@ public class TimeManager : MonoBehaviour
         _phaseCount = Enum.GetValues(typeof(DayPhase)).Length;
 
         _currentDayPhase = DayPhase.Morning;
-        Debug.Log($"[Day Phase]: {_currentDayPhase}");
+        // Debug.Log($"[Day Phase]: {_currentDayPhase}");
         OnPhaseChanged?.Invoke(_currentDayPhase);
     }
 
     private void HandlePhaseChange()
     {
         _currentDayPhase = (DayPhase)(((int)_currentDayPhase + 1) % _phaseCount);
-        Debug.Log($"[Day Phase]: {_currentDayPhase}");
+        // Debug.Log($"[Day Phase]: {_currentDayPhase}");
         OnPhaseChanged?.Invoke(_currentDayPhase);
 
         if(_currentDayPhase == DayPhase.Morning) _currentDayPhase++;

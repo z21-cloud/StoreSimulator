@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   itemName: Apple
-  basePrice: 1.25
+  price: 1.25
   foodRestore: 20
   thirstRestore: 0
   category: 1

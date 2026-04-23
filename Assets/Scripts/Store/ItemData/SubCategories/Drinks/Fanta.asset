@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Fanta
   m_EditorClassIdentifier: 
   itemName: Fanta
-  basePrice: 1.55
+  price: 1.2
+  foodRestore: 0
+  thirstRestore: 0
   category: 2
   subCategory: 512
   prefab: {fileID: 6951012357750109258, guid: 9ad815ffb86a2d944b0af977bc47ed2e, type: 3}

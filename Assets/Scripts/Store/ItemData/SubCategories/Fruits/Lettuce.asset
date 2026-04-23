@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Lettuce
   m_EditorClassIdentifier: 
   itemName: Lettuce
-  basePrice: 1.15
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 8
   prefab: {fileID: 756659037523293652, guid: f4686b310026edb47abf5b4cfdeb5547, type: 3}

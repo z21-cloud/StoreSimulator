@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using StoreSimulator.StoreableItems;
 
 namespace StoreSimulator.InteractableObjects
@@ -17,10 +15,12 @@ namespace StoreSimulator.InteractableObjects
         // private components
         private Rigidbody _rb;
         private Collider _itemCollider;
+        private IPriceProvider _priceProvider;
 
         // properties
         // Linke Item -> Shelf
         public IShelf CurrentShelf { get; private set; }
+        public float LockedPrice { get; private set; }
         // To get Item's Data
         public ItemData Data => itemData;
         public ItemCategory Category => itemData != null ? itemData.Category : ItemCategory.None;
@@ -42,10 +42,10 @@ namespace StoreSimulator.InteractableObjects
                 // keep it for now, delete later
                 // don't need this line, cause I enable kinematic only on SetPhysics method
                 //rb.isKinematic = true;
-                
+
                 // Link shelf and item
                 CurrentShelf = shelf;
-
+                _priceProvider = shelf.PriceProvider;
                 // move to slot position and rotation (coroutine)
                 mover.MoveToSlotPosition(slot.transform);
             }
@@ -57,18 +57,25 @@ namespace StoreSimulator.InteractableObjects
 
         public GameObject OnPickedFromStore()
         {
-            if(CurrentShelf == null)
+            if (CurrentShelf == null)
             {
                 Debug.LogWarning($"StoreableItem: {gameObject.name} - CurrentShelf is null");
                 return null;
             }
 
+            if(_priceProvider != null)
+            {
+                LockedPrice = _priceProvider.GetPrice(itemData);
+                Debug.Log($"[StoreableItem] locked price: {LockedPrice}");
+            }
+            
             // stop coroutine to prevert issue, when player goes back, and object follow him
             mover.StopAllCoroutines();
 
             // reset shelf
             CurrentShelf.Release();
             CurrentShelf = null;
+            _priceProvider = null;
 
             return gameObject;
         }

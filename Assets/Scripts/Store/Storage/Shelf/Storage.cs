@@ -35,6 +35,11 @@ namespace StoreSimulator.InteractableObjects
         {
             ResetPrice();
             _storeOwner = GetComponentInParent<Store>();
+
+            foreach (var slot in slots)
+            {
+                slot.Initialize(_storeOwner.PriceProvider);
+            }
         }
 
         void OnEnable()
@@ -141,19 +146,32 @@ namespace StoreSimulator.InteractableObjects
             {
                 taken = bestSlot.Release();
 
+                if(taken.TryGetComponent<IStoreable>(out var storeable))
+                {
+                    storeable.OnPickedFromStore();
+                }
+
                 ResetStates();
             }
 
             return taken;
         }
 
-        private float GetPrice() => _storeOwner.PriceProvider.GetPrice(_currentItemData);
-        
+        private float GetPrice()
+        {
+            float result = _storeOwner.PriceProvider.GetPrice(_currentItemData);
+            Debug.Log($"[Storage]: полученная цена {result}");
+            return result;
+        }
+
         public void OnPriceInputChanged(float newPrice)
         {
             if (_currentSubCategory == ItemSubCategory.None) return;
 
             _storeOwner.PriceProvider.SetPrice(_currentSubCategory, newPrice);
+
+            Debug.Log($"[Storage]: New price for {_currentSubCategory} is {newPrice}");
+
             UpdatePriceVisual();
         }
 

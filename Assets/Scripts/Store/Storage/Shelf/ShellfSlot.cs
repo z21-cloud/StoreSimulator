@@ -8,6 +8,7 @@ namespace StoreSimulator.InteractableObjects
     public class ShellfSlot : MonoBehaviour, IShelf
     {
         public ItemData ItemData { get; private set; }
+        public IPriceProvider PriceProvider {get; private set;}
         public bool IsOccupied { get; private set; }
         private GameObject item;
 
@@ -31,7 +32,13 @@ namespace StoreSimulator.InteractableObjects
         public GameObject Release()
         {
             IsOccupied = false;
+
             return item;
+        }
+
+        public void Initialize(IPriceProvider priceProvider)
+        {
+            PriceProvider = priceProvider;
         }
     }
 }

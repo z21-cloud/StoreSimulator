@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Lemon
   m_EditorClassIdentifier: 
   itemName: Lemon
-  basePrice: 1
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 4
   prefab: {fileID: 6228476171139669903, guid: 17b75dc2c54fc4944af6ebc51e9f2c75, type: 3}

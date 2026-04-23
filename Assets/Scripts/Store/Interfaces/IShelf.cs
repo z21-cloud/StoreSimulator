@@ -9,6 +9,8 @@ namespace StoreSimulator.InteractableObjects
     {
         public bool IsOccupied { get; }
         public ItemData ItemData { get; }
+        public IPriceProvider PriceProvider { get; }
+        public void Initialize(IPriceProvider priceProvider);
         public void Occupy(GameObject item);
         public GameObject GetStoredItem();
         public GameObject Release();

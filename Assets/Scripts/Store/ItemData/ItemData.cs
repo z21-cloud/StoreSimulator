@@ -6,7 +6,7 @@ namespace StoreSimulator.StoreableItems
     public class ItemData : ScriptableObject
     {
         [SerializeField] private string itemName;
-        [SerializeField] private float basePrice;
+        [SerializeField] private float price;
         [SerializeField] private float foodRestore;
         [SerializeField] private float thirstRestore;
         [SerializeField] private ItemCategory category;
@@ -15,12 +15,12 @@ namespace StoreSimulator.StoreableItems
         [SerializeField] private Sprite icon;
 
         public string ItemName => itemName;
-        public float BasePrice => basePrice;
         public float FoodRestore => foodRestore;
         public float ThirstRestore => thirstRestore;
         public ItemCategory Category => category;
         public ItemSubCategory SubCategory => subCategory;
         public GameObject Prefab => prefab;
         public Sprite Icon => icon;
+        public float Price => price;
     }
 }

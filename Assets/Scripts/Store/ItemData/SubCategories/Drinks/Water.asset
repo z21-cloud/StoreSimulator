@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   itemName: Water
-  basePrice: 1.05
+  price: 1.05
   foodRestore: 0
   thirstRestore: 20
   category: 2

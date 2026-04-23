@@ -7,6 +7,7 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IStoreable
     {
+        public float LockedPrice { get; }
         public ItemData Data { get; }
         public ItemCategory Category { get; }
         public ItemSubCategory SubCategory { get; }

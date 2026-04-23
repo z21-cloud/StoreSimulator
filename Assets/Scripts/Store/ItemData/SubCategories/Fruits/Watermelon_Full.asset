@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Watermelon_Full
   m_EditorClassIdentifier: 
   itemName: Watermelon_Full
-  basePrice: 4.05
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 64
   prefab: {fileID: 8887084665529090899, guid: 2c8da5ba7a227b941ac7986042bb6685, type: 3}

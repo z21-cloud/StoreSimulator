@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Sprite
   m_EditorClassIdentifier: 
   itemName: Sprite
-  basePrice: 1.65
+  price: 1.25
+  foodRestore: 0
+  thirstRestore: 0
   category: 2
   subCategory: 256
   prefab: {fileID: 3530488422174138250, guid: 8c498a37ca74ea34683777993fa7a8ab, type: 3}

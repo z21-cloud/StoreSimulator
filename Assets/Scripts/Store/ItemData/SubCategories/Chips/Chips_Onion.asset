@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Chips_Onion
   m_EditorClassIdentifier: 
   itemName: Chips_Onion
-  basePrice: 0.7
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 65536
   prefab: {fileID: 4716508350605066745, guid: eb481582393714c43b581052e2f62188, type: 3}

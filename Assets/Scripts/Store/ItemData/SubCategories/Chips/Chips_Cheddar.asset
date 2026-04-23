@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Chips_Cheddar
   m_EditorClassIdentifier: 
   itemName: Chips_Chedar
-  basePrice: 0.8
+  price: 1
+  foodRestore: 0
+  thirstRestore: 0
   category: 1
   subCategory: 16384
   prefab: {fileID: 6440020357588445236, guid: 62a9f7d692fb70347b668b23d9a87fca, type: 3}
