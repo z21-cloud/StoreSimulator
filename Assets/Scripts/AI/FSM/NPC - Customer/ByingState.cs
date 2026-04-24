@@ -12,6 +12,8 @@ public class BuyingState : INPCState
     {
         Debug.Log($"[AI - {_ctx.gameObject.name}]: Try to find cash storage");
 
+        // Enter state, 
+
         if (_ctx.CurrentCashStorage != null)
         {
             _ctx.Movement.SetDestination(_ctx.CurrentCashStorage.InteractionPoint);
@@ -20,6 +22,7 @@ public class BuyingState : INPCState
         {
             _ctx.CurrentCashStorage = _ctx.CurrentStore.CashStorageRegistry.GetRandomCashStorage();
 
+            // if NPC gets CurrentCashStorage and it's null, wait and try later
             if (_ctx.CurrentCashStorage == null)
             {
                 Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Cash Storage is null, waiting...");
@@ -31,7 +34,7 @@ public class BuyingState : INPCState
 
     public void Exit()
     {
-        
+
     }
 
     public void Tick()
@@ -67,7 +70,7 @@ public class BuyingState : INPCState
         }
 
         _ctx.RecordVisit(totalSpent);
-        
+
         _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
         _ctx.StateMachine.SetState(_ctx.LeavingState);
     }

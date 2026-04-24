@@ -12,10 +12,13 @@ public class IdleState : INPCState
 
     public void Enter()
     {
+        // Get store and set destination to store enter point
         _ctx.CurrentStore = StoreRegistry.Instance.GetRandomStore();
         _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreEnterPoint.position);
 
+        // Get memory based on store ID
         var memory = NPCMemoryManager.Instance.GetOrCreateMemoryData(_ctx.NpcId, _ctx.CurrentStore.StoreID);
+        // Selects memory to NPC
         _ctx.Psycho.GetComponent<NPCLoyalty>().Initialize(memory);
     }
 
@@ -28,10 +31,10 @@ public class IdleState : INPCState
         _ctx.Shelves.Clear();
 
         List<ItemCategory> needs = _ctx.NPCNeeds;
-        foreach (var category in needs)
+        foreach (var need in needs)
         {
-            List<IStorage> found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(category);
-            Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{category.ToString()}!");
+            List<IStorage> found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(need);
+            Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{need.ToString()}!");
 
             if (found == null || found.Count == 0)
             {
