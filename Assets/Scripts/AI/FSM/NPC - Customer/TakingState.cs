@@ -15,7 +15,7 @@ public class TakingState : INPCState
 
     public void Enter()
     {
-        Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Taking from shelf");
+        
     }
 
     public void Tick()

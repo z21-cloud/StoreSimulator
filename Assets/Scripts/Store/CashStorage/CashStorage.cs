@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class CashStorage : MonoBehaviour, ICashStorage
 {
+    [SerializeField] private StoreablePooling pool;
     [SerializeField] private TryFindCashier findCashier;
     [SerializeField] private Transform raycastPosition;
     [SerializeField] private float raycastDistance;
@@ -29,12 +30,13 @@ public class CashStorage : MonoBehaviour, ICashStorage
         float price = storeable.LockedPrice;
         findCashier.CashierWallet.Add(price);
         wallet.Spend(price);
-        Destroy(((MonoBehaviour)storeable).gameObject);
+        
+        storeable.ReturnToPool();
     }
 
     void Update()
     {
-        if(!auto) IsAvailable = findCashier.FindCashier;
+        if (!auto) IsAvailable = findCashier.FindCashier;
         else IsAvailable = true;
 
         TryFindNPC();

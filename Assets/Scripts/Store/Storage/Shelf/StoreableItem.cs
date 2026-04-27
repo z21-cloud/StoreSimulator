@@ -63,12 +63,12 @@ namespace StoreSimulator.InteractableObjects
                 return null;
             }
 
-            if(_priceProvider != null)
+            if (_priceProvider != null)
             {
                 LockedPrice = _priceProvider.GetPrice(itemData);
                 Debug.Log($"[StoreableItem] locked price: {LockedPrice}");
             }
-            
+
             // stop coroutine to prevert issue, when player goes back, and object follow him
             mover.StopAllCoroutines();
 
@@ -78,6 +78,19 @@ namespace StoreSimulator.InteractableObjects
             _priceProvider = null;
 
             return gameObject;
+        }
+
+        public void ReturnToPool()
+        {
+            if (StoreablePooling.Instance != null && Data.Prefab.TryGetComponent<StoreableItem>(out var prefab))
+            {
+                StoreablePooling.Instance.ReturnStoreable(this, prefab);
+            }
+            else
+            {
+                Debug.LogWarning($"[{nameof(StoreableItem)}] Не удалось вернуть в пул {gameObject.name}, уничтожаем.");
+                Destroy(gameObject);
+            }
         }
 
         public string GetDescription()

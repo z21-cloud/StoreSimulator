@@ -33,13 +33,10 @@ public class NPCLoyalty : MonoBehaviour
             {
                 if (record.reactionType == reaction.reactionType)
                 {
-                    Debug.Log($"[AI - {gameObject.name} - LOYALTY] {record.reactionType} -> {reaction.loyaltyChange}");
                     loyalty += reaction.loyaltyChange;
                     break;
                 }
-
             }
-
         }
 
         Debug.Log($"[AI - {gameObject.name} - LOYALTY] Loyalty changes - {Mathf.Clamp(loyalty, 0f, 100f)}");

@@ -1,4 +1,5 @@
 using StoreSimulator.ArtificialIntelligence;
+using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
 public class LeavingState : INPCState
@@ -17,13 +18,26 @@ public class LeavingState : INPCState
         while (_ctx.BoughtItems.Count != 0)
         {
             _ctx.Psycho.IncreaseParameters(_ctx.BoughtItems[0].Data.FoodRestore, _ctx.BoughtItems[0].Data.ThirstRestore);
-            var storeable = _ctx.BoughtItems[0];
-            ((MonoBehaviour)storeable).gameObject.SetActive(false);
+
+            IStoreable storeable = _ctx.BoughtItems[0];
+
+            if (storeable is StoreableItem storeableItem)
+            {
+                storeableItem.ReturnToPool();
+                
+                // GameObject storeableItemGO = storeableItem.Data.Prefab;
+                // StoreablePooling.Instance.ReturnStoreable(storeable, storeableItemGO.GetComponent<StoreableItem>());
+            }
+            else
+            {
+                ((MonoBehaviour)storeable)?.gameObject.SetActive(false);
+            }
+
+            // ((MonoBehaviour)storeable).gameObject.SetActive(false);
             _ctx.BoughtItems.RemoveAt(0);
         }
 
         _ctx.Psycho.ResetReaction();
-
         _ctx.CurrentShelf = null;
         _ctx.CurrentCashStorage = null;
         _ctx.BoughtItems.Clear();

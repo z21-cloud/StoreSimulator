@@ -14,6 +14,7 @@ namespace StoreSimulator.InteractableObjects
         public IShelf CurrentShelf { get; }
         public void OnStored(GameObject slot);
         public GameObject OnPickedFromStore();
+        public void ReturnToPool();
     }
 }
 

@@ -53,7 +53,6 @@ public class StealingState : INPCState
                 GameObject boughtGO = storeable.OnPickedFromStore();
                 boughtGO.transform.position = _ctx.PickUpPoint.position;
                 boughtGO.transform.parent = _ctx.PickUpPoint;
-
                 Debug.Log($"[AI - {_ctx.gameObject.name} - StealingState]: steal storeable - {boughtGO.name}");
             }
 

@@ -8,10 +8,19 @@ public class StoreablePooling : MonoBehaviour
     [SerializeField] private Transform parent;
     [SerializeField] private int initialSize = 100;
 
+    public static StoreablePooling Instance { get; private set; }
+
     private Dictionary<StoreableItem, ObjectPooling<StoreableItem>> _pools;
 
     private void Awake()
     {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         _pools = new Dictionary<StoreableItem, ObjectPooling<StoreableItem>>();
 
         foreach (var prefab in prefabs)
@@ -38,6 +47,7 @@ public class StoreablePooling : MonoBehaviour
         {
             if (_pools.TryGetValue(prefab, out var pool))
             {
+                Debug.Log($"[StoreablePool]: returns to pool {((MonoBehaviour)prefab).gameObject}");
                 pool.Release(concreteStoreable);
             }
         }
