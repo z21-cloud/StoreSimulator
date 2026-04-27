@@ -239,6 +239,8 @@ public class NPCPsycho : MonoBehaviour
             return false;
         }
 
+        if(stealingThoughts == null) return false;
+
         return stealingThoughts.StealItemOrNot();
     }
 

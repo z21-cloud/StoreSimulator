@@ -27,16 +27,19 @@ public class NPCLoyalty : MonoBehaviour
     {
         float loyalty = 50f;
 
-        foreach(var record in _memory.history)
+        foreach (var record in _memory.history)
         {
-            foreach(var reaction in priceReaction.priceReactions)
+            foreach (var reaction in priceReaction.priceReactions)
             {
-                if(record.reactionType == reaction.reactionType)
+                if (record.reactionType == reaction.reactionType)
                 {
+                    Debug.Log($"[AI - {gameObject.name} - LOYALTY] {record.reactionType} -> {reaction.loyaltyChange}");
                     loyalty += reaction.loyaltyChange;
                     break;
                 }
+
             }
+
         }
 
         Debug.Log($"[AI - {gameObject.name} - LOYALTY] Loyalty changes - {Mathf.Clamp(loyalty, 0f, 100f)}");

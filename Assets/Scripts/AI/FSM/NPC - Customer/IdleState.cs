@@ -31,23 +31,22 @@ public class IdleState : INPCState
         _ctx.Shelves.Clear();
 
         List<ItemCategory> needs = _ctx.NPCNeeds;
-        foreach (var need in needs)
+        foreach (ItemCategory need in needs)
         {
-            List<IStorage> found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(need);
             Debug.Log($"[AI: {_ctx.gameObject.name} - IdleState] I want to buy...{need.ToString()}!");
+            List<IStorage> found = _ctx.CurrentStore.StorageRegistry.GetStorageByNeeds(need);
 
-            if (found == null || found.Count == 0)
-            {
-                Debug.Log($"[AI - {_ctx.gameObject.name} - IdleState] Can't find needed shelf. Leaving...");
+            if (found != null && found.Count > 0) _ctx.Shelves.Add(found[0]);
+        }
 
-                float totalSpent = 0f;
-                PriceReactionType reaction = PriceReactionType.Scam;
-                _ctx.RecordVisit(totalSpent, reaction);
-                Leaving();
-                return;
-            }
-
-            _ctx.Shelves.Add(found[0]);
+        if (_ctx.Shelves == null || _ctx.Shelves.Count == 0)
+        {
+            Debug.Log($"[AI - {_ctx.gameObject.name} - IdleState] Can't find needed shelf. Leaving...");
+            float totalSpent = 0f;
+            PriceReactionType reaction = PriceReactionType.Scam;
+            _ctx.RecordVisit(totalSpent, reaction);
+            Leaving();
+            return;
         }
 
         _ctx.CurrentShelf = _ctx.Shelves[0];

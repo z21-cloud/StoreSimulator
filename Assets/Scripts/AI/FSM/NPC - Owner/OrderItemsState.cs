@@ -32,7 +32,7 @@ public class OrderItemsState : INPCState
                 {
                     _ctx.Wallet.Spend(orders[order]);
                     IDeliverable box = _ctx.BoxPooling.GetBoxStorage();
-                    box.Initialize(order);
+                    box.Initialize(order, _ctx.StoreablePooling);
                     box.transform.position = _ctx.Store.DeliveryPoint.position;
                     _ctx.SetBox(box);
 

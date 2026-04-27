@@ -35,6 +35,7 @@ public class ObjectPooling<T> where T : MonoBehaviour
         {
             if(!obj.isActiveAndEnabled)
             {
+                obj.transform.SetParent(_parent);
                 obj.gameObject.SetActive(true);
                 return obj;
             }

@@ -22,6 +22,7 @@ namespace StoreSimulator.Delivery
 
         [Header("Box pool")]
         [SerializeField] private BoxPooling boxPooling;
+        [SerializeField] private StoreablePooling storeablePooling;
 
         [Header("UI")]
         [SerializeField] private TMP_Text balanceText;
@@ -93,8 +94,8 @@ namespace StoreSimulator.Delivery
                 for (int i = 0; i < item.Quantity; i++)
                 {
                     IDeliverable box = boxPooling.GetBoxStorage();
-                    box.Initialize(item.Order);
                     deliveryZone.PlaceBox(box);
+                    box.Initialize(item.Order, storeablePooling);
                 }
             }
 

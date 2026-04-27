@@ -9,7 +9,7 @@ public class NPCMemoryData : ScriptableObject
     public int lastVisitDay;
     public List<VisitRecord> history = new List<VisitRecord>();
 
-    private const int MaxVisits = 5;
+    private const int MaxVisits = 10;
 
     public void AddVisit(VisitRecord record)
     {

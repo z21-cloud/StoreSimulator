@@ -307,6 +307,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53669867}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &64984129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 64984130}
+  m_Layer: 0
+  m_Name: BoxPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &64984130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64984129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1136664791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97537995
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCPsycho
   needs: {fileID: 97538004}
   loyalty: {fileID: 97538007}
-  stealingThoughts: {fileID: 97538008}
+  stealingThoughts: {fileID: 0}
   priceReactionConfig: {fileID: 11400000, guid: 5ff3b03a5ff5fbb439e601f92c370498, type: 2}
   psychoConfig: {fileID: 11400000, guid: aa669558b4235ea4b8ebcc6b4b636c1f, type: 2}
   checkStoreTimer: 20
@@ -2906,8 +2937,9 @@ MonoBehaviour:
   - {fileID: 6199979674178585751, guid: 76f3e2b100613e642a3739e87468599d, type: 3}
   - {fileID: 5170323711343921026, guid: 1b94ae294544e464ca3f50c5dd3d1fdf, type: 3}
   - {fileID: 4869238781764809839, guid: 2c8da5ba7a227b941ac7986042bb6685, type: 3}
-  boxPooling: {fileID: 1136664792}
   smokingArea: {fileID: 1052113726}
+  boxPooling: {fileID: 1136664792}
+  storeablePooling: {fileID: 1136664793}
 --- !u!54 &370511045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8222,6 +8254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1136664791}
   - component: {fileID: 1136664792}
+  - component: {fileID: 1136664793}
   m_Layer: 0
   m_Name: ObjectPooling
   m_TagString: Untagged
@@ -8241,7 +8274,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1838674439}
+  - {fileID: 64984130}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1136664792
@@ -8257,7 +8292,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoxPooling
   prefab: {fileID: 5152608388281818496, guid: 958e9159f9490644ea3c9ae627cb35cc, type: 3}
-  parent: {fileID: 1136664791}
+  parent: {fileID: 64984130}
+  initialSize: 100
+--- !u!114 &1136664793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136664790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76610d5f7e15f92409535e373c24168e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoreablePooling
+  prefabs:
+  - {fileID: 7173710772021398004, guid: df8acb0d5002faf4f83e08290661b7af, type: 3}
+  - {fileID: 3966161225564043706, guid: 2a383aff61ad4864288e81c299b5e54f, type: 3}
+  - {fileID: 9023640484251056032, guid: 78a18ba88ceea114eab7d2e8e9704252, type: 3}
+  - {fileID: 948424294654580685, guid: 8c498a37ca74ea34683777993fa7a8ab, type: 3}
+  - {fileID: 4838213061231755308, guid: 9ad815ffb86a2d944b0af977bc47ed2e, type: 3}
+  - {fileID: 7557369328304320491, guid: a7a13c41c53ad3a4dbf307c95e523887, type: 3}
+  - {fileID: 546342274845742257, guid: b3b8f0fc3c61227419be2a11e5e41a44, type: 3}
+  - {fileID: 430714210585349844, guid: 1d32119f328cae143b4ffd09a7f013eb, type: 3}
+  - {fileID: 3895801405764801544, guid: 0a067a1f051bf764a8ba09d16522e9a1, type: 3}
+  - {fileID: 668601145707478336, guid: 62a9f7d692fb70347b668b23d9a87fca, type: 3}
+  - {fileID: 521168932261355128, guid: 605cf26b525288544850afb8fc70ebc4, type: 3}
+  - {fileID: 2118496773665898976, guid: eb481582393714c43b581052e2f62188, type: 3}
+  - {fileID: 3968945172026845665, guid: 17b75dc2c54fc4944af6ebc51e9f2c75, type: 3}
+  - {fileID: 7742929137435503096, guid: f4686b310026edb47abf5b4cfdeb5547, type: 3}
+  - {fileID: 6199979674178585751, guid: 76f3e2b100613e642a3739e87468599d, type: 3}
+  - {fileID: 5170323711343921026, guid: 1b94ae294544e464ca3f50c5dd3d1fdf, type: 3}
+  - {fileID: 4869238781764809839, guid: 2c8da5ba7a227b941ac7986042bb6685, type: 3}
+  parent: {fileID: 1838674439}
   initialSize: 100
 --- !u!1 &1145993107
 GameObject:
@@ -12024,6 +12091,7 @@ MonoBehaviour:
   orderList: {fileID: 1163427822}
   deliveryZone: {fileID: 1983194008}
   boxPooling: {fileID: 1136664792}
+  storeablePooling: {fileID: 1136664793}
   balanceText: {fileID: 1580959099}
   totalPriceText: {fileID: 166760842}
 --- !u!1 &1657831562
@@ -12693,6 +12761,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810605744}
   m_CullTransparentMesh: 1
+--- !u!1 &1838674438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838674439}
+  m_Layer: 0
+  m_Name: StoreablePool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1838674439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838674438}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1136664791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1846941852
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,8 +29,11 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private Store store;
         [SerializeField] private CashStorage cashStorage;
         [SerializeField] private List<StoreableItem> items;
-        [SerializeField] private BoxPooling boxPooling;
         [SerializeField] private SmokingArea smokingArea;
+
+        [Header("Pools")]
+        [SerializeField] private BoxPooling boxPooling;
+        [SerializeField] private StoreablePooling storeablePooling;
 
         private List<StoreableItem> _temp;
 
@@ -50,8 +53,10 @@ namespace StoreSimulator.ArtificialIntelligence
         public Transform PickUpPoint => pickUpPoint;
         public NPCMovement Movement => movement;
         public IWallet Wallet => wallet;
-        public BoxPooling BoxPooling => boxPooling;
         public SmokingArea SmokingArea => smokingArea;
+        
+        public StoreablePooling StoreablePooling => storeablePooling;
+        public BoxPooling BoxPooling => boxPooling;
 
         public float Delay => delay;
         public float PickDelay => pickDelay;

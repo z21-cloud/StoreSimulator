@@ -40,16 +40,23 @@ public class StorageRegistry : MonoBehaviour
 
     public List<IStorage> GetStorageByNeeds(ItemCategory category)
     {
-        if(storages.Count == 0) return null;
+        if (storages.Count == 0)
+        {
+            Debug.Log($"[StorageRegistry]: No storages!");
+            return null;
+        }
 
         var result = new List<IStorage>();
-        foreach(var storage in storages)
+        foreach (var storage in storages)
         {
-            GameObject peeked = storage.PeekItem();
-            //Debug.Log($"[StorageRegistry]: Peeked Item is {peeked.name}");
-            if(peeked != null && peeked.TryGetComponent<IStoreable>(out var storeable))
+            if (storage.CanTakeItem())
             {
-                if((storeable.Category & category) != 0) result.Add(storage);
+                GameObject peeked = storage.PeekItem();
+                //Debug.Log($"[StorageRegistry]: Peeked Item is {peeked.name}");
+                if (peeked != null && peeked.TryGetComponent<IStoreable>(out var storeable))
+                {
+                    if ((storeable.Category & category) != 0) result.Add(storage);
+                }
             }
         }
 
@@ -58,11 +65,11 @@ public class StorageRegistry : MonoBehaviour
 
     public List<IStorage> GetAllStorages()
     {
-        if(storages.Count == 0) return null;
+        if (storages.Count == 0) return null;
 
         var result = new List<IStorage>();
 
-        foreach(var storage in storages)
+        foreach (var storage in storages)
         {
             result.Add(storage);
         }

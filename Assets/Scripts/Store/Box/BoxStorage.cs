@@ -25,7 +25,7 @@ namespace StoreSimulator.StoreableItems
             _itemCollider = GetComponent<Collider>();
         }
 
-        public void Initialize(DeliveryOrder order)
+        public void Initialize(DeliveryOrder order, StoreablePooling pooling)
         {
             _allowedCategory = order.ItemData.Category;
 
@@ -43,8 +43,22 @@ namespace StoreSimulator.StoreableItems
             }
 
             if (_slots.Count == 0) return;
+
             for (int i = 0; i < order.Quantity; i++)
             {
+                if (order.ItemData.Prefab.TryGetComponent<StoreableItem>(out var storeableItem))
+                {
+                    StoreableItem item = pooling.GetStoreable(storeableItem) as StoreableItem;
+
+                    item.GetComponent<Collider>().enabled = false;
+                    item.GetComponent<Rigidbody>().isKinematic = true;
+
+                    item.transform.position = _slots[i].transform.position;
+
+                    _slots[i].Occupy(item.gameObject);
+                }
+
+                /*
                 GameObject item = Instantiate
                 (
                     order.ItemData.Prefab,
@@ -55,6 +69,7 @@ namespace StoreSimulator.StoreableItems
                 item.GetComponent<Rigidbody>().isKinematic = true;
                 item.GetComponent<Collider>().enabled = false;
                 _slots[i].Occupy(item);
+                */
             }
         }
 
