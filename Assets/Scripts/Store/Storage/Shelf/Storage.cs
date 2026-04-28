@@ -10,9 +10,6 @@ namespace StoreSimulator.InteractableObjects
 {
     public class Storage : MonoBehaviour, IInteractable, IStorage, IPriceStorage
     {
-        [Header("General settings")]
-        [SerializeField] private List<ShellfSlot> slots;
-
         [Header("Category settings")]
         [SerializeField] private bool allowAnyCategory = false;
         [SerializeField] private ItemCategory allowedCategory;
@@ -21,25 +18,30 @@ namespace StoreSimulator.InteractableObjects
         [Header("Price visual")]
         [SerializeField] private TMP_Text priceText;
 
-        [Header("Pick Up point for NPC's")]
-        [SerializeField] private Transform interactionPosition;
+        // [Header("Pick Up point for NPC's")]
+        // [SerializeField] private Transform interactionPosition;
 
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
         private ItemData _currentItemData;
         private Store _storeOwner;
-
-        public Vector3 InteractionPoint => interactionPosition.position;
+        private List<IShelf> _slots;
+        public Vector3 InteractionPoint => transform.position;
 
         void Awake()
         {
             ResetPrice();
             _storeOwner = GetComponentInParent<Store>();
 
-            foreach (var slot in slots)
+            _slots = new List<IShelf>(GetComponentsInChildren<IShelf>());
+
+            foreach (var slot in _slots)
             {
                 slot.Initialize(_storeOwner.PriceProvider);
             }
+
+            IPriceTag priceTag = GetComponentInChildren<IPriceTag>();
+            priceTag.Initialize(this);
         }
 
         void OnEnable()
@@ -47,6 +49,13 @@ namespace StoreSimulator.InteractableObjects
             // Debug.Log($"Register storage");
             _storeOwner.StorageRegistry.RegisterStorage(this);
             // StorageRegistry.Instance.RegisterStorage(this);
+        }
+
+        private float GetPrice()
+        {
+            float result = _storeOwner.PriceProvider.GetPrice(_currentItemData);
+            Debug.Log($"[Storage]: полученная цена {result}");
+            return result;
         }
 
         // use events instead
@@ -77,7 +86,7 @@ namespace StoreSimulator.InteractableObjects
 
         public bool HasFreeSlot()
         {
-            foreach (var slot in slots)
+            foreach (IShelf slot in _slots)
             {
                 if (!slot.IsOccupied) return true;
             }
@@ -86,7 +95,7 @@ namespace StoreSimulator.InteractableObjects
 
         public bool CanTakeItem()
         {
-            foreach (var slot in slots)
+            foreach (IShelf slot in _slots)
             {
                 if (slot.IsOccupied) return true;
             }
@@ -98,8 +107,8 @@ namespace StoreSimulator.InteractableObjects
             // Should I get closest to player slot to place item or not?
 
             // FIND FREE SLOT
-            ShellfSlot reservedSlot = null;
-            foreach (ShellfSlot slot in slots)
+            IShelf reservedSlot = null;
+            foreach (IShelf slot in _slots)
             {
                 if (!slot.IsOccupied)
                 {
@@ -108,7 +117,7 @@ namespace StoreSimulator.InteractableObjects
             }
 
             // PLACE ITEM
-            if (reservedSlot != null)
+            if (reservedSlot != null && item.TryGetComponent<IStoreable>(out var storeable))
             {
                 reservedSlot.Occupy(item);
 
@@ -121,17 +130,18 @@ namespace StoreSimulator.InteractableObjects
             }
         }
 
+
         public GameObject TakeItem(Vector3 interactionPoint)
         {
-            ShellfSlot bestSlot = null;
+            IShelf bestSlot = null;
             float minDistance = float.MaxValue;
 
-            foreach (var slot in slots)
+            foreach (IShelf slot in _slots)
             {
                 if (slot.IsOccupied)
                 {
                     // optimisation
-                    float dist = (interactionPoint - slot.transform.position).sqrMagnitude;
+                    float dist = (interactionPoint - ((MonoBehaviour)slot).transform.position).sqrMagnitude;
 
                     if (minDistance > dist)
                     {
@@ -146,7 +156,7 @@ namespace StoreSimulator.InteractableObjects
             {
                 taken = bestSlot.Release();
 
-                if(taken.TryGetComponent<IStoreable>(out var storeable))
+                if (taken.TryGetComponent<IStoreable>(out var storeable))
                 {
                     storeable.OnPickedFromStore();
                 }
@@ -157,12 +167,6 @@ namespace StoreSimulator.InteractableObjects
             return taken;
         }
 
-        private float GetPrice()
-        {
-            float result = _storeOwner.PriceProvider.GetPrice(_currentItemData);
-            Debug.Log($"[Storage]: полученная цена {result}");
-            return result;
-        }
 
         public void OnPriceInputChanged(float newPrice)
         {
@@ -220,14 +224,9 @@ namespace StoreSimulator.InteractableObjects
             priceText.text = "No items";
         }
 
-        public ItemSubCategory GetItemSubCategory()
-        {
-            return _currentSubCategory;
-        }
-
         public GameObject PeekItem()
         {
-            foreach (var slot in slots)
+            foreach (IShelf slot in _slots)
             {
                 if (slot.IsOccupied)
                     return slot.GetStoredItem();
@@ -236,20 +235,14 @@ namespace StoreSimulator.InteractableObjects
             return null;
         }
 
-        public string GetDescription()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnDisable()
+        private void OnDisable()
         {
             _storeOwner.StorageRegistry.UnregisterStorage(this);
             // StorageRegistry.Instance.UnregisterStorage(this);
         }
-
-        public ItemCategory GetStorageCategory()
+        public string GetDescription()
         {
-            return allowedCategory;
+            throw new NotImplementedException();
         }
     }
 }

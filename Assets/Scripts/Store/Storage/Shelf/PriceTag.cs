@@ -8,20 +8,36 @@ namespace StoreSimulator.InteractableObjects
 {
     public class PriceTag : MonoBehaviour, IInteractable, IPriceTag
     {
-        [SerializeField] private Storage storage;
         [SerializeField] private PriceEditUI priceUI;
+
+        private IStorage storage;
+
+        public void Initialize(IStorage storage)
+        {
+            this.storage = storage;
+        }
 
         public void DoInteract()
         {
             // if can't take item => storage is empty
             if (!storage.CanTakeItem()) return;
 
-            ItemSubCategory subCategory = storage.GetItemSubCategory();
-            if (subCategory == ItemSubCategory.None) return;
+            if (storage.PeekItem().TryGetComponent<IStoreable>(out var storeable))
+            {
+                if (storeable.Data.SubCategory == ItemSubCategory.None) return;
+            }
 
-            priceUI.OpenForStorage(storage);
+
+            if (storage is IPriceStorage priceStorage)
+            {
+                priceUI.OpenForStorage(priceStorage);
+            }
+            else
+            {
+                Debug.LogError($"[Storage]: Storage has no IPriceStorage Implementation, Error expected");
+            }
         }
-        
+
         public string GetDescription()
         {
             throw new System.NotImplementedException();

@@ -1,16 +1,19 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using StoreSimulator.StoreableItems;
 
 namespace StoreSimulator.InteractableObjects
 {
     public class ShellfSlot : MonoBehaviour, IShelf
     {
-        public ItemData ItemData { get; private set; }
+        // public ItemData ItemData { get; private set; }
         public IPriceProvider PriceProvider {get; private set;}
         public bool IsOccupied { get; private set; }
         private GameObject item;
+        
+        public void Initialize(IPriceProvider priceProvider)
+        {
+            PriceProvider = priceProvider;
+        }
 
         public void Occupy(GameObject item)
         {
@@ -20,7 +23,7 @@ namespace StoreSimulator.InteractableObjects
             if(item.TryGetComponent<IStoreable>(out var storeable))
             {
                 storeable.OnStored(gameObject);
-                ItemData = storeable.Data;
+                // ItemData = storeable.Data;
             }
         }
 
@@ -34,11 +37,6 @@ namespace StoreSimulator.InteractableObjects
             IsOccupied = false;
 
             return item;
-        }
-
-        public void Initialize(IPriceProvider priceProvider)
-        {
-            PriceProvider = priceProvider;
         }
     }
 }

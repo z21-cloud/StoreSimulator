@@ -31,7 +31,7 @@ public class CashStorage : MonoBehaviour, ICashStorage
         findCashier.CashierWallet.Add(price);
         wallet.Spend(price);
         
-        storeable.ReturnToPool();
+        // storeable.ReturnToPool();
     }
 
     void Update()

@@ -12,7 +12,6 @@ namespace StoreSimulator.InteractableObjects
         public void PlaceItem(GameObject item);
         public GameObject PeekItem();
         public GameObject TakeItem(Vector3 interactionPoint);
-        public ItemCategory GetStorageCategory();
     }
 }
 

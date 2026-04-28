@@ -9,22 +9,19 @@ public class LeavingState : INPCState
     public LeavingState(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
-    {
-        Debug.Log($"[AI - {_ctx.gameObject.name} - LeavingState]: Leaving store");
-    }
+    { }
 
     public void Exit()
     {
         while (_ctx.BoughtItems.Count != 0)
         {
-            _ctx.Psycho.IncreaseParameters(_ctx.BoughtItems[0].Data.FoodRestore, _ctx.BoughtItems[0].Data.ThirstRestore);
-
             IStoreable storeable = _ctx.BoughtItems[0];
-
+            _ctx.Psycho.IncreaseParameters(storeable.Data.FoodRestore, storeable.Data.ThirstRestore);
+            
             if (storeable is StoreableItem storeableItem)
             {
                 storeableItem.ReturnToPool();
-                
+
                 // GameObject storeableItemGO = storeableItem.Data.Prefab;
                 // StoreablePooling.Instance.ReturnStoreable(storeable, storeableItemGO.GetComponent<StoreableItem>());
             }

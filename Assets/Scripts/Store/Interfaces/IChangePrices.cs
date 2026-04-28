@@ -6,6 +6,7 @@ namespace StoreSimulator.InteractableObjects
 {
     public interface IPriceTag
     {
+        public void Initialize(IStorage storage);
         public void DoInteract();
     }
 }
