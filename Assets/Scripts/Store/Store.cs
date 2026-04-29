@@ -5,34 +5,45 @@ using UnityEngine;
 
 namespace StoreSimulator.StoreUtility
 {
-    public class Store : MonoBehaviour
+    public class Store : MonoBehaviour, IStore
     {
-        [SerializeField] private DeliveryPriceManager deliveryPriceManager;
+        [Header("Store Config and settings")]
+        [SerializeField] private StoreConfig config;
         [SerializeField] private bool isOpen;
-        [SerializeField] private bool isAuto;
+        [SerializeField] private string storeId;
+        
+        [Header("Transform points")]
         [SerializeField] private Transform storeEnterPoint;
         [SerializeField] private Transform storeLeavePoint;
         [SerializeField] private Transform deliveryPoint;
-        [SerializeField] private string storeId;
+       
+        [Header("Services")]
         [SerializeField] private StorageRegistry storageRegistry;
         [SerializeField] private CashStorageRegistry cashStorageRegistry;
         
         [Header("Price Manager")]
         [SerializeField] private bool isPlayerStore;
         [SerializeField] private PricesManager pricesManager;
+        [SerializeField] private DeliveryPriceManager deliveryPriceManager;
         
         private StoreState _currentState;
         private IPriceProvider _priceProvider;
 
+        // services
         public IPriceProvider PriceProvider => _priceProvider;
         public CashStorageRegistry CashStorageRegistry => cashStorageRegistry;
         public StorageRegistry StorageRegistry => storageRegistry;
+        
+        // interaction points
         public Transform StoreEnterPoint => storeEnterPoint;
         public Transform StoreLeavePoint => storeLeavePoint;
         public Transform DeliveryPoint => deliveryPoint;
+
+        // config
+        public string StoreID => config.StoreID;
+        public bool IsAuto => config.IsAuto;
+
         public bool IsOpen => _currentState == StoreState.Open;
-        public bool IsAuto => isAuto;
-        public string StoreID => storeId;
 
         private void Awake()
         {
@@ -60,7 +71,7 @@ namespace StoreSimulator.StoreUtility
 
         private void HandlePhaseChange(DayPhase phase)
         {
-            if (!isAuto) return;
+            if (!IsAuto) return;
 
             if (phase == DayPhase.Morning) TryOpen();
             else if (phase == DayPhase.Night) TryClose();

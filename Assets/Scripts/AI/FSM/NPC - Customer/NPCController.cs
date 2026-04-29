@@ -30,7 +30,7 @@ namespace StoreSimulator.ArtificialIntelligence
         [Header("Smoking area")]
         [SerializeField] private SmokingArea smokingArea;
 
-        public Store CurrentStore { get; set; }
+        public IStore CurrentStore { get; set; }
         public IStorage CurrentShelf { get; set; }
         public ICashStorage CurrentCashStorage { get; set; }
         public List<IStoreable> BoughtItems { get; set; }

@@ -6,7 +6,7 @@ public class StoreRegistry : MonoBehaviour
 {
     public static StoreRegistry Instance { get; private set; }
 
-    private List<Store> _stores = new List<Store>();
+    private List<IStore> _stores = new List<IStore>();
 
     private void Awake()
     {
@@ -19,14 +19,14 @@ public class StoreRegistry : MonoBehaviour
         Instance = this;
     } 
 
-    public void RegisterStore(Store store)
+    public void RegisterStore(IStore store)
     {
         if(_stores.Contains(store)) return;
 
         _stores.Add(store);
     }
 
-    public Store GetRandomStore()
+    public IStore GetRandomStore()
     {
         if(_stores.Count > 0) 
         {

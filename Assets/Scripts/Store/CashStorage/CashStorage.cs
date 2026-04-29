@@ -16,7 +16,7 @@ public class CashStorage : MonoBehaviour, ICashStorage
     [SerializeField] private Transform interactionPoint;
     [SerializeField] private bool auto;
 
-    private Store _storeOwner;
+    private IStore _storeOwner;
 
     public bool IsOccupied { get; private set; }
     public bool IsAvailable { get; private set; }
@@ -61,7 +61,7 @@ public class CashStorage : MonoBehaviour, ICashStorage
 
     private void Awake()
     {
-        _storeOwner = GetComponentInParent<Store>();
+        _storeOwner = GetComponentInParent<IStore>();
     }
 
     void OnEnable()

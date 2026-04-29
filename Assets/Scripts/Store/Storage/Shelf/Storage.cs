@@ -24,14 +24,14 @@ namespace StoreSimulator.InteractableObjects
         // private vars
         private ItemSubCategory _currentSubCategory = ItemSubCategory.None;
         private ItemData _currentItemData;
-        private Store _storeOwner;
+        private IStore _storeOwner;
         private List<IShelf> _slots;
         public Vector3 InteractionPoint => transform.position;
 
         void Awake()
         {
             ResetPrice();
-            _storeOwner = GetComponentInParent<Store>();
+            _storeOwner = GetComponentInParent<IStore>();
 
             _slots = new List<IShelf>(GetComponentsInChildren<IShelf>());
 
