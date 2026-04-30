@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System;
 using StoreSimulator.StoreableItems;
 using TMPro;
-using StoreSimulator.StoreManager;
-using StoreSimulator.StoreUtility;
 
 namespace StoreSimulator.InteractableObjects
 {

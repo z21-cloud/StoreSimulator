@@ -4133,6 +4133,7 @@ Transform:
   - {fileID: 271892675}
   - {fileID: 995327440}
   - {fileID: 1335445252}
+  - {fileID: 7383548779852363935}
   - {fileID: 1983194007}
   - {fileID: 1639639397}
   - {fileID: 476227728}
@@ -4151,17 +4152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7faf35e8a0dc1c48af3b8b4a2fd8bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreSimulator.StoreUtility.StoreManager
-  deliveryPriceManager: {fileID: 748441063}
+  config: {fileID: 0}
   isOpen: 0
-  isAuto: 0
+  storeId: Player's Store
   storeEnterPoint: {fileID: 476227728}
   storeLeavePoint: {fileID: 476227728}
   deliveryPoint: {fileID: 0}
-  storeId: Player's Store
   storageRegistry: {fileID: 533075834}
   cashStorageRegistry: {fileID: 533075835}
   isPlayerStore: 1
   pricesManager: {fileID: 2123207934}
+  deliveryPriceManager: {fileID: 748441063}
 --- !u!114 &533075834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12357,17 +12358,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7faf35e8a0dc1c48af3b8b4a2fd8bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreSimulator.StoreUtility.Store
-  deliveryPriceManager: {fileID: 748441063}
+  config: {fileID: 0}
   isOpen: 0
-  isAuto: 1
+  storeId: Competitor's store
   storeEnterPoint: {fileID: 419127804}
   storeLeavePoint: {fileID: 419127804}
   deliveryPoint: {fileID: 604906289}
-  storeId: Competitor's store
   storageRegistry: {fileID: 1715016130}
   cashStorageRegistry: {fileID: 1715016133}
   isPlayerStore: 0
   pricesManager: {fileID: 2123207934}
+  deliveryPriceManager: {fileID: 748441063}
 --- !u!114 &1715016133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14329,6 +14330,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131258456}
   m_CullTransparentMesh: 1
+--- !u!1 &1401376999615658258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7925152903409761597, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+  m_PrefabInstance: {fileID: 7029670281860457142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1533082007113514721 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1961615983704891032, guid: f7a6e85bcc4b33a43a02801957a94e57, type: 3}
@@ -14530,6 +14536,91 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 271892674}
   m_SourcePrefab: {fileID: 100100000, guid: e2cd5ab8148c6bc4e8fc32b9bc6e929d, type: 3}
+--- !u!1001 &7029670281860457142
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 533075832}
+    m_Modifications:
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.779002
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.020002
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -270
+      objectReference: {fileID: 0}
+    - target: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2271369957059688401, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: priceText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2271369957059688401, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: allowedCategory
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472678813365855329, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      propertyPath: m_Name
+      value: VendingMachine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7925152903409761597, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7047116726194846438}
+  m_SourcePrefab: {fileID: 100100000, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+--- !u!114 &7047116726194846438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401376999615658258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2263b3aa7c37a1b4fac19a644cea62eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VendingStorage
+--- !u!4 &7383548779852363935 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 289813890585517590, guid: 9b62433f273e1e448bd5e208fc88661b, type: 3}
+  m_PrefabInstance: {fileID: 7029670281860457142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8458861252628374785 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 134187204385911413, guid: f7a6e85bcc4b33a43a02801957a94e57, type: 3}

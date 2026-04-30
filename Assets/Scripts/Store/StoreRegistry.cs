@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using StoreSimulator.StoreUtility;
 using UnityEngine;
 
 public class StoreRegistry : MonoBehaviour
