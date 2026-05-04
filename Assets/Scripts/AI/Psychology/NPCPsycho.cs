@@ -28,6 +28,8 @@ public class NPCPsycho : MonoBehaviour
 
     // Это свойство читает NPCController — "хочет ли NPC в магазин?"
     public bool WantBuyProducts => _wantBuyProducts;
+    public NPCHungerState HungerState => _hungerState;
+    public NPCThirstState ThirstState => _thirstState;
 
     // ─────────────────────────────────────────────────────────────────
     // Update: ТОЛЬКО определяем состояние. Никакой логики вероятностей!

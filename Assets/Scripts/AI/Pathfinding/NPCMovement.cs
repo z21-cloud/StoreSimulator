@@ -12,13 +12,15 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private AStar pathfinding;
 
         [Header("Parameters")]
-        [SerializeField] private float reachTargetDistance = 2f;
+        [SerializeField] private float stopDistance = 2f;
 
         public bool HasReached => _currentPath.Count == 0 && !mover.IsMoving;
 
+        private const float STOP_DISTANCE = 2f; 
+
         private Queue<Vector3> _currentPath = new Queue<Vector3>();
 
-        public void SetDestination(Vector3 goalPosition)
+        public void SetDestination(Vector3 goalPosition, float stopDistance = STOP_DISTANCE)
         {
             var path = pathfinding.FindPath(transform.position, goalPosition);
             _currentPath = new Queue<Vector3>(path);
@@ -29,7 +31,7 @@ namespace StoreSimulator.ArtificialIntelligence
             if (_currentPath.Count == 0) return;
 
             Vector3 target = _currentPath.Peek();
-            mover.MoveTo(target, reachTargetDistance);
+            mover.MoveTo(target, stopDistance);
             transform.LookAt(target);
 
             if (!mover.IsMoving) _currentPath.Dequeue();

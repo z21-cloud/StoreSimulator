@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
-public class VendingStorage : MonoBehaviour, IStorage
+public class VendingStorage : MonoBehaviour
 {
     [SerializeField] private List<StoreableItem> assortment;
     private IStore _storeOwner;
@@ -15,7 +15,7 @@ public class VendingStorage : MonoBehaviour, IStorage
     {
         _storeOwner = store;
 
-        _storeOwner.StorageRegistry.RegisterStorage(this);
+        // _storeOwner.StorageRegistry.RegisterStorage(this);
 
         _slots = new List<IShelf>(GetComponentsInChildren<IShelf>());
 
@@ -25,7 +25,7 @@ public class VendingStorage : MonoBehaviour, IStorage
         }
     }
 
-    public bool CanTakeItem()
+    /*public bool CanTakeItem()
     {
 
     }
@@ -53,6 +53,6 @@ public class VendingStorage : MonoBehaviour, IStorage
     public void PlaceItem(GameObject item)
     {
         throw new System.NotImplementedException();
-    }
+    }*/
 }
 

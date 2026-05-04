@@ -9,7 +9,7 @@ public class NPCLoyalty : MonoBehaviour
     private const float MAX_PRICE_BONUS = 0.3f;
     private NPCMemoryData _memory;
 
-    public float Loyalty => CalculateLoyalty();
+    public float Loyalty => _memory != null ? CalculateLoyalty() : 50f;
 
     public void Initialize(NPCMemoryData activeMemory)
     {
