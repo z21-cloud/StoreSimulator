@@ -4369,7 +4369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -10.80957, y: -13.38855}
+  m_AnchoredPosition: {x: -10.80957, y: -13.388489}
   m_SizeDelta: {x: 103.52246, y: 128.05127}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &561468892
@@ -9517,6 +9517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b67e7857b737de45b143b5cb2bf034a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerController
+  store: {fileID: 533075833}
   movement: {fileID: 1319418728}
   psycho: {fileID: 1319418726}
   wallet: {fileID: 1319418730}
@@ -12724,7 +12725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1715016129
 Transform:
   m_ObjectHideFlags: 0

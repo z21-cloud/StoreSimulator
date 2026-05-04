@@ -19,10 +19,17 @@ public class BuyProductsGoal : IGoal
 
     public bool IsSatisfied(MonoBehaviour npc)
     {
-        if (npc.TryGetComponent(out CustomerController customerController) && npc.TryGetComponent(out NPCPsycho psycho))
-            return customerController.Inventory.Count > 0 && psycho.GetPriorityNeeds().Count > 0;
+        if (!npc.TryGetComponent(out NPCPsycho psycho)) return true;
 
-        return true;
+        // Цель "купить продукты" удовлетворена ТОЛЬКО когда 
+        // потребности исчезли (уже поел/попил где-то или само прошло)
+        // Если NPC хочет есть или пить — цель НЕ удовлетворена,
+        // независимо от того, пуст ли инвентарь или сброшен ли WantBuyProducts
+
+        bool isHungry = psycho.HungerState != NPCHungerState.Full;
+        bool isThirsty = psycho.ThirstState != NPCThirstState.Full;
+
+        return !isHungry && !isThirsty;
     }
 
     public bool CanPursue(MonoBehaviour npc)

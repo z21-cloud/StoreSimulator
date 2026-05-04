@@ -36,7 +36,7 @@ public class MoveTo : INPCAction
     {
         var movable = npc.GetComponent<IMovable>();
 
-        if (_targetTransform != null || _targetPosition != null)
+        if (_targetTransform != null)
         {
             Vector3 destination = _targetTransform ? _targetTransform.position : _targetPosition;
             movable.Movement.SetDestination(destination, _stopDistance);

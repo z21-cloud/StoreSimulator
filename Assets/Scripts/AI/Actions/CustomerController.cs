@@ -3,6 +3,7 @@ using StoreSimulator.ArtificialIntelligence;
 using StoreSimulator.InteractableObjects;
 using StoreSimulator.MoneySystem;
 using StoreSimulator.StoreManager;
+using StoreSimulator.StoreUtility;
 using UnityEngine;
 
 public class CustomerController : MonoBehaviour,
@@ -12,6 +13,7 @@ IActionProvider, IStateMachineProvider, ILogProvider,
 IPlannerProvider
 {
     [Header("Base Components")]
+    [SerializeField] private Store store;
     [SerializeField] private NPCMovement movement;
     [SerializeField] private NPCPsycho psycho;
     [SerializeField] private NPCWallet wallet;
@@ -42,7 +44,7 @@ IPlannerProvider
 
     private void Start()
     {
-        CurrentStore = StoreRegistry.Instance.GetRandomStore();
+        CurrentStore = store;
         
         ActionQueue = new NPCActionQueue();
         Planner = new NPCPlanner();
@@ -55,6 +57,7 @@ IPlannerProvider
         {
             new BuyProductsGoal(),
             new SmokeGoal(),
+            new WaitGoal()
         };
         
         StateMachine.SetState(new GoalSelectionState(this));
