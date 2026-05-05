@@ -1,23 +1,34 @@
 using StoreSimulator.ArtificialIntelligence;
 using UnityEngine;
 
-public class MovingState : INPCState
+public class MovingStateToStore : INPCState
 {
     private readonly NPCController _ctx;
 
-    public MovingState(NPCController ctx) => _ctx = ctx;
+    public MovingStateToStore(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
     {
-        _ctx.Movement.SetDestination(_ctx.CurrentShelf.InteractionPoint);
+        
     }
 
     public void Tick()
     {
-        Debug.Log($"[AI - {_ctx.gameObject.name} - MovingState] Moving to {((MonoBehaviour)_ctx.CurrentShelf).gameObject.name}");
+        if(!_ctx.Movement.HasReached) return;
 
-        if(_ctx.Movement.HasReached)
-            _ctx.StateMachine.SetState(_ctx.TakingState);
+        if(!_ctx.CurrentStore.IsOpen)
+        {
+            Leaving();
+            return;
+        }
+
+        _ctx.StateMachine.SetState(_ctx.ShoppingState);
+    }
+
+    private void Leaving()
+    {
+        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
+        _ctx.StateMachine.SetState(_ctx.LeavingState);
     }
 
     public void Exit() { }

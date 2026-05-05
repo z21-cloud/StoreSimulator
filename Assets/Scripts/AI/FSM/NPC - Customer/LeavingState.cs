@@ -9,7 +9,13 @@ public class LeavingState : INPCState
     public LeavingState(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
-    { }
+    {
+        if (_ctx.BoughtItems.Count > 0)
+        {
+            float totalSpent = _ctx.GetTotalCost(_ctx.BoughtItems);
+            _ctx.RecordVisit(totalSpent);
+        }
+    }
 
     public void Exit()
     {
@@ -17,7 +23,7 @@ public class LeavingState : INPCState
         {
             IStoreable storeable = _ctx.BoughtItems[0];
             _ctx.Psycho.IncreaseParameters(storeable.Data.FoodRestore, storeable.Data.ThirstRestore);
-            
+
             if (storeable is StoreableItem storeableItem)
             {
                 storeableItem.ReturnToPool();

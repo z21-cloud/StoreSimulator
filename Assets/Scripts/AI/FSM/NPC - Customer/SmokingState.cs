@@ -25,14 +25,14 @@ public class SmokingState : INPCState
         if (_ctx.NPCNeeds.Count != 0)
         {
             Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: I have needs. Going to store...");
-            _ctx.StateMachine.SetState(_ctx.IdleState);
+            _ctx.StateMachine.SetState(_ctx.PickStoreState);
             return;
         }
 
         if (_ctx.Psycho.WantBuyProducts)
         {
             Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: I want to buy products. Going to store...");
-            _ctx.StateMachine.SetState(_ctx.IdleState);
+            _ctx.StateMachine.SetState(_ctx.PickStoreState);
             return;
         }
 

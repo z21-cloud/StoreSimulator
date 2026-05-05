@@ -3,7 +3,6 @@ using StoreSimulator.InteractableObjects;
 using StoreSimulator.MoneySystem;
 using StoreSimulator.StoreableItems;
 using StoreSimulator.StoreManager;
-using StoreSimulator.StoreUtility;
 using UnityEngine;
 
 namespace StoreSimulator.ArtificialIntelligence
@@ -35,6 +34,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public ICashStorage CurrentCashStorage { get; set; }
         public List<IStoreable> BoughtItems { get; set; }
         public List<IStorage> Shelves { get; set; }
+        public Vector3 CurrentInteractionPoint { get; set; }
 
         public int ItemsToBuy { get; set; }
 
@@ -54,14 +54,17 @@ namespace StoreSimulator.ArtificialIntelligence
         public List<ItemCategory> NPCNeeds => Psycho.GetPriorityNeeds();
 
         public NPCStateMachine StateMachine { get; private set; }
-        public IdleState IdleState { get; private set; }
-        public MovingState MovingState { get; private set; }
+        // public IdleState IdleState { get; private set; }
+        public MovingStateToStore MovingState { get; private set; }
         public TakingState TakingState { get; private set; }
         public BuyingState BuyingState { get; private set; }
         public LeavingState LeavingState { get; private set; }
         public WaitingState WaitingState { get; private set; }
         public StealingState StealingState { get; private set; }
         public SmokingState SmokingState { get; private set; }
+        public ShoppingState ShoppingState { get; private set; }
+        public MovingToCheckout MovingToCheckout { get; private set; }
+        public PickStoreState PickStoreState { get; private set; }
 
         void Start()
         {
@@ -69,20 +72,23 @@ namespace StoreSimulator.ArtificialIntelligence
             Shelves = new List<IStorage>();
 
             StateMachine = new NPCStateMachine();
-            IdleState = new IdleState(this);
-            MovingState = new MovingState(this);
+            // IdleState = new IdleState(this);
+            MovingState = new MovingStateToStore(this);
             TakingState = new TakingState(this);
             BuyingState = new BuyingState(this);
             StealingState = new StealingState(this);
             LeavingState = new LeavingState(this);
             WaitingState = new WaitingState(this);
             SmokingState = new SmokingState(this);
+            ShoppingState = new ShoppingState(this);
+            MovingToCheckout = new MovingToCheckout(this);
+            PickStoreState = new PickStoreState(this);
 
             BuyPool = buyPool;
             WaitTime = waitTime;
             PickDelay = pickDelay;
 
-            StateMachine.SetState(IdleState);
+            StateMachine.SetState(PickStoreState);
         }
 
         void Update()

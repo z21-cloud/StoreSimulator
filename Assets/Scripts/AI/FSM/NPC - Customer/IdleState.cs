@@ -4,9 +4,9 @@ using StoreSimulator.InteractableObjects;
 using StoreSimulator.StoreableItems;
 using UnityEngine;
 
-public class IdleState : INPCState
+/*public class IdleState : INPCState
 {
-    private readonly NPCController _ctx;
+    /*private readonly NPCController _ctx;
 
     public IdleState(NPCController ctx) => _ctx = ctx;
 
@@ -62,5 +62,5 @@ public class IdleState : INPCState
         _ctx.StateMachine.SetState(_ctx.LeavingState);
     }
 
-    public void Exit() { }
-}
+    public void Exit() { }*/
+//}
