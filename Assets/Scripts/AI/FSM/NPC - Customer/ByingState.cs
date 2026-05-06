@@ -10,7 +10,11 @@ public class BuyingState : INPCState
 
     public void Enter()
     {
-       
+        if(_ctx.BoughtItems == null || _ctx.BoughtItems.Count == 0)
+        {
+            Leaving();
+            return;
+        }
     }
 
     public void Exit()

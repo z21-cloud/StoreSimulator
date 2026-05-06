@@ -3,23 +3,34 @@ using StoreSimulator.InteractableObjects;
 using StoreSimulator.StoreManager;
 using UnityEngine;
 
-public class TakingState : INPCState
+public class MovingToStorage : INPCState
 {
     private readonly NPCController _ctx;
-
+    private float _pickTimer = 0f;
     private bool _acceptDeal = false;
     private bool _steal = false;
-    private float _pickTimer = 0f;
-
-    public TakingState(NPCController ctx) => _ctx = ctx;
+    public MovingToStorage(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
     {
-        
+        if (_ctx.Shelves.Count == 0)
+        {
+            Debug.Log($"[AI - {_ctx.gameObject.name} - MovingToStorage] I have no shelves! Leaving");
+        }
+        else
+        {
+            _ctx.CurrentShelf = _ctx.Shelves[0];
+            _ctx.Movement.SetDestination(_ctx.CurrentShelf.InteractionPoint);
+
+            _ctx.Shelves.RemoveAt(0);
+            Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: Shelves is not empty, moving to next storage...");
+        }
     }
 
     public void Tick()
     {
+        if (!_ctx.Movement.HasReached) return;
+
         if (TryTakingFromShelf() && _ctx.BoughtItems.Count < _ctx.ItemsToBuy)
         {
             _pickTimer -= Time.deltaTime;
@@ -30,42 +41,34 @@ public class TakingState : INPCState
             return;
         }
 
-        if (_steal)
+        /*if (_steal)
         {
             _ctx.StateMachine.SetState(_ctx.StealingState);
             return;
-        }
+        }*/
 
         if (!_acceptDeal)
         {
             _ctx.RecordVisit(0f);
-            _ctx.StateMachine.SetState(_ctx.LeavingState);
+            Leaving();
             return;
         }
 
         if (_ctx.BoughtItems.Count == 0)
         {
-            Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Shelf is empty");
+            Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: Shelves are empty");
 
-            _ctx.StateMachine.SetState(_ctx.LeavingState);
+            Leaving();
             return;
         }
 
-        if (_ctx.Shelves.Count == 0) Debug.LogWarning($"[AI - {_ctx.gameObject.name} - TakingState] I have no shelves!");
-        else _ctx.Shelves.RemoveAt(0);
-
-        if (_ctx.Shelves.Count > 0)
+        if(_ctx.Shelves.Count > 0)
         {
-            _ctx.CurrentShelf = _ctx.Shelves[0];
-            Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Shelves is not empty, moving to next storage...");
-            
-            _ctx.Movement.SetDestination(_ctx.CurrentShelf.InteractionPoint);
-            // _ctx.StateMachine.SetState(_ctx.MovingToStorage);
-            
+            _ctx.StateMachine.SetState(_ctx.MovingToStorage);
             return;
         }
 
-        _ctx.StateMachine.SetState(_ctx.BuyingState);
+        _ctx.StateMachine.SetState(_ctx.MovingToCheckout);
     }
 
     private bool TryTakingFromShelf()
@@ -90,34 +93,40 @@ public class TakingState : INPCState
                 {
                     _ctx.BoughtItems.Add(storeable);
 
-                    Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: take storeable - {boughtGO.name}");
+                    Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: take storeable - {boughtGO.name}");
                     return true;
                 }
                 else
                 {
-                    if(_ctx.CurrentShelf.CanPlaceItem(storeable))
+                    if (_ctx.CurrentShelf.CanPlaceItem(storeable))
                     {
                         _ctx.CurrentShelf.PlaceItem(boughtGO);
                     }
                     else
                     {
-                        Debug.LogWarning($"[AI - TakingState - {_ctx.gameObject.name}]: Unexpected error. Can't place back taken storeable. Dropping item");
+                        Debug.LogWarning($"[AI - ShoppingState - {_ctx.gameObject.name}]: Unexpected error. Can't place back taken storeable. Dropping item");
                         _ctx.HandleDropItem(storeable);
                     }
 
                     _steal = _ctx.Psycho.StealItemOrNot();
-                    Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Do I wanna steal? Result - {_steal}");
+                    Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: Do I wanna steal? Result - {_steal}");
                     return false;
                 }
             }
             else
             {
-                Debug.LogWarning($"[AI - TakingState - {_ctx.gameObject.name}]: Picked GO has no storeable component!");
+                Debug.LogWarning($"[AI - ShoppingState - {_ctx.gameObject.name}]: Picked GO has no storeable component!");
             }
         }
 
-        Debug.Log($"[AI - {_ctx.gameObject.name} - TakingState]: Can't take item. Shelf is empty");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: Can't take item. Shelf is empty");
         return false;
+    }
+
+    private void Leaving()
+    {
+        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
+        _ctx.StateMachine.SetState(_ctx.LeavingState);
     }
 
     public void Exit()

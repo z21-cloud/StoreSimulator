@@ -55,16 +55,17 @@ namespace StoreSimulator.ArtificialIntelligence
 
         public NPCStateMachine StateMachine { get; private set; }
         // public IdleState IdleState { get; private set; }
-        public MovingStateToStore MovingState { get; private set; }
+        public PickStoreState PickStoreState { get; private set; }
+        public MovingToStore MovingToStore { get; private set; }
+        public MovingToStorage MovingToStorage { get; private set; }
         public TakingState TakingState { get; private set; }
-        public BuyingState BuyingState { get; private set; }
-        public LeavingState LeavingState { get; private set; }
-        public WaitingState WaitingState { get; private set; }
-        public StealingState StealingState { get; private set; }
-        public SmokingState SmokingState { get; private set; }
         public ShoppingState ShoppingState { get; private set; }
         public MovingToCheckout MovingToCheckout { get; private set; }
-        public PickStoreState PickStoreState { get; private set; }
+        public BuyingState BuyingState { get; private set; }
+        public LeavingState LeavingState { get; private set; }
+        public StealingState StealingState { get; private set; }
+        public WaitingState WaitingState { get; private set; }
+        public SmokingState SmokingState { get; private set; }
 
         void Start()
         {
@@ -73,7 +74,7 @@ namespace StoreSimulator.ArtificialIntelligence
 
             StateMachine = new NPCStateMachine();
             // IdleState = new IdleState(this);
-            MovingState = new MovingStateToStore(this);
+            MovingToStore = new MovingToStore(this);
             TakingState = new TakingState(this);
             BuyingState = new BuyingState(this);
             StealingState = new StealingState(this);
@@ -83,6 +84,7 @@ namespace StoreSimulator.ArtificialIntelligence
             ShoppingState = new ShoppingState(this);
             MovingToCheckout = new MovingToCheckout(this);
             PickStoreState = new PickStoreState(this);
+            MovingToStorage = new MovingToStorage(this);
 
             BuyPool = buyPool;
             WaitTime = waitTime;

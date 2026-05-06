@@ -26,7 +26,7 @@ public class PickStoreState : INPCState
     {
         if (!_ctx.Movement.HasReached) return;
 
-        _ctx.StateMachine.SetState(_ctx.MovingState);
+        _ctx.StateMachine.SetState(_ctx.MovingToStore);
     }
 
 

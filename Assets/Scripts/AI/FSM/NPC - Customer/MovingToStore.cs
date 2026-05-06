@@ -1,11 +1,11 @@
 using StoreSimulator.ArtificialIntelligence;
 using UnityEngine;
 
-public class MovingStateToStore : INPCState
+public class MovingToStore : INPCState
 {
     private readonly NPCController _ctx;
 
-    public MovingStateToStore(NPCController ctx) => _ctx = ctx;
+    public MovingToStore(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
     {
