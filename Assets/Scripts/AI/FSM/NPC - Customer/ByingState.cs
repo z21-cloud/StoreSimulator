@@ -10,8 +10,9 @@ public class BuyingState : INPCState
 
     public void Enter()
     {
-        if(_ctx.BoughtItems == null || _ctx.BoughtItems.Count == 0)
+        if (_ctx.BoughtItems == null || _ctx.BoughtItems.Count == 0)
         {
+            Debug.LogWarning($"Bought items count: {_ctx.BoughtItems.Count}");
             Leaving();
             return;
         }
@@ -19,11 +20,13 @@ public class BuyingState : INPCState
 
     public void Exit()
     {
-        
+
     }
 
     public void Tick()
     {
+        // if(!_ctx.Movement.HasReached) return;
+
         // if store-owner stays in cash store zone -> cash storage is available
         if (_ctx.CurrentCashStorage.IsAvailable)
         {
@@ -47,8 +50,9 @@ public class BuyingState : INPCState
             _ctx.WaitingState.SetReturn(_ctx.BuyingState);
             return;*/
             _ctx.StateMachine.SetState(_ctx.BuyingState);
+            return;
         }
-        
+
         Leaving();
     }
 

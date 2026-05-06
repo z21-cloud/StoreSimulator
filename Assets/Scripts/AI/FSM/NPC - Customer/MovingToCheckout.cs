@@ -13,11 +13,7 @@ public class MovingToCheckout : INPCState
 
         Debug.Log($"[AI - {_ctx.gameObject.name}]: Try to find cash storage");
 
-        if (_ctx.CurrentCashStorage != null)
-        {
-            _ctx.Movement.SetDestination(_ctx.CurrentCashStorage.InteractionPoint);
-        }
-        else
+        if (_ctx.CurrentCashStorage == null)
         {
             _ctx.CurrentCashStorage = _ctx.CurrentStore.CashStorageRegistry.GetRandomCashStorage();
 
@@ -27,15 +23,20 @@ public class MovingToCheckout : INPCState
                 Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Cash Storage is null, waiting...");
                 _ctx.StateMachine.SetState(_ctx.MovingToCheckout);
             }
+
         }
+
+        Debug.Log($"[AI - {_ctx.gameObject.name} - MovingToCheckout] Destination is {((MonoBehaviour)_ctx.CurrentCashStorage).gameObject.name}");
+        _ctx.Movement.SetDestination(_ctx.CurrentCashStorage.InteractionPoint);
     }
 
     public void Tick()
     {
-        Debug.Log($"[AI - {_ctx.gameObject.name} - MovingState] Moving to {((MonoBehaviour)_ctx.CurrentShelf).gameObject.name}");
+        Debug.Log($"[AI - {_ctx.gameObject.name} - MovingToCheckout] Moving to {((MonoBehaviour)_ctx.CurrentCashStorage).gameObject.name}");
 
         if (!_ctx.Movement.HasReached) return;
 
+        Debug.Log($"Reached");
         _ctx.StateMachine.SetState(_ctx.BuyingState);
     }
 
