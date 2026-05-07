@@ -2,6 +2,7 @@ using StoreSimulator.ArtificialIntelligence;
 
 public class ShopAction : IUtilityAction
 {
+    public string Name => "ShopAction";
     public bool CanBeInterrupted => false;
 
     public float Score(NPCWorldState state)

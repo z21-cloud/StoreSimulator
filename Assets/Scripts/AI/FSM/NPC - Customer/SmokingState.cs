@@ -29,8 +29,8 @@ public class SmokingState : INPCState
         if (_timer > SMOKE_TIME)
         {
             _timer = 0f;
-            _ctx.OnActionCompleted();
             Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: Finished smoking...");
+            _ctx.OnActionCompleted();
         }
 
         Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: Smoking...");

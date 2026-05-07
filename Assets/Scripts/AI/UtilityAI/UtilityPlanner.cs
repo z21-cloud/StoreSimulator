@@ -26,7 +26,7 @@ public class UtilityPlanner
 
     public void Tick()
     {
-        if(_actionRunning) return;
+        if(_actionRunning && !_currentAction.CanBeInterrupted) return;
 
         _timer -= Time.deltaTime;
         if(_timer > 0f) return;
@@ -63,6 +63,9 @@ public class UtilityPlanner
 
         _currentAction = best;
         _actionRunning = true;
+
+        Debug.Log($"[UtilityPlanner]: {_currentAction.Name}");
+
         best.Execute(_ctx);
     }
 

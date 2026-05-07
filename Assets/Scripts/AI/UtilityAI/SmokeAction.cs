@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class SmokeAction : IUtilityAction
 {
+    public string Name => "ShopAction";
     private const float THRESHOLD = 1f;
-    public bool CanBeInterrupted => true;
+    public bool CanBeInterrupted => false;
 
     public float Score(NPCWorldState state)
     {
