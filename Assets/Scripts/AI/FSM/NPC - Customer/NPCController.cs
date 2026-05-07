@@ -53,6 +53,9 @@ namespace StoreSimulator.ArtificialIntelligence
 
         public List<ItemCategory> NPCNeeds => Psycho.GetPriorityNeeds();
 
+        // Added
+        public UtilityPlanner UtilityPlanner { get; private set; }
+
         public NPCStateMachine StateMachine { get; private set; }
         // public IdleState IdleState { get; private set; }
         public PickStoreState PickStoreState { get; private set; }
@@ -90,13 +93,17 @@ namespace StoreSimulator.ArtificialIntelligence
             WaitTime = waitTime;
             PickDelay = pickDelay;
 
-            StateMachine.SetState(PickStoreState);
+            UtilityPlanner = new UtilityPlanner(this);
+
+            // uncomment
+            // StateMachine.SetState(PickStoreState);
         }
 
         void Update()
         {
             movement.Tick();
             StateMachine.Tick();
+            UtilityPlanner.Tick();
         }
 
         public void RecordVisit(float totalSpent = 0f, PriceReactionType priceReactionType = PriceReactionType.Fair)
@@ -139,6 +146,11 @@ namespace StoreSimulator.ArtificialIntelligence
             {
                 holdable.Release(Vector3.zero);
             }
+        }
+
+        public void OnActionCompleted()
+        {
+            UtilityPlanner.OnCurrentActionDone();
         }
     }
 }

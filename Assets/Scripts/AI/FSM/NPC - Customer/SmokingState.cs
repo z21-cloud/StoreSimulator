@@ -5,6 +5,9 @@ public class SmokingState : INPCState
 {
     private readonly NPCController _ctx;
 
+    private const float SMOKE_TIME = 5f;
+    private float _timer;
+
     public SmokingState(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
@@ -22,18 +25,12 @@ public class SmokingState : INPCState
     {
         if (!_ctx.Movement.HasReached) return;
 
-        if (_ctx.NPCNeeds.Count != 0)
+        _timer += Time.deltaTime;
+        if (_timer > SMOKE_TIME)
         {
-            Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: I have needs. Going to store...");
-            _ctx.StateMachine.SetState(_ctx.PickStoreState);
-            return;
-        }
-
-        if (_ctx.Psycho.WantBuyProducts)
-        {
-            Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: I want to buy products. Going to store...");
-            _ctx.StateMachine.SetState(_ctx.PickStoreState);
-            return;
+            _timer = 0f;
+            _ctx.OnActionCompleted();
+            Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: Finished smoking...");
         }
 
         Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: Smoking...");

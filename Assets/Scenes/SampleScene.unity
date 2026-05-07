@@ -512,7 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCMovement
   mover: {fileID: 97537996}
   pathfinding: {fileID: 406524155}
-  stopDistance: 2
+  stopDistance: 1
 --- !u!114 &97538004
 MonoBehaviour:
   m_ObjectHideFlags: 0

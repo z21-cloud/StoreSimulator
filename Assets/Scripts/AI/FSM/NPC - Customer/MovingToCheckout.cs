@@ -10,11 +10,9 @@ public class MovingToCheckout : INPCState
     public void Enter()
     {
         // Enter state, 
-
-        Debug.Log($"[AI - {_ctx.gameObject.name}]: Try to find cash storage");
-
         if (_ctx.CurrentCashStorage == null)
         {
+            Debug.Log($"[AI - {_ctx.gameObject.name}]: Try to find cash storage");
             _ctx.CurrentCashStorage = _ctx.CurrentStore.CashStorageRegistry.GetRandomCashStorage();
 
             // if NPC gets CurrentCashStorage and it's null, wait and try later

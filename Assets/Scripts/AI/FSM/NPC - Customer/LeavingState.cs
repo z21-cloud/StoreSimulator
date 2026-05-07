@@ -50,8 +50,7 @@ public class LeavingState : INPCState
     {
         if (_ctx.Movement.HasReached)
         {
-            Debug.Log($"[AI - {_ctx.gameObject.name} - LeavingState]: Gone from store. Wanna smoke");
-            _ctx.StateMachine.SetState(_ctx.SmokingState);
+            _ctx.UtilityPlanner.OnCurrentActionDone();
         }
     }
 }
