@@ -72,13 +72,13 @@ namespace StoreSimulator.InteractableObjects
             if (_currentSubCategory != ItemSubCategory.None)
             {
                 // Debug.Log($"Storage: {storable} sub category = {(_currentSubCategory & storable.SubCategory) != 0}");
-                return (((allowedCategory & storable.Category) != 0) && ((_currentSubCategory & storable.SubCategory) != 0));
+                return (((allowedCategory & storable.Data.Category) != 0) && ((_currentSubCategory & storable.Data.SubCategory) != 0));
             }
             // if shelf has no it's own sub category: 
             else
             {
                 // Debug.Log($"Storage: {storable} category = {(allowedCategory & storable.Category) != 0}");
-                return (allowedCategory & storable.Category) != 0;
+                return (allowedCategory & storable.Data.Category) != 0;
             }
         }
 
@@ -196,7 +196,7 @@ namespace StoreSimulator.InteractableObjects
                 // Lock shelf's sub category
                 if (_currentSubCategory == ItemSubCategory.None)
                 {
-                    _currentSubCategory = storeable.SubCategory;
+                    _currentSubCategory = storeable.Data.SubCategory;
                     _currentItemData = storeable.Data;
                 }
             }

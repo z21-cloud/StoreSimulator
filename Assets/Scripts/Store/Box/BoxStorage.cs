@@ -137,14 +137,14 @@ namespace StoreSimulator.StoreableItems
                 return FindMatchingGroup(storeable) != null;
             }
 
-            Debug.Log($"BoxStorage: ItemCategory & AllowedCategory - {(_allowedCategory & storeable.Category) != 0}");
-            if ((_allowedCategory & storeable.Category) == 0) return false;
+            Debug.Log($"BoxStorage: ItemCategory & AllowedCategory - {(_allowedCategory & storeable.Data.Category) != 0}");
+            if ((_allowedCategory & storeable.Data.Category) == 0) return false;
 
             GameObject exsistingItem = PeekItem();
 
             if (exsistingItem != null && exsistingItem.TryGetComponent<IStoreable>(out var existingStoreable))
             {
-                return (existingStoreable.SubCategory & storeable.SubCategory) != 0;
+                return (existingStoreable.Data.SubCategory & storeable.Data.SubCategory) != 0;
             }
 
             Debug.Log($"BoxStorage: Has free slot - {HasFreeSlot()}");
@@ -206,15 +206,15 @@ namespace StoreSimulator.StoreableItems
 
             matched.gameObject.SetActive(true);
             _slots = matched.Slots;
-            _allowedCategory = storeable.Category;
+            _allowedCategory = storeable.Data.Category;
         }
 
         private SlotGroup FindMatchingGroup(IStoreable storeable)
         {
             foreach (var group in groups)
             {
-                if (((group.Preset.Category & storeable.Category) != 0) &&
-                    ((group.Preset.SubCategory & storeable.SubCategory) != 0))
+                if (((group.Preset.Category & storeable.Data.Category) != 0) &&
+                    ((group.Preset.SubCategory & storeable.Data.SubCategory) != 0))
                 {
                     return group;
                 }

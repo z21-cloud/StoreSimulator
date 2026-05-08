@@ -4,16 +4,17 @@ using UnityEngine;
 public class SmokeAction : IUtilityAction
 {
     public string Name => "ShopAction";
-    private const float THRESHOLD = 1f;
+    private const float THRESHOLD_SCORE = 0.3f;
     public bool CanBeInterrupted => false;
 
     public float Score(NPCWorldState state)
     {
-        return Mathf.Max(0f, THRESHOLD - state.Hunger);
+        return THRESHOLD_SCORE;
     }
 
     public void Execute(NPCController ctx)
     {
+        Debug.Log($"[{ctx.gameObject.name}] Smoking: wanna smoke");
         ctx.StateMachine.SetState(ctx.SmokingState);
     }
 }

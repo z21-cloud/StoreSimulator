@@ -26,7 +26,7 @@ public class UtilityPlanner
 
     public void Tick()
     {
-        if(_actionRunning && !_currentAction.CanBeInterrupted) return;
+        if(_actionRunning) return; // && !_currentAction.CanBeInterrupted) return;
 
         _timer -= Time.deltaTime;
         if(_timer > 0f) return;
@@ -81,12 +81,16 @@ public class UtilityPlanner
 
     private float GetHunger()
     {
+        if(!_ctx.Psycho.WantBuyProducts) return 0.2f;
+
         int hunger = (int)_ctx.Psycho.HungerState;
         return (hunger * 25f / 100f) + 0.25f;
     }
 
     private float GetThirst()
     {
+        if(!_ctx.Psycho.WantBuyProducts) return 0.2f;
+
         int thirst = (int)_ctx.Psycho.ThirstState;
         return (thirst * 25f / 100f) + 0.25f;
     }

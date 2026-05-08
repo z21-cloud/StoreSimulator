@@ -9,8 +9,6 @@ namespace StoreSimulator.InteractableObjects
     {
         public float LockedPrice { get; }
         public ItemData Data { get; }
-        public ItemCategory Category { get; }
-        public ItemSubCategory SubCategory { get; }
         public IShelf CurrentShelf { get; }
         public void OnStored(GameObject slot);
         public GameObject OnPickedFromStore();

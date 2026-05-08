@@ -55,7 +55,7 @@ public class StorageRegistry : MonoBehaviour
                 //Debug.Log($"[StorageRegistry]: Peeked Item is {peeked.name}");
                 if (peeked != null && peeked.TryGetComponent<IStoreable>(out var storeable))
                 {
-                    if ((storeable.Category & category) != 0) result.Add(storage);
+                    if ((storeable.Data.Category & category) != 0) result.Add(storage);
                 }
             }
         }
