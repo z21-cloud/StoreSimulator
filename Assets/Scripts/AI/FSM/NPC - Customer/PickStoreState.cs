@@ -17,9 +17,9 @@ public class PickStoreState : INPCState
         _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreEnterPoint.position);
 
         // Get memory based on store ID
-        var memory = NPCMemoryManager.Instance.GetOrCreateMemoryData(_ctx.NpcId, _ctx.CurrentStore.StoreID);
+        // var memory = NPCMemoryManager.Instance.GetOrCreateMemoryData(_ctx.NpcId, _ctx.CurrentStore.StoreID);
         // Selects memory to NPC
-        _ctx.Psycho.GetComponent<NPCLoyalty>().Initialize(memory);
+        // _ctx.Psycho.GetComponent<NPCLoyalty>().Initialize(memory);
     }
 
     public void Tick()

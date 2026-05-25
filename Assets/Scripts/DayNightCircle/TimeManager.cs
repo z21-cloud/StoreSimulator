@@ -17,6 +17,7 @@ public class TimeManager : MonoBehaviour
     public DayPhase CurrentDayPhase => _currentDayPhase;
     public Action<DayPhase> OnPhaseChanged;
 
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -43,7 +44,10 @@ public class TimeManager : MonoBehaviour
         // Debug.Log($"[Day Phase]: {_currentDayPhase}");
         OnPhaseChanged?.Invoke(_currentDayPhase);
 
-        if(_currentDayPhase == DayPhase.Morning) _currentDayPhase++;
+        if(_currentDayPhase == DayPhase.Morning)
+        {
+            _currentDayPhase++;
+        }
     }
 
     void Update()

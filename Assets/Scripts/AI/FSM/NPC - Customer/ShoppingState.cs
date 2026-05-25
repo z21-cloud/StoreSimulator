@@ -29,9 +29,9 @@ public class ShoppingState : INPCState
         if (_ctx.Shelves == null || _ctx.Shelves.Count == 0)
         {
             Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState] Can't find needed shelf. Leaving...");
-            float totalSpent = 0f;
-            PriceReactionType reaction = PriceReactionType.Scam;
-            _ctx.RecordVisit(totalSpent, reaction);
+            // float totalSpent = 0f;
+            // PriceReactionType reaction = PriceReactionType.Scam;
+            // _ctx.RecordVisit(totalSpent, reaction);
             Leaving();
             return;
         }

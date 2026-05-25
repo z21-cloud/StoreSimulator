@@ -10,19 +10,16 @@ public class LeavingState : INPCState
 
     public void Enter()
     {
-        if (_ctx.BoughtItems.Count > 0)
+        /*if (_ctx.BoughtItems.Count > 0)
         {
             float totalSpent = _ctx.GetTotalCost(_ctx.BoughtItems);
             _ctx.RecordVisit(totalSpent);
-        }
+        }*/
     }
 
     public void Exit()
     {
-        _ctx.Psycho.ResetReaction();
-        _ctx.CurrentShelf = null;
-        _ctx.CurrentCashStorage = null;
-        _ctx.BoughtItems.Clear();
+        // _ctx.Psycho.ResetReaction();
     }
 
     public void Tick()
@@ -50,6 +47,9 @@ public class LeavingState : INPCState
             _ctx.BoughtItems.RemoveAt(0);
         }
 
-        _ctx.UtilityPlanner.OnCurrentActionDone();
+        _ctx.CurrentShelf = null;
+        _ctx.CurrentCashStorage = null;
+        _ctx.BoughtItems.Clear();
+        // _ctx.UtilityPlanner.OnCurrentActionDone();
     }
 }

@@ -8,7 +8,7 @@ public class MovingToStorage : INPCState
     private readonly NPCController _ctx;
     private float _pickTimer = 0f;
     private bool _acceptDeal = false;
-    private bool _steal = false;
+    // private bool _steal = false;
     public MovingToStorage(NPCController ctx) => _ctx = ctx;
 
     public void Enter()
@@ -49,7 +49,7 @@ public class MovingToStorage : INPCState
 
         if (!_acceptDeal)
         {
-            _ctx.RecordVisit(0f);
+            // _ctx.RecordVisit(0f);
             Leaving();
             return;
         }
@@ -108,8 +108,8 @@ public class MovingToStorage : INPCState
                         _ctx.HandleDropItem(storeable);
                     }
 
-                    _steal = _ctx.Psycho.StealItemOrNot();
-                    Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: Do I wanna steal? Result - {_steal}");
+                    // _steal = _ctx.Psycho.StealItemOrNot();
+                    // Debug.Log($"[AI - {_ctx.gameObject.name} - ShoppingState]: Do I wanna steal? Result - {_steal}");
                     return false;
                 }
             }
@@ -132,6 +132,6 @@ public class MovingToStorage : INPCState
     public void Exit()
     {
         _acceptDeal = false;
-        _steal = false;
+        // _steal = false;
     }
 }

@@ -19,7 +19,7 @@ public class LeavingVendingMachine : INPCState
 
     public void Exit()
     {
-        _ctx.Psycho.ResetReaction();
+        // _ctx.Psycho.ResetReaction();
         _ctx.CurrentShelf = null;
         _ctx.BoughtItems.Clear();
     }

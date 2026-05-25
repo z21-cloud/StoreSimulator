@@ -17,7 +17,7 @@ namespace StoreSimulator.ArtificialIntelligence
         [Header("NPC components")]
         [SerializeField] private NPCPsycho psycho;
         [SerializeField] private NPCWallet wallet;
-        [SerializeField] private NPCMemoryData memoryData;
+        // [SerializeField] private NPCMemoryData memoryData;
 
         [Header("Movement logic")]
         [SerializeField] private NPCMovement movement;
@@ -29,6 +29,10 @@ namespace StoreSimulator.ArtificialIntelligence
         [Header("Smoking area")]
         [SerializeField] private SmokingArea smokingArea;
 
+        //
+        public IShoppingProvider CurrentProvider { get; private set; }
+        public IShoppingSession LastSession { get; set; }
+        //
         public IStore CurrentStore { get; set; }
         public IStorage CurrentShelf { get; set; }
         public ICashStorage CurrentCashStorage { get; set; }
@@ -54,7 +58,7 @@ namespace StoreSimulator.ArtificialIntelligence
         public List<ItemCategory> NPCNeeds => Psycho.GetPriorityNeeds();
 
         // Added
-        public UtilityPlanner UtilityPlanner { get; private set; }
+        // public UtilityPlanner UtilityPlanner { get; private set; }
 
         public NPCStateMachine StateMachine { get; private set; }
         // public IdleState IdleState { get; private set; }
@@ -66,12 +70,20 @@ namespace StoreSimulator.ArtificialIntelligence
         public MovingToCheckout MovingToCheckout { get; private set; }
         public BuyingState BuyingState { get; private set; }
         public LeavingState LeavingState { get; private set; }
-        public StealingState StealingState { get; private set; }
+        // public StealingState StealingState { get; private set; }
         public WaitingState WaitingState { get; private set; }
         public SmokingState SmokingState { get; private set; }
 
+        public void Initialize(Vector3 position)
+        {
+            transform.position = position;
+        }
+
         void Start()
         {
+            CurrentProvider = StoreRegistry.Instance.GetRandomStore() as IShoppingProvider;
+            //
+
             BoughtItems = new List<IStoreable>(buyPool);
             Shelves = new List<IStorage>();
 
@@ -80,7 +92,7 @@ namespace StoreSimulator.ArtificialIntelligence
             MovingToStore = new MovingToStore(this);
             TakingState = new TakingState(this);
             BuyingState = new BuyingState(this);
-            StealingState = new StealingState(this);
+            // StealingState = new StealingState(this);
             LeavingState = new LeavingState(this);
             WaitingState = new WaitingState(this);
             SmokingState = new SmokingState(this);
@@ -93,7 +105,7 @@ namespace StoreSimulator.ArtificialIntelligence
             WaitTime = waitTime;
             PickDelay = pickDelay;
 
-            UtilityPlanner = new UtilityPlanner(this);
+            // UtilityPlanner = new UtilityPlanner(this);
 
             // uncomment
             // StateMachine.SetState(PickStoreState);
@@ -103,10 +115,10 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             movement.Tick();
             StateMachine.Tick();
-            UtilityPlanner.Tick();
+            // UtilityPlanner.Tick();
         }
 
-        public void RecordVisit(float totalSpent = 0f, PriceReactionType priceReactionType = PriceReactionType.Fair)
+        /*public void RecordVisit(float totalSpent = 0f, PriceReactionType priceReactionType = PriceReactionType.Fair)
         {
             VisitRecord visit = new VisitRecord();
             //visit.dayIndex = 
@@ -121,7 +133,7 @@ namespace StoreSimulator.ArtificialIntelligence
             NPCMemoryManager.Instance.RecordVisit(npcId, CurrentStore.StoreID, visit);
 
             Debug.Log($"[AI - {gameObject.name}] New visit recorded: Total Spent: {visit.totalSpent} \n, Reaction type: {visit.reactionType} \n, All Items Found: {visit.foundAllItems}");
-        }
+        }*/
 
         public bool HaveEnoughMoney(IStoreable storeable)
         {
@@ -148,9 +160,9 @@ namespace StoreSimulator.ArtificialIntelligence
             }
         }
 
-        public void OnActionCompleted()
+        /*public void OnActionCompleted()
         {
             UtilityPlanner.OnCurrentActionDone();
-        }
+        }*/
     }
 }

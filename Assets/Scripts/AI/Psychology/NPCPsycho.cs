@@ -202,11 +202,11 @@ public class NPCPsycho : MonoBehaviour
     public bool BuyItemOrNot(float playerPrice, float marketPrice)
     {
         float ratio = loyalty.GreedRatio(playerPrice, marketPrice);
-        float bonus = loyalty.GetPriceThresholdBonus();
+        // float bonus = loyalty.GetPriceThresholdBonus();
 
         foreach (var reaction in priceReactionConfig.priceReactions)
         {
-            float adjustedThreshold = reaction.ratioThreshold + bonus;
+            float adjustedThreshold = reaction.ratioThreshold; // + bonus;
 
             if (ratio >= adjustedThreshold)
             {
@@ -220,7 +220,7 @@ public class NPCPsycho : MonoBehaviour
         return false;
     }
 
-    public PriceReactionType GetLastReaction()
+    /*public PriceReactionType GetLastReaction()
     {
         if(_visitReactions.Count == 0) return PriceReactionType.Fair;
 
@@ -231,9 +231,9 @@ public class NPCPsycho : MonoBehaviour
         }
 
         return worst;
-    }
+    }*/
 
-    public bool StealItemOrNot()
+    /*public bool StealItemOrNot()
     {
         if(loyalty.Loyalty >= 90f)
         {
@@ -249,7 +249,7 @@ public class NPCPsycho : MonoBehaviour
     public bool LoudStealOrQuiete()
     {
         return stealingThoughts.LoudStealOrQuiete();
-    }
+    }*/
 
-    public void ResetReaction() => _visitReactions.Clear();
+    // public void ResetReaction() => _visitReactions.Clear();
 }

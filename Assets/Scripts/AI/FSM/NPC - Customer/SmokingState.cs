@@ -30,7 +30,7 @@ public class SmokingState : INPCState
         {
             _timer = 0f;
             Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: Finished smoking...");
-            _ctx.OnActionCompleted();
+            // _ctx.OnActionCompleted();
         }
 
         Debug.Log($"[AI - {_ctx.gameObject.name} - SmokingState]: Smoking...");

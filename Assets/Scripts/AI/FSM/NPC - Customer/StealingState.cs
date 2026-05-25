@@ -2,7 +2,7 @@ using StoreSimulator.ArtificialIntelligence;
 using StoreSimulator.InteractableObjects;
 using UnityEngine;
 
-public class StealingState : INPCState
+/*public class StealingState : INPCState
 {
     private readonly NPCController _ctx;
 
@@ -77,4 +77,4 @@ public class StealingState : INPCState
         _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
         // _ctx.RecordVisit(0f);
     }
-}
+}*/

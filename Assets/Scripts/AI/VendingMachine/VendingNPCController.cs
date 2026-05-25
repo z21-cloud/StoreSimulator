@@ -91,8 +91,8 @@ namespace StoreSimulator.ArtificialIntelligence
 
             visit.totalSpent = totalSpent;
 
-            if (priceReactionType == PriceReactionType.Fair) visit.reactionType = psycho.GetLastReaction();
-            else visit.reactionType = priceReactionType;
+            /*if (priceReactionType == PriceReactionType.Fair) visit.reactionType = psycho.GetLastReaction();
+            else visit.reactionType = priceReactionType;*/
 
             // visit.foundAllItems = boughtItems.Count > 0;
 
