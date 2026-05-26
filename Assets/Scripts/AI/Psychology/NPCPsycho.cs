@@ -7,7 +7,7 @@ public class NPCPsycho : MonoBehaviour
 {
     [SerializeField] private NPCNeeds needs;
     [SerializeField] private NPCLoyalty loyalty;
-    [SerializeField] private StealingThoughts stealingThoughts;
+    // [SerializeField] private StealingThoughts stealingThoughts;
 
     [Header("Configs")]
     [SerializeField] private NPCPriceReactionSO priceReactionConfig;

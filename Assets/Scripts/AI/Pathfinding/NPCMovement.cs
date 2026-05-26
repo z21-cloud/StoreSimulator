@@ -16,9 +16,22 @@ namespace StoreSimulator.ArtificialIntelligence
 
         public bool HasReached => _currentPath.Count == 0 && !mover.IsMoving;
 
-        private const float STOP_DISTANCE = 2f; 
+        private const float STOP_DISTANCE = 2f;
 
         private Queue<Vector3> _currentPath = new Queue<Vector3>();
+
+        private void Awake()
+        {
+            if (pathfinding == null)
+            {
+                pathfinding = FindFirstObjectByType<AStar>();
+
+                if (pathfinding == null)
+                {
+                    Debug.LogError("Can't find AStar!! Error!");
+                }
+            }
+        }
 
         public void SetDestination(Vector3 goalPosition, float stopDistance = STOP_DISTANCE)
         {

@@ -15,7 +15,6 @@ public class PickStoreState : INPCState
         // Get store and set destination to store enter point
         _ctx.CurrentStore = StoreRegistry.Instance.GetRandomStore();
         _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreEnterPoint.position);
-
         // Get memory based on store ID
         // var memory = NPCMemoryManager.Instance.GetOrCreateMemoryData(_ctx.NpcId, _ctx.CurrentStore.StoreID);
         // Selects memory to NPC

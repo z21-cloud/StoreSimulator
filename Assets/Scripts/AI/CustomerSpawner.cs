@@ -9,9 +9,6 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private int minimalSpawnCount = 1;
     [SerializeField] private int maxSpawnCount = 10;
 
-    private float timer = 0f;
-    private const float SPAWN_DELAY_THRESHOLD = 2f;
-
     void OnEnable()
     {
         TimeManager.Instance.OnPhaseChanged += HandlePhaseChange;
@@ -40,11 +37,11 @@ public class CustomerSpawner : MonoBehaviour
     //     if (timer <= SPAWN_DELAY_THRESHOLD)
     // }
 
-    public NPCController SpawnCustomer()
+    public void SpawnCustomer()
     {
         int randomIndex = Random.Range(0, transforms.Count);
         Transform spawnTransform = transforms[randomIndex];
 
-        return factory.Spawn(spawnTransform.position);
+        factory.Spawn(spawnTransform.position);
     }
 }

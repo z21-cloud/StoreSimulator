@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using StoreSimulator.InteractableObjects;
 using StoreSimulator.MoneySystem;
@@ -30,8 +31,6 @@ namespace StoreSimulator.ArtificialIntelligence
         [SerializeField] private SmokingArea smokingArea;
 
         //
-        public IShoppingProvider CurrentProvider { get; private set; }
-        public IShoppingSession LastSession { get; set; }
         //
         public IStore CurrentStore { get; set; }
         public IStorage CurrentShelf { get; set; }
@@ -41,12 +40,9 @@ namespace StoreSimulator.ArtificialIntelligence
         public Vector3 CurrentInteractionPoint { get; set; }
 
         public int ItemsToBuy { get; set; }
-
         public string NpcId => npcId;
 
         public Transform PickUpPoint => pickUpPoint;
-        public SmokingArea SmokingArea => smokingArea;
-
         public NPCMovement Movement => movement;
         public NPCPsycho Psycho => psycho;
         public IWallet Wallet => wallet;
@@ -72,7 +68,8 @@ namespace StoreSimulator.ArtificialIntelligence
         public LeavingState LeavingState { get; private set; }
         // public StealingState StealingState { get; private set; }
         public WaitingState WaitingState { get; private set; }
-        public SmokingState SmokingState { get; private set; }
+
+        public event Action<NPCController> OnDespawnRequested;
 
         public void Initialize(Vector3 position)
         {
@@ -81,8 +78,6 @@ namespace StoreSimulator.ArtificialIntelligence
 
         void Start()
         {
-            CurrentProvider = StoreRegistry.Instance.GetRandomStore() as IShoppingProvider;
-            //
 
             BoughtItems = new List<IStoreable>(buyPool);
             Shelves = new List<IStorage>();
@@ -95,7 +90,6 @@ namespace StoreSimulator.ArtificialIntelligence
             // StealingState = new StealingState(this);
             LeavingState = new LeavingState(this);
             WaitingState = new WaitingState(this);
-            SmokingState = new SmokingState(this);
             ShoppingState = new ShoppingState(this);
             MovingToCheckout = new MovingToCheckout(this);
             PickStoreState = new PickStoreState(this);
@@ -108,7 +102,7 @@ namespace StoreSimulator.ArtificialIntelligence
             // UtilityPlanner = new UtilityPlanner(this);
 
             // uncomment
-            // StateMachine.SetState(PickStoreState);
+            StateMachine.SetState(PickStoreState);
         }
 
         void Update()
@@ -164,5 +158,38 @@ namespace StoreSimulator.ArtificialIntelligence
         {
             UtilityPlanner.OnCurrentActionDone();
         }*/
+
+        public void CleanUpAfterVisit()
+        {
+            while (BoughtItems.Count != 0)
+            {
+                IStoreable storeable = BoughtItems[0];
+                Psycho.IncreaseParameters(storeable.Data.FoodRestore, storeable.Data.ThirstRestore);
+
+                if (storeable is StoreableItem storeableItem)
+                {
+                    storeableItem.ReturnToPool();
+
+                    // GameObject storeableItemGO = storeableItem.Data.Prefab;
+                    // StoreablePooling.Instance.ReturnStoreable(storeable, storeableItemGO.GetComponent<StoreableItem>());
+                }
+                else
+                {
+                    ((MonoBehaviour)storeable)?.gameObject.SetActive(false);
+                }
+
+                // ((MonoBehaviour)storeable).gameObject.SetActive(false);
+                BoughtItems.RemoveAt(0);
+            }
+
+            CurrentShelf = null;
+            CurrentCashStorage = null;
+            BoughtItems.Clear();
+        }
+
+        public void RequestDespawn()
+        {
+            OnDespawnRequested?.Invoke(this);
+        }
     }
 }

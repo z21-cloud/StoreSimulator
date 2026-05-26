@@ -26,30 +26,8 @@ public class LeavingState : INPCState
     {
         if (!_ctx.Movement.HasReached) return;
         
-        while (_ctx.BoughtItems.Count != 0)
-        {
-            IStoreable storeable = _ctx.BoughtItems[0];
-            _ctx.Psycho.IncreaseParameters(storeable.Data.FoodRestore, storeable.Data.ThirstRestore);
-
-            if (storeable is StoreableItem storeableItem)
-            {
-                storeableItem.ReturnToPool();
-
-                // GameObject storeableItemGO = storeableItem.Data.Prefab;
-                // StoreablePooling.Instance.ReturnStoreable(storeable, storeableItemGO.GetComponent<StoreableItem>());
-            }
-            else
-            {
-                ((MonoBehaviour)storeable)?.gameObject.SetActive(false);
-            }
-
-            // ((MonoBehaviour)storeable).gameObject.SetActive(false);
-            _ctx.BoughtItems.RemoveAt(0);
-        }
-
-        _ctx.CurrentShelf = null;
-        _ctx.CurrentCashStorage = null;
-        _ctx.BoughtItems.Clear();
+        _ctx.CleanUpAfterVisit();
+        _ctx.RequestDespawn();
         // _ctx.UtilityPlanner.OnCurrentActionDone();
     }
 }

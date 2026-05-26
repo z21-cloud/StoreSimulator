@@ -14,10 +14,19 @@ public class NPCPooling : MonoBehaviour
         pool = new ObjectPooling<NPCController>(prefab, initialSize, parent);
     }
 
-    public NPCController GetNpc() => pool.Get();
+    public NPCController GetNpc()
+    {
+        NPCController npc = pool.Get();
+
+        npc.OnDespawnRequested += ReturnNpc;
+
+        return npc;
+    }
 
     public void ReturnNpc(NPCController npc)
     {
+        npc.OnDespawnRequested -= ReturnNpc;
+
         pool.Release(npc);
     }
 }
