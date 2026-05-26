@@ -5,6 +5,7 @@
 Демонстрация системы FSM - https://youtu.be/uycTad_G77U
 
 Реакция NPC на цену (нормальная цена) - https://youtu.be/5ayztOv7tMc 
+
 Реакция NPC на цену (высокая цена) - https://youtu.be/1ESaVMZOwh0
 
 ### Граф состояний ИИ (State Transition Diagram)
