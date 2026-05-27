@@ -1,6 +1,4 @@
-using System;
 using StoreSimulator.StoreManager;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace StoreSimulator.StoreUtility

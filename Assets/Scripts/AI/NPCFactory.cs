@@ -1,17 +1,20 @@
-using StoreSimulator.ArtificialIntelligence;
 using UnityEngine;
 
-public class NPCFactory : MonoBehaviour
+namespace StoreSimulator.ArtificialIntelligence
 {
-    [SerializeField] private NPCController prefab;
-    [SerializeField] private NPCPooling pool;
-    
-    public NPCController Spawn(Vector3 position)
+    public class NPCFactory : MonoBehaviour
     {
-        NPCController nPC = pool.GetNpc();
+        [SerializeField] private NPCController prefab;
+        [SerializeField] private NPCPooling pool;
 
-        nPC.Initialize(position);
+        public NPCController Spawn(Vector3 position)
+        {
+            NPCController nPC = pool.GetNpc();
 
-        return nPC;
+            nPC.Initialize(position);
+
+            return nPC;
+        }
     }
 }
+

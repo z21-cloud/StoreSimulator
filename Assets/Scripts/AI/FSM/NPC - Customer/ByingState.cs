@@ -1,76 +1,77 @@
-using StoreSimulator.ArtificialIntelligence;
-using StoreSimulator.StoreManager;
 using UnityEngine;
 
-public class BuyingState : INPCState
+namespace StoreSimulator.ArtificialIntelligence
 {
-    private readonly NPCController _ctx;
-
-    public BuyingState(NPCController ctx) => _ctx = ctx;
-
-    public void Enter()
+    public class BuyingState : INPCState
     {
-        if (_ctx.BoughtItems == null || _ctx.BoughtItems.Count == 0)
+        private readonly NPCController _ctx;
+
+        public BuyingState(NPCController ctx) => _ctx = ctx;
+
+        public void Enter()
         {
-            Debug.LogWarning($"Bought items count: {_ctx.BoughtItems.Count}");
-            Leaving();
-            return;
-        }
-    }
-
-    public void Exit()
-    {
-
-    }
-
-    public void Tick()
-    {
-        // if(!_ctx.Movement.HasReached) return;
-
-        // if store-owner stays in cash store zone -> cash storage is available
-        if (_ctx.CurrentCashStorage.IsAvailable)
-        {
-            for (int i = 0; i < _ctx.BoughtItems.Count; i++)
+            if (_ctx.BoughtItems == null || _ctx.BoughtItems.Count == 0)
             {
-                // if NPC can't buy item -> drop it 
-                if (!_ctx.Wallet.CanAfford(_ctx.BoughtItems[i].LockedPrice))
-                {
-                    HandleDropItem(i);
-                    continue;
-                }
-
-                // if NPC can afford item -> buy it & increase needs parameters
-                HandleBuyItem(i);
+                Debug.LogWarning($"Bought items count: {_ctx.BoughtItems.Count}");
+                Leaving();
+                return;
             }
         }
-        else
+
+        public void Exit()
         {
-            // wait state
-            /*Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Waiting player to buy item");
-            _ctx.WaitingState.SetReturn(_ctx.BuyingState);
-            return;*/
-            _ctx.StateMachine.SetState(_ctx.BuyingState);
-            return;
+
         }
 
-        Leaving();
-    }
+        public void Tick()
+        {
+            // if(!_ctx.Movement.HasReached) return;
 
-    private void Leaving()
-    {
-        _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
-        _ctx.StateMachine.SetState(_ctx.LeavingState);
-    }
+            // if store-owner stays in cash store zone -> cash storage is available
+            if (_ctx.CurrentCashStorage.IsAvailable)
+            {
+                for (int i = 0; i < _ctx.BoughtItems.Count; i++)
+                {
+                    // if NPC can't buy item -> drop it 
+                    if (!_ctx.Wallet.CanAfford(_ctx.BoughtItems[i].LockedPrice))
+                    {
+                        HandleDropItem(i);
+                        continue;
+                    }
 
-    private void HandleDropItem(int id)
-    {
-        Debug.LogWarning($"[AI - {_ctx.gameObject.name} - BuyingState]: Unexpected drop at cashier - {_ctx.BoughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
-        _ctx.HandleDropItem(_ctx.BoughtItems[id]);
-    }
+                    // if NPC can afford item -> buy it & increase needs parameters
+                    HandleBuyItem(i);
+                }
+            }
+            else
+            {
+                // wait state
+                /*Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Waiting player to buy item");
+                _ctx.WaitingState.SetReturn(_ctx.BuyingState);
+                return;*/
+                _ctx.StateMachine.SetState(_ctx.BuyingState);
+                return;
+            }
 
-    private void HandleBuyItem(int id)
-    {
-        Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Try to buy item at price: {_ctx.BoughtItems[id].LockedPrice}");
-        _ctx.CurrentCashStorage.BuyItem(_ctx.BoughtItems[id], _ctx.Wallet);
+            Leaving();
+        }
+
+        private void Leaving()
+        {
+            _ctx.Movement.SetDestination(_ctx.CurrentStore.StoreLeavePoint.position);
+            _ctx.StateMachine.SetState(_ctx.LeavingState);
+        }
+
+        private void HandleDropItem(int id)
+        {
+            Debug.LogWarning($"[AI - {_ctx.gameObject.name} - BuyingState]: Unexpected drop at cashier - {_ctx.BoughtItems[0].Data.ItemName}. Check HaveEnoughMoney logic.");
+            _ctx.HandleDropItem(_ctx.BoughtItems[id]);
+        }
+
+        private void HandleBuyItem(int id)
+        {
+            Debug.Log($"[AI - {_ctx.gameObject.name} - BuyingState]: Try to buy item at price: {_ctx.BoughtItems[id].LockedPrice}");
+            _ctx.CurrentCashStorage.BuyItem(_ctx.BoughtItems[id], _ctx.Wallet);
+        }
     }
 }
